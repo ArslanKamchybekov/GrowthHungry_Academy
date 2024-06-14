@@ -1,1 +1,1 @@
-# growth_hungry_academy
+# GrowthHungry Academy
