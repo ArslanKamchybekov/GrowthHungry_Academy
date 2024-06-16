@@ -1,1 +1,3 @@
 # GrowthHungry Academy
+
+First Commit
