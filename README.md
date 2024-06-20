@@ -1,3 +1,3 @@
 # GrowthHungry Academy
 
-First Commit
+my First Commit 
