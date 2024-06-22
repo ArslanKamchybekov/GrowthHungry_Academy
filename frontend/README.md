@@ -1,8 +1,37 @@
-# React + Vite
+# Video Platform (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About the project
 
-Currently, two official plugins are available:
+ This is Front end part of the Video Platfrom project built with React+Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies used
+
+- React
+- Vite
+- Node
+- NPM
+
+## Prerequisites
+
+- Node.js v20.12.2
+- NPM v8.19.2
+
+## Setup/installation
+
+- Clone the repository 
+
+ https://github.com/ArslanKamchybekov/GrowthHungry_Academy
+
+- Navigate to project folder
+
+cd GrowthHungry_Academy/frontend
+
+- Install dependencies
+
+ `npm install`
+
+- Run the project 
+
+ `npm run dev`
+
+The application wil be running at http://localhost:5173
