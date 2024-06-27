@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 interface Video {
-
+    id: string,
+    title: string,
+    url: string,
 }
 
 const useFetchVideos = async() => {
@@ -13,7 +15,7 @@ const useFetchVideos = async() => {
     useEffect(() => {
         const fetchVideos = async() => {
             try {
-                const response = await axios.get<Video[]>('http://localhost:4000/users');
+                const response = await axios.get<Video[]>('http://localhost:4000/videos');
                 setVideos(response.data);
             }catch(err){
                 setError(err.message);
