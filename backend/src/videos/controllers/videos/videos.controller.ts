@@ -1,19 +1,27 @@
-import { Controller, Get, Res } from '@nestjs/common';
-import { Response } from 'express';
-import * as path from 'path';
-import * as fs from 'fs';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('videos')
 export class VideosController {
-    @Get()
-    getVideo(@Res() res: Response) {
-        const filePath = path.join(__dirname, '..', '..', '..', 'assets', 'sample.mp4');
-        const stat = fs.statSync(filePath);
-        res.writeHead(200, {
-          'Content-Type': 'video/mp4',
-          'Content-Length': stat.size,
-        });
-        const readStream = fs.createReadStream(filePath);
-        readStream.pipe(res);
-    }
+  @Get()
+  getVideos() {
+    const videos = [
+      {
+        id: '1',
+        title: 'Sample Video 1',
+        url: 'http://localhost:4000/assets/sample1.mp4',
+      },
+      {
+        id: '2',
+        title: 'Sample Video 2',
+        url: 'http://localhost:4000/assets/sample2.mp4',
+      },
+      {
+        id: '3',
+        title: 'Sample Video 3',
+        url: 'http://localhost:4000/assets/sample3.mp4',
+      },
+    ];
+
+    return videos;
+  }
 }

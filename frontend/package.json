@@ -11,9 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "axios": "^1.7.2",
+    "config": "^3.3.12",
+=======
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
+>>>>>>> origin/main
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.8.0",
