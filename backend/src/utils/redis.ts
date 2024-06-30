@@ -9,4 +9,4 @@ const client = () => {
   throw new Error('Redis URL not found');
 };
 
-export default client = new Redis(client());
+export const redis = new Redis(client());
