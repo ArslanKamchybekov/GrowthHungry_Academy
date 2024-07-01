@@ -31,6 +31,7 @@
 ```bash
 1. Navigate to your project directory
 $ cd backend
+
 2. Install Node Package Manager
 $ npm install
 ```
