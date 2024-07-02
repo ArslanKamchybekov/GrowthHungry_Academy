@@ -1,0 +1,18 @@
+/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+^\w+: The string must start letters, digits, or underscores
+
+([\.-]?\w+)*: (.) or a hyphen (-), followed by one or more word characters
+
+@: There must be a single "@" symbol
+
+\w+: After the "@", there must be one or more word characters
+
+([\.-]?\w+)*: This is similar to the previous, allowing segments of word characters optionally preceded by a dot or a hyphen
+
+(\.\w{2,3})+: The email must end with a dot followed by two or three word characters. This group must appear at least once, supporting top-level domains like .com, .info, .uk, etc.
+
+
+Example: john.doe@example.com
+Example: jane-doe23@sub-domain.example.com
+Example: simple@example.co.uk
