@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { ErrorHandler } from './middleware/error';
+import { ErrorMiddleware } from './middleware/error';
 
 export const app = express();
 require('dotenv').config();
@@ -14,4 +14,4 @@ app.use(
     credentials: true,
   }),
 );
-app.use(ErrorHandler);
+app.use(ErrorMiddleware);
