@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import * as  bcrypt from 'bcryptjs';
 
 const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -33,8 +33,8 @@ const userSchema = new Schema<IUser>(
     },
     password: { type: String, required: true, minlength: 6, select: false },
     avatar: {
-      public_id: { type: String, required: true },
-      url: { type: String, required: true },
+      public_id: { type: String, required: false },
+      url: { type: String, required: false },
     },
     role: { type: String, default: 'user' },
     isVerified: { type: Boolean, default: false },

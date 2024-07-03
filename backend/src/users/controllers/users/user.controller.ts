@@ -1,8 +1,7 @@
-import { Controller, Post, Req, Res, Next } from '@nestjs/common';
+import { Controller, Post, Req, Res, Next, Body } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import userModel from 'src/models/user.model';
+import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
-import { CatchAsyncError } from 'src/middleware/catchAsyncError';
 import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
 require('dotenv').config();
@@ -19,6 +18,12 @@ interface IRegisterUser {
 interface IActivationToken {
   token: string;
   activationCode: string;
+}
+
+// Interface for the activation request
+interface IActivationRequest {
+  activation_token: string;
+  activation_code: string;
 }
 
 @Controller('users')
@@ -63,5 +68,32 @@ export class UserController {
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
     const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, { expiresIn: '5m' });
     return { token, activationCode };
+  }
+
+  @Post('activate-user')
+  async activateUser(@Body() activationRequest: IActivationRequest, @Res() res: Response, @Next() next: NextFunction) {
+    try {
+      const { activation_token, activation_code } = activationRequest;
+      const newUser: { user: IUser; activationCode: string } = jwt.verify(
+        activation_token,
+        process.env.JWT_SECRET as string,
+      ) as { user: IUser; activationCode: string };
+
+      if (newUser.activationCode !== activation_code) {
+        return next(new ErrorHandler('Invalid activation code', 400));
+      }
+
+      const { name, email, password } = newUser.user;
+      const userExists = await userModel.findOne({ email });
+
+      if (userExists) {
+        return next(new ErrorHandler('Email already exists', 400));
+      }
+
+      const user = await userModel.create({ name, email, password });
+      res.status(201).json({ success: true, message: 'User activated successfully', user });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
   }
 }
