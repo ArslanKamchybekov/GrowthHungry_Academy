@@ -2,9 +2,8 @@ import { Controller, Post, Req, Res, Next } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import userModel from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
-import * as jwt from 'jsonwebtoken';  // Correct import statement
-import * as ejs from 'ejs';
-import * as path from 'path';
+import { CatchAsyncError } from 'src/middleware/catchAsyncError';
+import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
 require('dotenv').config();
 
@@ -34,13 +33,12 @@ export class UserController {
 
       const activation_token = this.createActivationToken(user);
       const activation_code = activation_token.activationCode;
-      const data = { user: { name: user.name }, activation_code };  // Ensure the key matches your EJS template
+      const data = { user: { name: user.name }, activation_code };
 
-      const templatePath = path.join(__dirname, '../../../mails/activation-mail.ejs');
-      const html = await ejs.renderFile(templatePath, data);
+      const template = 'activation-mail.ejs'; // Template filename
 
       try {
-        await sendMail({ email: user.email, subject: "Account Activation", template: html, data: data });
+        await sendMail({ email: user.email, subject: "Account Activation", template, data });
         res.status(201).json({
           success: true,
           message: 'User registered successfully. Please check your email for activation code.',
@@ -55,6 +53,13 @@ export class UserController {
   }
 
   createActivationToken(user: IRegisterUser): IActivationToken {
+    if (!jwt) {
+      console.error('JWT is not imported correctly');
+    }
+    if (!process.env.JWT_SECRET) {
+      console.error('JWT_SECRET is not defined in the environment variables');
+    }
+
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
     const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, { expiresIn: '5m' });
     return { token, activationCode };
