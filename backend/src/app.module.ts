@@ -1,22 +1,23 @@
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { UserModule } from './users/user.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 import { VideosModule } from './videos/videos.module';
 import { VideosController } from './videos/controllers/videos/videos.controller';
-import { UserController } from './users/controllers/users/user.controller';
+import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    UserModule,
     AppModule,
+    AuthModule,
+    UserModule,
     VideosModule,
   ],
-  controllers: [VideosController, UserController],
+  controllers: [VideosController, AuthController, UserController],
   providers: [],
 })
 export class AppModule {}

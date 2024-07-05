@@ -26,14 +26,19 @@ interface IActivationRequest {
   activation_code: string;
 }
 
-@Controller('users')
-export class UserController {
+@Controller('auth')
+export class AuthController {
   @Post('register')
-  async registerUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+  async registerUser(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Next() next: NextFunction,
+  ) {
     try {
       const { name, email, password } = req.body;
       const emailExists = await userModel.findOne({ email });
-      if (emailExists) return next(new ErrorHandler('Email already exists', 400));
+      if (emailExists)
+        return next(new ErrorHandler('Email already exists', 400));
       const user: IRegisterUser = { name, email, password };
 
       const activation_token = this.createActivationToken(user);
@@ -43,11 +48,17 @@ export class UserController {
       const template = 'activation-mail.ejs'; // Template filename
 
       try {
-        await sendMail({ email: user.email, subject: "Account Activation", template, data });
+        await sendMail({
+          email: user.email,
+          subject: 'Account Activation',
+          template,
+          data,
+        });
         res.status(201).json({
           success: true,
-          message: 'User registered successfully. Please check your email for activation code.',
-          activation_token: activation_token.token
+          message:
+            'User registered successfully. Please check your email for activation code.',
+          activation_token: activation_token.token,
         });
       } catch (error: any) {
         return next(new ErrorHandler(error.message, 400));
@@ -66,12 +77,18 @@ export class UserController {
     }
 
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
-    const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, { expiresIn: '5m' });
+    const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, {
+      expiresIn: '5m',
+    });
     return { token, activationCode };
   }
 
   @Post('activate-user')
-  async activateUser(@Body() activationRequest: IActivationRequest, @Res() res: Response, @Next() next: NextFunction) {
+  async activateUser(
+    @Body() activationRequest: IActivationRequest,
+    @Res() res: Response,
+    @Next() next: NextFunction,
+  ) {
     try {
       const { activation_token, activation_code } = activationRequest;
       const newUser: { user: IUser; activationCode: string } = jwt.verify(
@@ -91,9 +108,15 @@ export class UserController {
       }
 
       const user = await userModel.create({ name, email, password });
-      res.status(201).json({ success: true, message: 'User activated successfully', user });
+      res
+        .status(201)
+        .json({ success: true, message: 'User activated successfully', user });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
   }
+
+  //Update access token
+
+  //Social auth
 }
