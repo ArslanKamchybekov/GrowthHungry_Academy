@@ -1,7 +1,11 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import * as  bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const ACCESS_TOKEN_EXPIRE = '5m'; 
+const REFRESH_TOKEN_EXPIRE = '59m'; 
+const SECRET_KEY = 'your_secret_key';
 
 export interface IUser extends Document {
   name: string;
@@ -15,6 +19,9 @@ export interface IUser extends Document {
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
   comparePassword(candidatePassword: string): Promise<boolean>;
+  signAccessToken(): Promise<string>;
+  signRefreshToken(): Promise<string>;
+  
 }
 
 const userSchema = new Schema<IUser>(
@@ -56,3 +63,25 @@ userSchema.methods.comparePassword = async function (
 };
 const userModel: Model<IUser> = mongoose.model<IUser>('User', userSchema);
 export default userModel;
+
+userSchema.methods.signAccessToken = function(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const payload = { id: this._id, role: this.role };
+    const options = { expiresIn: ACCESS_TOKEN_EXPIRE };
+    jwt.sign(payload, SECRET_KEY, options, (err, token) => {
+      if (err) reject(err);
+      resolve(token);
+    });
+  });
+};
+
+userSchema.methods.signRefreshToken = function(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const payload = { id: this._id, role: this.role };
+    const options = { expiresIn: REFRESH_TOKEN_EXPIRE };
+    jwt.sign(payload, SECRET_KEY, options, (err, token) => {
+      if (err) reject(err);
+      resolve(token);
+    });
+  });
+};

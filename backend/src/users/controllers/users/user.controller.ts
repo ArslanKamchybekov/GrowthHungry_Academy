@@ -4,6 +4,7 @@ import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
 import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
+import { sendToken } from 'src/utils/jwt';
 require('dotenv').config();
 
 // Interface for registering a user
@@ -12,6 +13,11 @@ interface IRegisterUser {
   email: string;
   password: string;
   avatar?: string;
+}
+interface ILoginRequest{
+  email: string;
+  password: string;
+
 }
 
 // Interface for the activation token
@@ -25,6 +31,7 @@ interface IActivationRequest {
   activation_token: string;
   activation_code: string;
 }
+
 
 @Controller('users')
 export class UserController {
@@ -95,5 +102,33 @@ export class UserController {
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
+    
+interface ILoginRequest {
+  email: string;
+  password: string;
+}
+
+
+async function loginUser(req, res) {
+const { email, password }: ILoginRequest = req.body;
+
+if (!email || !password) {
+  throw new ErrorHandler('Email and password are required', 400 );
+}
+
+const user = await userModel.findOne({ email });
+if (!user) {
+  throw new ErrorHandler('User not found', 404);
+}
+
+const isMatch = await user.comparePassword(password);
+if (!isMatch) {
+  throw new ErrorHandler('Password is incorrect', 401);
+}
+
+sendToken(user, 200, res);
+}
   }
+
+  
 }
