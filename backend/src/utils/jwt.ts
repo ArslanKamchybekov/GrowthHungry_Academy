@@ -3,15 +3,15 @@ import { Response } from 'express';
 import { IUser } from 'src/models/user.model';
 
 export interface ITokenOptions {
-    expires: string;
+    expires: Date;
     maxAge: number;
     httpOnly: boolean;
     sameSite: boolean | 'lax' | 'strict' | 'none';
     secure?: boolean;
 }
-    export function sendToken(user: IUser, statusCode: number, res: Response) {
-        const accessToken = user.signAccessToken();
-        const refreshToken = user.signRefreshToken();
+    export const sendToken = (user: IUser, statusCode: number, res: Response) =>{
+        const accessToken = user.SignAccessToken();
+        const refreshToken = user.SignRefreshToken();
       
         const accessTokenOptions: ITokenOptions = {
             expires: new Date(Date.now() + parseInt(process.env.ACCESS_TOKEN_EXPIRE) * 60 * 1000),
@@ -31,7 +31,7 @@ export interface ITokenOptions {
       
         // Setting cookies
         res.cookie('accessToken', accessToken, accessTokenOptions);
-        res.cookie('refreshToken', refreshToken, refreshTokenOptions);‹
+        res.cookie('refreshToken', refreshToken, refreshTokenOptions);
       
         // Sending response
         res.status(statusCode).json({

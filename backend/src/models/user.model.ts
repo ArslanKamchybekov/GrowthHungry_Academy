@@ -19,8 +19,8 @@ export interface IUser extends Document {
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
   comparePassword(candidatePassword: string): Promise<boolean>;
-  signAccessToken(): Promise<string>;
-  signRefreshToken(): Promise<string>;
+  SignAccessToken: () => string;
+  SignRefreshToken: () => string;
   
 }
 
@@ -64,24 +64,11 @@ userSchema.methods.comparePassword = async function (
 const userModel: Model<IUser> = mongoose.model<IUser>('User', userSchema);
 export default userModel;
 
-userSchema.methods.signAccessToken = function(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const payload = { id: this._id, role: this.role };
-    const options = { expiresIn: ACCESS_TOKEN_EXPIRE };
-    jwt.sign(payload, SECRET_KEY, options, (err, token) => {
-      if (err) reject(err);
-      resolve(token);
-    });
-  });
+userSchema.methods.SignAccessToken = function(){
+  return jwt.sign({id: this._id}, process.env.ACCESS_TOKEN)
+
 };
 
-userSchema.methods.signRefreshToken = function(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const payload = { id: this._id, role: this.role };
-    const options = { expiresIn: REFRESH_TOKEN_EXPIRE };
-    jwt.sign(payload, SECRET_KEY, options, (err, token) => {
-      if (err) reject(err);
-      resolve(token);
-    });
-  });
+userSchema.methods.SignRefreshToken = function() {
+  return jwt.sign({id: this._id}, process.env.REFRESH_TOKEN)
 };

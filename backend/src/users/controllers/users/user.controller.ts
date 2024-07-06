@@ -14,11 +14,7 @@ interface IRegisterUser {
   password: string;
   avatar?: string;
 }
-interface ILoginRequest{
-  email: string;
-  password: string;
 
-}
 
 // Interface for the activation token
 interface IActivationToken {
@@ -30,6 +26,10 @@ interface IActivationToken {
 interface IActivationRequest {
   activation_token: string;
   activation_code: string;
+}
+interface ILoginRequest {
+  email: string;
+  password: string;
 }
 
 
@@ -77,6 +77,28 @@ export class UserController {
     return { token, activationCode };
   }
 
+
+@Post('login')
+async loginUser(@Body() loginRequest: ILoginRequest, @Res() res: Response, @Next() next: NextFunction, @Req()req:Request) {
+  const { email, password } =req.body as ILoginRequest;
+
+  if (!email || !password) {
+    throw new ErrorHandler('Email and password are required', 400);
+  }
+
+  const user = await userModel.findOne({ email }).select("+password");
+  if (!user) {
+    throw new ErrorHandler('User not found', 404);
+  }
+
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    throw new ErrorHandler('Password is incorrect', 401);
+  }
+
+  sendToken(user, 200, res);
+}
+
   @Post('activate-user')
   async activateUser(@Body() activationRequest: IActivationRequest, @Res() res: Response, @Next() next: NextFunction) {
     try {
@@ -102,33 +124,9 @@ export class UserController {
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
-    
-interface ILoginRequest {
-  email: string;
-  password: string;
-}
-
-
-async function loginUser(req, res) {
-const { email, password }: ILoginRequest = req.body;
-
-if (!email || !password) {
-  throw new ErrorHandler('Email and password are required', 400 );
-}
-
-const user = await userModel.findOne({ email });
-if (!user) {
-  throw new ErrorHandler('User not found', 404);
-}
-
-const isMatch = await user.comparePassword(password);
-if (!isMatch) {
-  throw new ErrorHandler('Password is incorrect', 401);
-}
-
-sendToken(user, 200, res);
-}
   }
+}
+     
 
   
-}
+
