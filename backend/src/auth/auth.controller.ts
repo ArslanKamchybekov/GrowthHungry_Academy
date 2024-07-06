@@ -4,9 +4,9 @@ import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
 import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
+import { AuthService } from './auth.service';
 require('dotenv').config();
 
-// Interface for registering a user
 interface IRegisterUser {
   name: string;
   email: string;
@@ -14,20 +14,25 @@ interface IRegisterUser {
   avatar?: string;
 }
 
-// Interface for the activation token
 interface IActivationToken {
   token: string;
   activationCode: string;
 }
 
-// Interface for the activation request
 interface IActivationRequest {
   activation_token: string;
   activation_code: string;
 }
 
+interface ILoginRequest {
+  email: string;
+  password: string;
+}
+
 @Controller('auth')
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
   @Post('register')
   async registerUser(
     @Req() req: Request,
@@ -116,6 +121,30 @@ export class AuthController {
     }
   }
 
+  @Post('login')
+  async loginUser(
+    @Body() loginRequest: ILoginRequest,
+    @Res() res: Response,
+    @Req() req: Request,
+    @Next() next: NextFunction,
+  ) {
+    try {
+      const { email, password } = req.body as ILoginRequest;
+      if (!email || !password) return next(new ErrorHandler('Please enter email and password', 400));
+
+      const user = await this.authService.validateUser(email, password);
+      if (!user) return next(new ErrorHandler('Invalid credentials', 401));
+
+      const token = await this.authService.login(user);
+      res.status(200).json({
+        status: 'success',
+        accessToken: token.access_token,
+        user,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
   //Update access token
 
   //Social auth
