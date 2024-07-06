@@ -1,4 +1,4 @@
-import { Controller, Post, Req, Res, Next, Body } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, Next, Body } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
@@ -31,7 +31,7 @@ interface ILoginRequest {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   async registerUser(
@@ -145,6 +145,17 @@ export class AuthController {
       return next(new ErrorHandler(error.message, 400));
     }
   }
+
+  @Get('logout')
+  async logoutUser(@Res() res: Response) {
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    res.status(200).json({
+      status: 'success',
+      message: 'Logged out successfully',
+    });
+  }
+
   //Update access token
 
   //Social auth
