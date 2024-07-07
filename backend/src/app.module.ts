@@ -6,11 +6,13 @@ import { VideosController } from './videos/controllers/videos/videos.controller'
 import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { UserController } from './user/user.controller';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
+    ConfigModule.forRoot({isGlobal: true}),
+    CacheModule.register({
+      url: process.env.REDIS_URL,
     }),
     AppModule,
     AuthModule,
