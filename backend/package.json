@@ -69,6 +69,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.14.9",
     "@types/nodemailer": "^6.4.15",
+    "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",

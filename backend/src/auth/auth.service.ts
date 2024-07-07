@@ -23,9 +23,8 @@ export class AuthService {
   async login(user: any) {
     const payload = { username: user.username, sub: user._id };
     const token = this.jwtService.sign(payload);
-
     try {
-      await this.cacheManager.set("hi", "there");
+      await this.cacheManager.set(user._id, token, 60 * 60);
       console.log(`User ID saved: ${user._id}`);
     } catch (error) {
       console.error('Error saving session in Redis:', error);
