@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Req, Res, Next, Body } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, Next, Body, UseGuards } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
 import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
 import { AuthService } from './auth.service';
+import { RefreshJwtGuard } from './refresh-jwt-auth.guard';
 require('dotenv').config();
 
 interface IRegisterUser {
@@ -139,6 +140,7 @@ export class AuthController {
       res.status(200).json({
         status: 'success',
         accessToken: token.access_token,
+        refreshToken: token.refresh_token,
         user,
       });
     } catch (error: any) {
@@ -146,14 +148,21 @@ export class AuthController {
     }
   }
 
+  @UseGuards(RefreshJwtGuard)
+  @Post('refresh-token')
+  async refreshToken(@Req() req: Request){
+    return this.authService.refreshToken(req.user);
+  }
+
   @Get('logout')
-  async logoutUser(@Res() res: Response) {
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
-    res.status(200).json({
-      status: 'success',
-      message: 'Logged out successfully',
-    });
+  async logoutUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    try {
+      const user = req.user as IUser;
+      await this.authService.logout(user);
+      res.status(200).json({ success: true, message: 'User logged out successfully' });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
   }
 
   //Update access token

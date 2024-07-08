@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import { CacheModule } from '@nestjs/cache-manager';
+import { RefreshJwtStrategy } from './refresh-token.strategy';
 
 @Module({
   imports: [
@@ -18,13 +19,13 @@ import { CacheModule } from '@nestjs/cache-manager';
       imports: [ConfigModule],
       useFactory: async () => ({
         secret: process.env.JWT_SECRET ,
-        signOptions: { expiresIn: '60m' },
+        signOptions: { expiresIn: '60s' },
       }),
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, RefreshJwtStrategy],
   controllers: [AuthController],
-  exports: [AuthService, JwtStrategy]
+  exports: [AuthService, JwtStrategy, RefreshJwtStrategy]
 })
 export class AuthModule {}

@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, Res, Next, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Res, Next, HttpStatus, UseGuards } from '@nestjs/common';
 import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
+import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 interface IUpdateUser {
     name?: string;
@@ -10,6 +11,7 @@ interface IUpdateUser {
 @Controller('user')
 export class UserController {
 
+    @UseGuards(JwtGuard)
     @Get(':id')
     async findOne(@Param('id') id: string, @Res() res, @Next() next) {
         try {

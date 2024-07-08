@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { VideosModule } from './videos/videos.module';
-import { VideosController } from './videos/controllers/videos/videos.controller';
+import { VideosController } from './videos/videos.controller';
 import { AuthController } from './auth/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { UserController } from './user/user.controller';
