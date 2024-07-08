@@ -12,7 +12,11 @@ import { CacheModule } from '@nestjs/cache-manager';
   imports: [
     ConfigModule.forRoot({isGlobal: true}),
     CacheModule.register({
+      store: require('cache-manager-redis-store'),
       url: process.env.REDIS_URL,
+      isGlobal: true,
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
     }),
     AppModule,
     AuthModule,
