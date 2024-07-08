@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
+
 export interface ICourseData {
     title: string;
     description: string;
@@ -22,9 +23,5 @@ const CourseSchema: Schema = new Schema({
     prerequisites: { type: String, required: true }
 });
 
-export interface ICourseDataModel extends ICourseData, Document {}
-
-export interface ICourseModel extends ICourse, Document {}
-
-export const CourseData = mongoose.model<ICourseDataModel>('CourseData', CourseDataSchema);
-export const Course = mongoose.model<ICourseModel>('Course', CourseSchema);
+export const CourseData = mongoose.model<ICourseData>('CourseData', CourseDataSchema);
+export const Course = mongoose.model<ICourse>('Course', CourseSchema);
