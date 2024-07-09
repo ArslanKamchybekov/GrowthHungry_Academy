@@ -10,6 +10,7 @@ export interface ICourse {
     name: string;
     description: string;
     prerequisites: string;
+    thumbnail: object;
 }
 const CourseDataSchema: Schema = new Schema({
     title: { type: String, required: true },
@@ -20,7 +21,11 @@ const CourseDataSchema: Schema = new Schema({
 const CourseSchema: Schema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    prerequisites: { type: String, required: true }
+    prerequisites: { type: String, required: true },
+    thumbnail: { 
+        public_id: { type: String },
+        url: { type: String }
+     }
 });
 
 export const CourseData = mongoose.model<ICourseData>('CourseData', CourseDataSchema);

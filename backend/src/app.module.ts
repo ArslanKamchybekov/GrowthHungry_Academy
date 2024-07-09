@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { VideosModule } from './videos/videos.module';
-import { VideosController } from './videos/videos.controller';
-import { AuthController } from './auth/auth.controller';
+import { CourseModule } from './course/course.module';
 import { ConfigModule } from '@nestjs/config';
-import { UserController } from './user/user.controller';
 import { CacheModule } from '@nestjs/cache-manager';
+import { MulterModule } from '@nestjs/platform-express';
+import { UserController } from './user/user.controller';
+import { CourseController } from './course/course.controller';
+import { AuthController } from './auth/auth.controller';
+import { CloudinaryService } from './course/cloudinary.service';
 
 @Module({
   imports: [
@@ -18,12 +20,15 @@ import { CacheModule } from '@nestjs/cache-manager';
       host: process.env.REDIS_HOST,
       port: process.env.REDIS_PORT,
     }),
+    MulterModule.register({
+      dest: './uploads',
+    }),
     AppModule,
     AuthModule,
     UserModule,
-    VideosModule,
+    CourseModule,
   ],
-  controllers: [VideosController, AuthController, UserController],
-  providers: [],
+  controllers: [CourseController, AuthController, UserController],
+  providers: [CloudinaryService],
 })
 export class AppModule {}
