@@ -2,13 +2,12 @@ import * as nodeMailer from 'nodemailer';
 import { Transporter } from 'nodemailer';
 import * as ejs from 'ejs';
 import * as path from 'path';
-import { promisify } from 'util';
 require('dotenv').config();
 
 interface EmailOptions {
   email: string;
   subject: string;
-  template: string; // This should be the filename like 'activation-mail.ejs'
+  template: string;
   data: { [key: string]: any };
 }
 
@@ -49,7 +48,7 @@ const sendMail = async (options: EmailOptions): Promise<void> => {
     await transporter.sendMail(mailOptions);
   } catch (error) {
     console.error('Error sending email:', error);
-    throw error; // Re-throw the error to be handled by the caller
+    throw error;
   }
 };
 
