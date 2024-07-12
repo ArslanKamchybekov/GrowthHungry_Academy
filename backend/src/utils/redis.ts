@@ -1,10 +1,8 @@
 import { Redis } from 'ioredis';
 import * as dotenv from 'dotenv';
 
-// Load environment variables from .env file
 dotenv.config();
 
-// Create Redis client with appropriate configuration
 const createRedisClient = () => {
   const redisUrl = process.env.REDIS_URL;
   
