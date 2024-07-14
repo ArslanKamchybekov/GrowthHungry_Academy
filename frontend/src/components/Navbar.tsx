@@ -1,5 +1,4 @@
 "use client"
-
 import React from "react";
 import { useState } from "react";
 import { Search, LogIn } from 'lucide-react';
@@ -26,7 +25,7 @@ const Navbar = () => {
                         <div className="items-center gap-x-2 hidden lg:flex hover:opacity-75 transition-opacity">
                             <div className="leading-tight">
                                 <p className="font-semibold text-base text-sky-700">Learning Management System</p>
-                                <p className="text-xs text-muted-foreground">Build something great!</p>
+                                <p className="text-xs text-muted-foreground text-sky-700">Build something great!</p>
                             </div>
                         </div>
                     </a>
@@ -44,10 +43,9 @@ const Navbar = () => {
                     </div>
                     <div className="flex items-center gap-x-2 ml-auto">
                         <Link href={"/login"}>
-                            <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-                                <LogIn />
-                                Log In
-                            </button>
+                        <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
+                            Login
+                        </button>
                         </Link>
                     </div>
                 </div>

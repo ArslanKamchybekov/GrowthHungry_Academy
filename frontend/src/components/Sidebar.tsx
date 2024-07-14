@@ -1,6 +1,4 @@
 "use client"
-
-import Link from "next/link";
 import { Compass, Trophy } from 'lucide-react';
 
 const Sidebar = () => {
