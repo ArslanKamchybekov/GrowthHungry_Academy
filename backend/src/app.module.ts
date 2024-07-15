@@ -9,10 +9,11 @@ import { UserController } from './user/user.controller';
 import { CourseController } from './course/course.controller';
 import { AuthController } from './auth/auth.controller';
 import { CloudinaryService } from './course/cloudinary.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.register({
       store: require('cache-manager-redis-store'),
       url: process.env.REDIS_URL,
@@ -23,7 +24,7 @@ import { CloudinaryService } from './course/cloudinary.service';
     MulterModule.register({
       dest: './uploads',
     }),
-    AppModule,
+    MongooseModule.forRoot(process.env.DATABASE_URL),
     AuthModule,
     UserModule,
     CourseModule,
