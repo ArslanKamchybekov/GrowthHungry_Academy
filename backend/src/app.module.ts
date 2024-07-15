@@ -28,7 +28,7 @@ import { CloudinaryService } from './course/cloudinary.service';
     UserModule,
     CourseModule,
   ],
-  controllers: [CourseController, AuthController, UserController],
+  controllers: [AuthController, CourseController, UserController],
   providers: [CloudinaryService],
 })
 export class AppModule {}
