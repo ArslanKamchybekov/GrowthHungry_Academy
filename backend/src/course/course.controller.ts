@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards, Put } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
 import { ICourse } from '../models/course.model';
@@ -7,25 +7,23 @@ import { Roles } from '../auth/roles.decorator';
 import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('course')
-@UseGuards(JwtGuard)
+@UseGuards(JwtGuard, RolesGuard)
+@Roles('admin', 'user')
 export class CourseController {
     constructor(private readonly courseService: CourseService) {}
 
-    @Post('/create-course')
-    @UseInterceptors(FileInterceptor('file'))
-    async createCourse(@Body() courseData: ICourse, @UploadedFile() file: Express.Multer.File) {
+    @Post('/create')
+    //@UseInterceptors(FileInterceptor('thumbnail'))
+    async createCourse(@Body() course: ICourse) { // @UploadedFile() thumbnail: Express.Multer.File
         try {
-            const filePath = file.path;
-            const createdCourse = await this.courseService.create(courseData, filePath);
+            const createdCourse = await this.courseService.create(course);
             return createdCourse;
         } catch (error) {
             return { error: error.message };
         }
     }
 
-    @Get('/get-courses')
-    @UseGuards(JwtGuard, RolesGuard)
-    @Roles('admin')
+    @Get('/get')
     async getCourses() {
         try {
             const courses = await this.courseService.getAll();
@@ -35,7 +33,7 @@ export class CourseController {
         }
     }
 
-    @Get('/get-course/:id')
+    @Get(':id')
     async getCourse(@Param('id') id: string) {
         try {
             const course = await this.courseService.get(id);
@@ -45,25 +43,19 @@ export class CourseController {
         }
     }
 
-    @Delete('/delete-course/:id')
+    @Delete('/delete/:id')
     async deleteCourse(@Param('id') id: string) {
+        const deletedCourse = await this.courseService.delete(id);
+        return deletedCourse;
+    }
+
+    @Put('/update/:id')
+    async updateCourse(@Param('id') id: string, @Body() course: ICourse) {
         try {
-            const course = await this.courseService.get(id);
-            if (course.videoUrl) {
-                const publicId = this.extractPublicId(course.videoUrl);
-                await this.courseService.delete(id);
-                await this.cloudinaryService.delete(publicId);
-            }
-            return { message: 'Course deleted successfully' };
+            const updatedCourse = await this.courseService.update(id, course);
+            return updatedCourse;
         } catch (error) {
             return { error: error.message };
         }
-    }
-
-    // Helper function to extract public ID from Cloudinary URL
-    private extractPublicId(url: string): string {
-        const parts = url.split('/');
-        const publicId = parts[parts.length - 1].split('.')[0];
-        return publicId;
     }
 }

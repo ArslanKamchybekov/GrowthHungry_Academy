@@ -10,6 +10,8 @@ import { CourseController } from './course/course.controller';
 import { AuthController } from './auth/auth.controller';
 import { CloudinaryService } from './course/cloudinary.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CloudinaryModule } from './course/cloudinary.module';
+import { CourseService } from './course/course.service';
 
 @Module({
   imports: [
@@ -24,12 +26,14 @@ import { MongooseModule } from '@nestjs/mongoose';
     MulterModule.register({
       dest: './uploads',
     }),
-    MongooseModule.forRoot(process.env.DATABASE_URL),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     UserModule,
     CourseModule,
+    CloudinaryModule
   ],
   controllers: [AuthController, CourseController, UserController],
-  providers: [CloudinaryService],
+  providers: [CloudinaryService, CourseService],
+  exports: []
 })
 export class AppModule {}

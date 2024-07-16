@@ -1,40 +1,38 @@
 import { Injectable } from '@nestjs/common';
-import { ICourse, Course } from '../models/course.model';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Course } from '../models/course.model';
 import { CloudinaryService } from './cloudinary.service';
 
 @Injectable()
 export class CourseService {
     constructor(
-        @InjectModel('Course') private readonly courseModel: Model<ICourse>,
         private readonly cloudinaryService: CloudinaryService
     ) {}
 
-    async create(courseData: any, filePath: string): Promise<ICourse> {
+    async create(courseData: any) { // thumbnail: string
         try {
-            const uploadResponse = await this.cloudinaryService.upload(filePath);
-            const newCourse = new this.courseModel({
-                ...courseData,
-                videoUrl: uploadResponse.url,
-            });
-            return newCourse.save();
+            //const uploadResponse = await this.cloudinaryService.upload(filePath);
+            // const newCourse = new Course({
+            //     ...courseData,
+            //     videoUrl: uploadResponse.url,
+            // });
+            const course = new Course(courseData);
+            return course.save();
         } catch (error) {
             throw new Error(`Error creating course: ${error.message}`);
         }
     }
 
-    async getAll(): Promise<ICourse[]> {
+    async getAll() {
         try {
-            return this.courseModel.find().exec();
+            return Course.find().exec();
         } catch (error) {
             throw new Error(`Error fetching courses: ${error.message}`);
         }
     }
 
-    async get(id: string): Promise<ICourse> {
+    async get(id: string) {
         try {
-            return this.courseModel.findById(id).exec();
+            return Course.findById(id).exec();
         } catch (error) {
             throw new Error(`Error fetching course with id ${id}: ${error.message}`);
         }
@@ -42,9 +40,18 @@ export class CourseService {
 
     async delete(id: string): Promise<void> {
         try {
-            await this.courseModel.findByIdAndDelete(id).exec();
+            await Course.findByIdAndDelete(id).exec();
+            //this.cloudinaryService.delete(id);
         } catch (error) {
             throw new Error(`Error deleting course with id ${id}: ${error.message}`);
         }
+    }
+
+    async update(id: string, courseData: any) {
+        try {
+            return Course.findByIdAndUpdate(id, courseData, { new: true }).exec();
+        } catch (error) {
+            throw new Error(`Error updating course with id ${id}: ${error.message}`);
+        }   
     }
 }
