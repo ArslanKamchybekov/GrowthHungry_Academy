@@ -13,5 +13,5 @@ app.use(
   cors({
     origin: process.env.ORIGIN,
     credentials: true,
-  }),
+  }),  
 );

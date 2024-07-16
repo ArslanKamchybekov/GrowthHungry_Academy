@@ -29,7 +29,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     UserModule,
     CourseModule,
   ],
-  controllers: [CourseController, AuthController, UserController],
+  controllers: [AuthController, CourseController, UserController],
   providers: [CloudinaryService],
 })
 export class AppModule {}

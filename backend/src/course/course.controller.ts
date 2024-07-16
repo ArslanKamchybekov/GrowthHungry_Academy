@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
-import { JwtGuard } from '../auth/jwt.guard'; // Ensure you have JWT guard implemented
 import { ICourse } from '../models/course.model';
+import { RolesGuard } from '../auth/roles.guard';
+import { Roles } from '../auth/roles.decorator';
+import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('course')
 @UseGuards(JwtGuard)
@@ -22,6 +24,8 @@ export class CourseController {
     }
 
     @Get('/get-courses')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles('admin')
     async getCourses() {
         try {
             const courses = await this.courseService.getAll();

@@ -17,15 +17,15 @@ import { RefreshJwtStrategy } from './refresh-token.strategy';
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async () => ({
         secret: process.env.JWT_SECRET ,
         signOptions: { expiresIn: '60s' },
       }),
-      inject: [ConfigService],
     }),
   ],
   providers: [AuthService, JwtStrategy, RefreshJwtStrategy],
   controllers: [AuthController],
-  exports: [AuthService, JwtStrategy, RefreshJwtStrategy]
+  exports: [AuthService, JwtStrategy, RefreshJwtStrategy, JwtModule]
 })
 export class AuthModule {}
