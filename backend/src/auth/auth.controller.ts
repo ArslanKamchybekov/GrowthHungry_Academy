@@ -5,7 +5,6 @@ import ErrorHandler from 'src/utils/ErrorHandler';
 import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
 import { AuthService } from './auth.service';
-import { JwtGuard } from './jwt-auth.guard';
 import { RefreshJwtGuard } from './refresh-jwt-auth.guard';
 require('dotenv').config();
 
