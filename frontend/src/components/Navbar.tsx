@@ -13,7 +13,6 @@ const Navbar = () => {
     const handleChange = async (e: any) => {
         // e.preventDefault();
         // setSearchInput(e.target.value);
-        // do filtering later once supabase is set up
         console.log(e.target.value)
         setSearchInput(e.target.value);
     }
