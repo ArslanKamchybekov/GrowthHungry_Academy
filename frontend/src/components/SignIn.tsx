@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaGoogle } from 'react-icons/fa';
+import Link from 'next/link';
+
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -75,9 +77,9 @@ const SignIn: React.FC = () => {
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-sm text-gray-600 hover:underline">
+            <Link href="/forgot-password" className="text-sm text-gray-600 hover:underline">
               Forgot Password?
-            </a>
+            </Link>
           </div>
           <button
             type="submit"
