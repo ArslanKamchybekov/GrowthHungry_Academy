@@ -1,0 +1,56 @@
+/* Sidebar.module.css */
+.sidebar {
+    height: 100vh; /* Full viewport height */
+    width: 250px; /* Fixed width for the sidebar */
+    background-color: #add8e6; /* Light blue */
+    border-right: 1px solid #ddd;
+    overflow: hidden; /* Prevent scrolling within the sidebar */
+    position: fixed; /* Keep it fixed in position */
+    top: 0; /* Align with the top of the viewport */
+    left: 0; /* Align with the left of the viewport */
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px; /* Adjust for navbar height */
+}
+
+.sidebarContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px;
+    gap: 6px;
+    flex: 1; /* Ensure it takes up available space */
+}
+
+.button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 14px 12px;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.buttonPrimary {
+    background-color: #f0f0f0; /* Muted background color */
+    color: #333; /* Primary text color */
+}
+
+.buttonSecondary {
+    color: #666; /* Muted foreground text color */
+}
+
+.button:hover {
+    background-color: #e0e0e0; /* Hover background color */
+}
+
+.icon {
+    margin-right: 8px;
+}
+
+.pageWrapper {
+    display: flex;
+    margin-left: 250px; /* Adjust for sidebar width */
+}

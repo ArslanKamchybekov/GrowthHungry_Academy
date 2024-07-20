@@ -1,16 +1,18 @@
 "use client";
+
 import { Compass, Trophy } from 'lucide-react';
+import styles from './sidebar.module.css'; // Import CSS module
 
 const Sidebar = () => {
     return (
-        <div className="sidebar">
-            <div className="sidebarContent">
-                <button className="button buttonPrimary">
-                    <Compass className="icon" />
+        <div className={styles.sidebar}>
+            <div className={styles.sidebarContent}>
+                <button className={`${styles.button} ${styles.buttonPrimary}`}>
+                    <Compass className={styles.icon} />
                     Browse
                 </button>
-                <button className="button buttonSecondary">
-                    <Trophy className="icon" />
+                <button className={`${styles.button} ${styles.buttonSecondary}`}>
+                    <Trophy className={styles.icon} />
                     Leadership
                 </button>
             </div>
