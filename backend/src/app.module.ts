@@ -12,6 +12,7 @@ import { CloudinaryService } from './course/cloudinary.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CloudinaryModule } from './course/cloudinary.module';
 import { CourseService } from './course/course.service';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { CourseService } from './course/course.service';
     CloudinaryModule
   ],
   controllers: [AuthController, CourseController, UserController],
-  providers: [CloudinaryService, CourseService],
+  providers: [CloudinaryService, CourseService, UserService],
   exports: []
 })
 export class AppModule {}

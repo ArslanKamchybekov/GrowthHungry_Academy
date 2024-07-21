@@ -1,34 +1,56 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, Res, Next, HttpStatus, UseGuards } from '@nestjs/common';
-import userModel, { IUser } from 'src/models/user.model';
-import ErrorHandler from 'src/utils/ErrorHandler';
-import { JwtGuard } from 'src/auth/jwt-auth.guard';
+import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import UserModel, { IUser } from 'src/models/user.model';
+import { UserService } from './user.service';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
+import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
+@UseGuards(JwtGuard, RolesGuard)
+@Roles('admin')
 @Controller('user')
 export class UserController {
-
-    @Get()
-    @UseGuards(RolesGuard)
-    @Roles('admin')
-    async getUsers(@Res() res) {
+    constructor(private readonly userService : UserService){}
+    
+    @Get('/get')
+    async getUsers(@Body() user: IUser) { 
         try {
-            const users = await userModel.find();
-            return res.status(HttpStatus.OK).json(users);
+            const users = await this.userService.getAll();
+            return users;
         } catch (error) {
-            return new ErrorHandler(res, error);
+            return { error: error.message };
         }
     }
 
     @Get(':id')
-    @UseGuards(JwtGuard)
-    async getUser(@Res() res, @Param('id') id: string) {
+    async getUser(@Param ('id')id:string) { 
         try {
-            const user = await userModel.findById(id);
-            return res.status(HttpStatus.OK).json(user);
+            return UserModel.findById(id).exec();
         } catch (error) {
-            return new ErrorHandler(res, error);
+            return { error: error.message };
         }
     }
 
+    @Delete('/delete/:id')
+    async deleteUser(@Param ('id')id:string) { 
+        try {
+            this.userService.delete(id);
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+
+   @Put('/update/:id')
+   async updateUser(@Param ('id')id:string, @Body ()user: IUser) { 
+        try {
+            const updatedUser = await this.userService.update(id, user);
+            return updatedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 }
+
+
+
+
+
