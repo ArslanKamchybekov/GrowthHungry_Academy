@@ -1,9 +1,14 @@
-import { Post, } from '../Models/posts'
-export class postService {
-    //create a post
-    async createPost(data: any) {
+import { Injectable, Post } from '@nestjs/common';
+import UserModel from '../models/user.model';
+
+
+@Injectable()
+export class UserService {
+
+      //create a post
+      async createPost(data: any) {
         try {
-            const newPost = await Post.create(data)
+            const newPost = await UserModel.create(data)
             return newPost
 
         } catch (error) {
@@ -14,7 +19,7 @@ export class postService {
     //get all posts
     async getPosts() {
         try {
-            const posts = await Post.find({})
+            const posts = await UserModel.find({})
             return posts
 
         } catch (error) {
@@ -26,7 +31,7 @@ export class postService {
     async getPost(id: string) {
       
         try {
-            const post = await Post.findById({_id:id})
+            const post = await UserModel.findById({_id:id})
             if (!post) {
                 return 'post not available'
             }
@@ -43,20 +48,17 @@ export class postService {
                 //pass the id of the object you want to update
                 //data is for the new body you are updating the old one with
                 //new:true, so the dats being returned, is the update one
-                const postz = await Post.findByIdAndUpdate({_id:id}, data, {new: true})                
-                if(!postz){
-                    return "post not available"
-                }
-                return postz          
-        } catch (error) {
+                return UserModel.findByIdAndUpdate(id, data, { new: true }).exec();
+            } catch (error) {
             console.log(error)
         }
     }
 
+
     //delete a post by using the find by id and delete 
     async deletePost(id: string) {
         try {
-            const post = await Post.findByIdAndDelete(id)
+            const post = await UserModel.findByIdAndDelete(id)
             if (!post) {
                 return 'post not available'
             }
@@ -66,5 +68,4 @@ export class postService {
     }
 }
 
-//export the class
-export const postServices = new postService()
+  
