@@ -23,7 +23,7 @@ export class RolesGuard implements CanActivate {
     console.log('User ID:', id);
 
     try {
-      const userEntity = await this.userService.getUser(id);
+      const userEntity = await this.userService.get(id);
       console.log('User entity:', userEntity);
 
       if (!userEntity) {

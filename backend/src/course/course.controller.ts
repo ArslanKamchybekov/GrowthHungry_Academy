@@ -8,7 +8,7 @@ import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('course')
 @UseGuards(JwtGuard, RolesGuard)
-@Roles('admin', 'user')
+@Roles('admin')
 export class CourseController {
     constructor(private readonly courseService: CourseService) {}
 
