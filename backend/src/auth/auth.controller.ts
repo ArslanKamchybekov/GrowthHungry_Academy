@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Res, Next, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, Body, UseGuards, Next } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
@@ -32,7 +32,7 @@ interface ILoginRequest {
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   async registerUser(
@@ -62,8 +62,7 @@ export class AuthController {
         });
         res.status(201).json({
           success: true,
-          message:
-            'User registered successfully. Please check your email for activation code.',
+          message: 'User registered successfully. Please check your email for activation code.',
           activation_token: activation_token.token,
         });
       } catch (error: any) {
@@ -75,13 +74,6 @@ export class AuthController {
   }
 
   createActivationToken(user: IRegisterUser): IActivationToken {
-    if (!jwt) {
-      console.error('JWT is not imported correctly');
-    }
-    if (!process.env.JWT_SECRET) {
-      console.error('JWT_SECRET is not defined in the environment variables');
-    }
-
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
     const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, {
       expiresIn: '5m',
@@ -114,9 +106,7 @@ export class AuthController {
       }
 
       const user = await userModel.create({ name, email, password });
-      res
-        .status(201)
-        .json({ success: true, message: 'User activated successfully', user });
+      res.status(201).json({ success: true, message: 'User activated successfully', user });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -136,11 +126,9 @@ export class AuthController {
       const user = await this.authService.validateUser(email, password);
       if (!user) return next(new ErrorHandler('Invalid credentials', 401));
 
-      const token = await this.authService.login(user);
+      await this.authService.login(user, res); // Pass response to the login method
       res.status(200).json({
         status: 'success',
-        accessToken: token.access_token,
-        refreshToken: token.refresh_token,
         user,
       });
     } catch (error: any) {
@@ -150,22 +138,18 @@ export class AuthController {
 
   @UseGuards(RefreshJwtGuard)
   @Post('refresh-token')
-  async refreshToken(@Req() req: Request){
-    return this.authService.refreshToken(req.user);
+  async refreshToken(@Req() req: Request, @Res() res: Response) {
+    await this.authService.refreshToken(req.user, res); // Pass response to the refresh method
   }
 
   @Get('logout')
   async logoutUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
       const user = req.user as IUser;
-      await this.authService.logout(user);
+      await this.authService.logout(user, res); // Pass response to the logout method
       res.status(200).json({ success: true, message: 'User logged out successfully' });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
   }
-
-  //Update access token
-
-  //Social auth
 }
