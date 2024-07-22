@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { FaGoogle } from 'react-icons/fa';
 import Link from 'next/link';
 
-
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,10 +17,13 @@ const SignIn: React.FC = () => {
 
     try {
       // api will be changed
-      const response = await fetch('/api/auth/signin', {
+      const response = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         },
         body: JSON.stringify({ email, password }),
       });
@@ -33,7 +35,7 @@ const SignIn: React.FC = () => {
       const data = await response.json();
       localStorage.setItem('token', data.token);
       router.push('/dashboard');
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
     }
   };
