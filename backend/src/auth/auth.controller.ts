@@ -126,7 +126,7 @@ export class AuthController {
       const user = await this.authService.validateUser(email, password);
       if (!user) return next(new ErrorHandler('Invalid credentials', 401));
 
-      await this.authService.login(user, res); // Pass response to the login method
+      await this.authService.login(user, res);
       res.status(200).json({
         status: 'success',
         user,
@@ -139,14 +139,14 @@ export class AuthController {
   @UseGuards(RefreshJwtGuard)
   @Post('refresh-token')
   async refreshToken(@Req() req: Request, @Res() res: Response) {
-    await this.authService.refreshToken(req.user, res); // Pass response to the refresh method
+    await this.authService.refreshToken(req.user, res);
   }
 
   @Get('logout')
   async logoutUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
       const user = req.user as IUser;
-      await this.authService.logout(user, res); // Pass response to the logout method
+      await this.authService.logout(user, res);
       res.status(200).json({ success: true, message: 'User logged out successfully' });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));

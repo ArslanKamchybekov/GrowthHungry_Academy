@@ -24,7 +24,7 @@ export class CourseService {
 
     async getAll() {
         try {
-            return Course.find().exec();
+            return Course.find().select('-courseData.videoUrl').exec();
         } catch (error) {
             throw new Error(`Error fetching courses: ${error.message}`);
         }
@@ -32,13 +32,21 @@ export class CourseService {
 
     async get(id: string) {
         try {
+            return Course.findById(id).select('-courseData.videoUrl ').exec();
+        } catch (error) {
+            throw new Error(`Error fetching course with id ${id}: ${error.message}`);
+        }
+    }
+
+    async getContent(id: string){
+        try {
             return Course.findById(id).exec();
         } catch (error) {
             throw new Error(`Error fetching course with id ${id}: ${error.message}`);
         }
     }
 
-    async delete(id: string): Promise<void> {
+    async delete(id: string) {
         try {
             await Course.findByIdAndDelete(id).exec();
             //this.cloudinaryService.delete(id);
@@ -53,5 +61,5 @@ export class CourseService {
         } catch (error) {
             throw new Error(`Error updating course with id ${id}: ${error.message}`);
         }   
-    }
+    } 
 }

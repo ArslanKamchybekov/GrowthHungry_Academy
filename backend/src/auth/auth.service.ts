@@ -63,7 +63,7 @@ export class AuthService {
     try {
       await this.cacheManager.del(user._id);
       console.log(`User ID deleted: ${user._id}`);
-
+      
       res.clearCookie('access_token');
       res.clearCookie('refresh_token');
     } catch (error) {

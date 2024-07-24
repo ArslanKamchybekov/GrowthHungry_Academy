@@ -5,7 +5,7 @@ import UserModel from '../models/user.model';
 export class UserService {
     async getAll() {
         try {
-            const users = await UserModel.find().exec();
+            const users = await UserModel.find().sort({createdAt: -1}).exec();
             return users
         } catch (error) {
             console.log(error)
