@@ -7,6 +7,9 @@ const Home: React.FC = () => {
   return (
     <>
       <Navbar />
+      <br />
+      <br />
+      <br />
       <Sidebar />
     </>
   );

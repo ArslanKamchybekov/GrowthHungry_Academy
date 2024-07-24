@@ -1,0 +1,42 @@
+/* Course.module.css */
+
+/* Container for the entire page, considering navbar and sidebar */
+.pageWrapper {
+    display: flex;
+    margin-top: 80px; /* Height of the navbar */
+  }
+  
+  /* Sidebar styling */
+  .sidebar {
+    position: fixed;
+    top: 80px; /* Height of the navbar */
+    left: 0;
+    width: 250px; /* Adjust width as needed */
+    height: calc(100vh - 80px); /* Full viewport height minus navbar height */
+    background-color: #f9f9f9; /* Adjust background color as needed */
+    z-index: 40; /* Ensure it's below the navbar but above other content */
+  }
+  
+  /* Main content area styling */
+  .mainContent {
+    margin-left: 250px; /* Width of the sidebar */
+    flex: 1;
+    padding: 1rem;
+  }
+  
+  /* Video container styling */
+  .videoContainer {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .videoContainer iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
