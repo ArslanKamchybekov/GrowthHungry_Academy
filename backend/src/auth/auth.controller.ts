@@ -6,6 +6,7 @@ import * as jwt from 'jsonwebtoken';
 import sendMail from 'src/utils/sendMail';
 import { AuthService } from './auth.service';
 import { RefreshJwtGuard } from './refresh-jwt-auth.guard';
+import { JwtGuard } from './jwt-auth.guard';
 require('dotenv').config();
 
 interface IRegisterUser {
@@ -35,11 +36,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async registerUser(
-    @Req() req: Request,
-    @Res() res: Response,
-    @Next() next: NextFunction,
-  ) {
+  async registerUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
       const { name, email, password } = req.body;
       const emailExists = await userModel.findOne({ email });
@@ -81,12 +78,12 @@ export class AuthController {
     return { token, activationCode };
   }
 
+  createResetToken(user: IUser): string {
+    return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  }
+
   @Post('activate-user')
-  async activateUser(
-    @Body() activationRequest: IActivationRequest,
-    @Res() res: Response,
-    @Next() next: NextFunction,
-  ) {
+  async activateUser(@Body() activationRequest: IActivationRequest, @Res() res: Response, @Next() next: NextFunction) {
     try {
       const { activation_token, activation_code } = activationRequest;
       const newUser: { user: IUser; activationCode: string } = jwt.verify(
@@ -113,12 +110,7 @@ export class AuthController {
   }
 
   @Post('login')
-  async loginUser(
-    @Body() loginRequest: ILoginRequest,
-    @Res() res: Response,
-    @Req() req: Request,
-    @Next() next: NextFunction,
-  ) {
+  async loginUser(@Res() res: Response, @Req() req: Request, @Next() next: NextFunction) {
     try {
       const { email, password } = req.body as ILoginRequest;
       if (!email || !password) return next(new ErrorHandler('Please enter email and password', 400));
@@ -127,10 +119,7 @@ export class AuthController {
       if (!user) return next(new ErrorHandler('Invalid credentials', 401));
 
       await this.authService.login(user, res);
-      res.status(200).json({
-        status: 'success',
-        user,
-      });
+      res.status(200).json({ status: 'success', user });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -142,12 +131,30 @@ export class AuthController {
     await this.authService.refreshToken(req.user, res);
   }
 
+  @UseGuards(JwtGuard)
   @Get('logout')
   async logoutUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      const user = req.user as IUser;
-      await this.authService.logout(user, res);
+      await this.authService.logout(req.user, res); //user id is undefined
       res.status(200).json({ success: true, message: 'User logged out successfully' });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    try {
+      // Forgot password logic
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+    try {
+      // Reset password logic
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

@@ -80,6 +80,9 @@ const SignUp: React.FC = () => {
           {error && <p className="mt-2 text-red-600">{error}</p>}
         </form>
       </div>
+      <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">Supported by GrowthHungry Academy</p>
+        </div>
     </div>
   );
 };
