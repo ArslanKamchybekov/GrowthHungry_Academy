@@ -3,7 +3,6 @@ import UserModel from '../models/user.model';
 
 @Injectable()
 export class UserService {
-
     async getAll() {
         try {
             const users = await UserModel.find().exec();
