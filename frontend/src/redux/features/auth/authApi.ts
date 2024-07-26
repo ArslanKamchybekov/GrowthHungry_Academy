@@ -15,7 +15,7 @@ export const authApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         register: builder.mutation<RegistrationResponse, RegistrationData>({
             query: (data) => ({
-                url: "/auth/register",
+                url: "http://localhost:8000/auth/register",
                 method: "POST",
                 body: data,
                 credentials: "include" as const,
@@ -35,7 +35,7 @@ export const authApi = apiSlice.injectEndpoints({
         }),
         activation: builder.mutation({
             query: ({activation_token, activation_code}) => ({
-                url: "/auth/activate-user",
+                url: "http://localhost:8000/auth/activate-user",
                 method: "POST",
                 body: { activation_token, activation_code },
             }),

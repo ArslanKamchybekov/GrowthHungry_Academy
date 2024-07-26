@@ -29,7 +29,7 @@ const ForgotPassword: React.FC = () => {
       }
 
       setSuccess('Reset password email sent successfully!');
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
     }
   };

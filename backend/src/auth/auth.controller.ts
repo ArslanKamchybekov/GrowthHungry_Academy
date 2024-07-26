@@ -46,7 +46,8 @@ export class AuthController {
 
       const activation_token = this.createActivationToken(user);
       const activation_code = activation_token.activationCode;
-      const data = { user: { name: user.name }, activation_code };
+      const activationLink = `http://localhost:3000/activate?token=${activation_token.token}&code=${activation_code}`;
+      // const data = { user: { name: user.name }, activation_code };
 
       const template = 'activation-mail.ejs'; // Template filename
 
@@ -55,7 +56,7 @@ export class AuthController {
           email: user.email,
           subject: 'Account Activation',
           template,
-          data,
+          data: { activationLink },
         });
         res.status(201).json({
           success: true,

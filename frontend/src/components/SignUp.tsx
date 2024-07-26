@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
 
     try {
      //api will be changed
-      const response = await fetch('/auth/register', {
+      const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
-      router.push('/signin');
+      router.push('/activate');
     } catch (err: any) {
       setError(err.message);
     }
