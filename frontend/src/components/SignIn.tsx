@@ -34,7 +34,7 @@ const SignIn: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
-      router.push('/dashboard');
+      router.push('/course');
     } catch (err: any) {
       setError(err.message);
     }
