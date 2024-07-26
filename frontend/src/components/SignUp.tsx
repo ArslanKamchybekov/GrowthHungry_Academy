@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
 
     try {
      //api will be changed
-      const response = await fetch('/auth/register', {
+      const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
-      router.push('/signin');
+      router.push('/activate');
     } catch (err: any) {
       setError(err.message);
     }
@@ -80,6 +80,9 @@ const SignUp: React.FC = () => {
           {error && <p className="mt-2 text-red-600">{error}</p>}
         </form>
       </div>
+      <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">Supported by GrowthHungry Academy</p>
+        </div>
     </div>
   );
 };

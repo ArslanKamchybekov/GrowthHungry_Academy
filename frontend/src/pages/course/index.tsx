@@ -9,21 +9,17 @@ const Course = () => {
         <>
             <Navbar />
             <div className={styles.pageWrapper}>
-                <Sidebar/>
+                <Sidebar />
                 <main className={styles.mainContent}>
                     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                         <div className="order-1 col-span-1 lg:col-span-3 flex flex-col space-y-6">
                             <div className="border rounded-md overflow-hidden bg-white">
-                                <div className={styles.videoContainer}>
-                                    <iframe
-                                        src="https://www.youtube.com/embed/kf6yyxMck8Y?si=rXhTTDQuhuiB3ZrU"
-                                        title="YouTube video player"
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerPolicy="strict-origin-when-cross-origin"
-                                        allowFullScreen
-                                        className={styles.videoIframe}
-                                    ></iframe>
+                                <div className={styles.thumbnailContainer}>
+                                    <img
+                                        src="/path/to/your/thumbnail.jpg" // Replace with your thumbnail image path
+                                        alt="Course Thumbnail"
+                                        className={styles.thumbnailImage}
+                                    />
                                 </div>
                             </div>
                             <div className="border rounded-md p-6 bg-white">
@@ -37,7 +33,7 @@ const Course = () => {
                                     Course Title
                                 </h3>
                                 <p className="text-sm text-muted-foreground mb-4">
-                                    Sed ut perspiciatis unde omnis isteem aperiam,  aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                                    Sed ut perspiciatis unde omnis isteem aperiam, aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
                                 </p>
                                 <div className="mt-4">
                                     <p className="font-medium text-sky-700 text-xs">0% Complete</p>
