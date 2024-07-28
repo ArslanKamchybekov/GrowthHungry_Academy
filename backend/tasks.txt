@@ -16,3 +16,23 @@ async updateRole(id: string, role: string) {
             console.log(error)
         }
     }    
+
+2. Enroll 
+
+@Post('enroll/:id')
+    async enrollUser(@Param ('id')id: string, @Body() _id: string) { 
+        try {
+            const enrolledUser = await this.userService.enroll(id, _id);
+            return enrolledUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+
+async enroll(id: string, courseId: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { $push: { courses: courseId } }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
