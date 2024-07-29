@@ -3,6 +3,9 @@ import UserModel from '../models/user.model';
 
 @Injectable()
 export class UserService {
+    static getByEmail(email: any) {
+      throw new Error('Method not implemented.');
+    }
     async getAll() {
         try {
             const users = await UserModel.find().sort({createdAt: -1}).exec();
@@ -27,6 +30,7 @@ export class UserService {
             return user
         } catch (error) {
             console.log(error)
+            return null;
         }
     }
 

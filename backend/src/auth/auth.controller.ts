@@ -7,6 +7,9 @@ import sendMail from 'src/utils/sendMail';
 import { AuthService } from './auth.service';
 import { RefreshJwtGuard } from './refresh-jwt-auth.guard';
 import { JwtGuard } from './jwt-auth.guard';
+import { UserService } from 'src/user/user.service';
+import path from 'path';
+import ejs from 'ejs';
 require('dotenv').config();
 
 interface IRegisterUser {
@@ -26,10 +29,24 @@ interface IActivationRequest {
   activation_code: string;
 }
 
+interface IResetPasswordRequest {
+    resetToken: string;
+    newPassword: string;
+  };
+
+
+
+interface IForgotPasswordRequest{
+   email:string;
+}
+
+
 interface ILoginRequest {
   email: string;
   password: string;
 }
+export const userService = new UserService();
+
 
 @Controller('auth')
 export class AuthController {
@@ -145,7 +162,56 @@ export class AuthController {
   @Post('forgot-password')
   async forgotPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      // Forgot password logic
+      const {email} = req.body;
+      const user = await userService.getByEmail(email);
+
+      if(!user){
+        return res.status(404).send({message: 'User not found' });
+      }
+      const token  = await AuthService.createResetToken(user);
+      const expires = Date.now() + 3600000;
+
+      user.resetPasswordToken = token;
+      user.resetPasswordExpires = new Date(expires);
+
+      await user.save();
+
+      const activation_token = this.createActivationToken(user);
+      const activation_code = activation_token.activationCode;
+      const data = { user: { name: user.name }, activation_code };
+
+      
+
+
+
+
+      const transporter = NodeFilter.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS, // Use environment variables in production
+        },
+      });
+
+      // Render the EJS template
+        const templatePath = 'reset-password-mail.ejs';
+      const emailHtml = await ejs.renderFile(templatePath, {
+        userName: user.name, // Assuming the user model has a name field
+        resetToken: token,
+        appName: 'YourAppName', // Replace with your app name
+        year: new Date().getFullYear()
+      });
+
+      const mailOptions = {
+        to: user.email,
+        from: process.env.EMAIL_USER,
+        subject: 'Password Reset',
+        html: emailHtml
+      };
+
+      await transporter.sendMail(mailOptions);
+
+      res.status(200).send({ message: 'Password reset email sent' });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -154,7 +220,34 @@ export class AuthController {
   @Post('reset-password')
   async resetPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      // Reset password logic
+      const { resetToken, newPassword } = req.body;
+      if (!resetToken || !newPassword) {
+        return res.status(400).send({ message: 'Reset token and new password are required' });
+      }
+      let decoded;
+      try {
+        decoded = jwt.verify(resetToken, process.env.JWT_SECRET) as { userId: string };
+      } catch (error) {
+        return res.status(400).send({ message: 'Invalid or expired reset token' });
+      }
+
+      const user = await userService.get(decoded.userId);
+
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
+      if (user.resetPasswordToken !== resetToken || user.resetPasswordExpires < new Date()) {
+        return res.status(400).send({ message: 'Invalid or expired reset token' });
+      }
+
+      user.password = await this.authService.hashPassword(newPassword);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+
+      await user.save();
+
+      res.status(200).send({ message: 'Password has been reset successfully' });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
