@@ -8,13 +8,8 @@ export class CourseService {
         private readonly cloudinaryService: CloudinaryService
     ) {}
 
-    async create(courseData: any) { // thumbnail: string
+    async create(courseData: any) {
         try {
-            //const uploadResponse = await this.cloudinaryService.upload(filePath);
-            // const newCourse = new Course({
-            //     ...courseData,
-            //     videoUrl: uploadResponse.url,
-            // });
             const course = new Course(courseData);
             return course.save();
         } catch (error) {

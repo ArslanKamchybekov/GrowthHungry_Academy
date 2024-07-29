@@ -13,6 +13,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CloudinaryModule } from './course/cloudinary.module';
 import { CourseService } from './course/course.service';
 import { UserService } from './user/user.service';
+import { LayoutController } from './layout/layout.controller';
+import { LayoutService } from './layout/layout.service';
+import { LayoutModule } from './layout/layout.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -31,10 +35,11 @@ import { UserService } from './user/user.service';
     AuthModule,
     UserModule,
     CourseModule,
+    LayoutModule,
     CloudinaryModule
   ],
-  controllers: [AuthController, CourseController, UserController],
-  providers: [CloudinaryService, CourseService, UserService],
+  controllers: [AuthController, CourseController, UserController, LayoutController],
+  providers: [CourseService, UserService, LayoutService, CloudinaryService],
   exports: []
 })
 export class AppModule {}

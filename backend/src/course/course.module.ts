@@ -6,7 +6,7 @@ import { UserService } from 'src/user/user.service';
 
 @Module({
   controllers: [CourseController],
-  imports: [CloudinaryModule,],
+  imports: [CloudinaryModule],
   providers: [CourseService, UserService]
 })
 
