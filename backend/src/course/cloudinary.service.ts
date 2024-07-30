@@ -12,8 +12,8 @@ export class CloudinaryService {
     }
 
     // upload method to upload images to Cloudinary(image database)
-    async upload(filePath: string) {
-        return v2.uploader.upload(filePath, {folder: 'course'});
+    async upload(filePath: string, folder: string) {
+        return v2.uploader.upload(filePath, {folder: folder});
     }
 
     // delete method to delete images from Cloudinary

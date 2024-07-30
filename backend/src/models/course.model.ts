@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 export interface ICourseData {
     title: string;
@@ -11,11 +11,12 @@ export interface ICourse {
     description: string;
     prerequisites: string;
     thumbnail: object;
+    courseData: ICourseData[];
 }
 const CourseDataSchema: Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    videoUrl: { type: String, required: true },
+    videoUrl: { type: String},
     videoLength: { type: Number, required: true }
 });
 const CourseSchema: Schema = new Schema({
@@ -25,7 +26,8 @@ const CourseSchema: Schema = new Schema({
     thumbnail: { 
         public_id: { type: String },
         url: { type: String }
-     }
+    },
+    courseData: { type: [CourseDataSchema], required: true }
 });
 
 export const CourseData = mongoose.model<ICourseData>('CourseData', CourseDataSchema);
