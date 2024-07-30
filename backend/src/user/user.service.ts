@@ -45,6 +45,14 @@ export class UserService {
             console.log(error)
         }
     }
+
+    async updateRole(id: string, role: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { role }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
   

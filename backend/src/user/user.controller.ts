@@ -48,6 +48,16 @@ export class UserController {
             return { error: error.message };
         }
     }
+
+    @Put('/update-role/:id')
+   async updateRole(@Param ('id')id:string, @Body ()user: IUser) { 
+        try {
+            const updatedUser = await this.userService.updateRole(id, user.role);
+            return updatedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 }
 
 
