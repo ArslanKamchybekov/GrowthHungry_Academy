@@ -10,10 +10,6 @@ import { nanoid } from 'nanoid';
 
 @Injectable()
 export class AuthService {
-  static createResetToken(user: import("mongoose").Document<unknown, {}, import("../models/user.model").IUser> & import("../models/user.model").IUser & Required<{ _id: unknown; }>) {
-    
-    throw new Error('Method not implemented.');
-  }
   constructor(
     private readonly jwtService: JwtService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
@@ -48,18 +44,7 @@ export class AuthService {
       refresh_token: refreshToken,
     };
   }
-  async forgotPassword(email: string){
-    const user = await userService.getByEmail(email);
-    if(user){
-      const resetToken = nanoid();
-      
-
-    }
-    return {message: 'If this user exists, they will receive an email' }
-
-
-
-  }
+  
 
 
   async refreshToken(user: any, res: any) {

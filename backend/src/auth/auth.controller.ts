@@ -168,19 +168,35 @@ export class AuthController {
       if(!user){
         return res.status(404).send({message: 'User not found' });
       }
-      const token  = await AuthService.createResetToken(user);
+      const token  = await this.createResetToken(user);
       const expires = Date.now() + 3600000;
-
-      user.resetPasswordToken = token;
-      user.resetPasswordExpires = new Date(expires);
 
       await user.save();
 
-      const activation_token = this.createActivationToken(user);
+      const activation_token = this.createActivationToken();
       const activation_code = activation_token.activationCode;
       const data = { user: { name: user.name }, activation_code };
 
-      
+      const template = 'reset-password-mail.ejs';
+      try {
+        await sendMail({
+          email: user.email,
+          subject: 'Reset Password',
+          template,
+          data,
+        });
+        res.status(201).json({
+          success: true,
+          message: 'We received a request to reset the password for your account',
+          activation_token: activation_token.token,
+        });
+      } catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
 
 
 
