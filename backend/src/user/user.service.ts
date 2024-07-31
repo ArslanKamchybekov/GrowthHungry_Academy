@@ -45,6 +45,14 @@ export class UserService {
             console.log(error)
         }
     }
+
+async enroll(id: string, courseId: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, data, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
   

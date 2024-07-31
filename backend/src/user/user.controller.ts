@@ -48,6 +48,16 @@ export class UserController {
             return { error: error.message };
         }
     }
+
+   @Post('/enroll/:id')
+   async updateUser(@Param ('id')id:string, @Body ()id: string) {
+        try {
+            const updatedUser = await this.userService.update(id, user);
+            return updatedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 }
 
 
