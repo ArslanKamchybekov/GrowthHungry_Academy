@@ -18,6 +18,7 @@ export interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
+  points: mongoose.Types.Decimal128;
 }
 
 const userSchema = new Schema<IUser>(
@@ -42,6 +43,7 @@ const userSchema = new Schema<IUser>(
     role: { type: String, default: 'user' },
     isVerified: { type: Boolean, default: false },
     courses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
+    points: { type: Schema.Types.Decimal128, required: true }
   },
   { timestamps: true },
 );
