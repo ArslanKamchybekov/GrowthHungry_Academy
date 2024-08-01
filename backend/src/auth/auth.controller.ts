@@ -48,7 +48,6 @@ export class AuthController {
       const activation_code = activation_token.activationCode;
       const activationLink = `http://localhost:3000/activate?token=${activation_token.token}&code=${activation_code}`;
       // const data = { user: { name: user.name }, activation_code };
-
       const template = 'activation-mail.ejs'; // Template filename
 
       try {
@@ -146,7 +145,29 @@ export class AuthController {
   @Post('forgot-password')
   async forgotPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      // Forgot password logic
+      const { email } = req.body;
+      const user = await userModel.findOne({email});
+      if (!user) return next(new ErrorHandler('User not found', 404));
+
+      const resetToken = this.createResetToken(user);
+      const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+      const template = 'reset-password.ejs'; // Template filename
+
+      try {
+        await sendMail({
+          email: user.email,
+          subject: 'Reset Password',
+          template,
+          data: { resetLink },
+        });
+        res.status(200).json({
+          success: true,
+          message: 'Reset password link sent to email',
+          resetToken,
+        });
+      }catch (error: any) {
+        return next(new ErrorHandler(error.message, 400));
+      }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -155,7 +176,17 @@ export class AuthController {
   @Post('reset-password')
   async resetPassword(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      // Reset password logic
+      const { password } = req.body;
+      const resetToken = req.headers.authorization; // Headers:  Authorization , NO BEARER, just token
+      if (!resetToken) return next(new ErrorHandler('Invalid token', 400));
+
+      const decoded = jwt.verify(resetToken, process.env.JWT_SECRET as string) as { userId: string };
+      const user = await userModel.findById(decoded.userId);
+      if (!user) return next(new ErrorHandler('User not found', 404));
+
+      user.password = password;
+      await user.save();
+      res.status(200).json({ success: true, message: 'Password reset successfully'});
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

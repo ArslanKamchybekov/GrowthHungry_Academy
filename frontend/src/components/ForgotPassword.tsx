@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
 
@@ -15,8 +16,7 @@ const ForgotPassword: React.FC = () => {
     setSuccess('');
 
     try {
-      // api will be changed
-      const response = await fetch('/api/auth/forgot-password', {
+      const response = await fetch('http://localhost:8000/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,8 +24,10 @@ const ForgotPassword: React.FC = () => {
         body: JSON.stringify({ email }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send reset email');
+      if (response.ok) {
+        setMessage('Reset password email sent successfully!');
+      }else{
+        setMessage('An error occurred during activation.');
       }
 
       setSuccess('Reset password email sent successfully!');
