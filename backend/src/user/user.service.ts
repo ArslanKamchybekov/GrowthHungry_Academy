@@ -46,13 +46,14 @@ export class UserService {
         }
     }
 
-    async updateRole(id: string, role: string) {
+    async enroll(id: string, courseId: string) {
         try {
-            return UserModel.findByIdAndUpdate(id, { role }, { new: true }).exec();
+            return UserModel.findByIdAndUpdate(id, { $push: { courses: courseId } }, { new: true }).exec();
         } catch (error) {
             console.log(error)
         }
     }
+
 }
 
   
