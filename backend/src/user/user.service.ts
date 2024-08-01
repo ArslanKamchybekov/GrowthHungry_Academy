@@ -46,13 +46,23 @@ export class UserService {
         }
     }
 
-async enroll(id: string, courseId: string) {
+async enrollInCourse(userId: string, courseId: string) {
         try {
-            return UserModel.findByIdAndUpdate(id, data, { new: true }).exec();
+            const user = await UserModel.findById(userId).exec();
+            if (!user) {
+                throw new Error('User not found');
+            }
+            if (!user.courses.some(course => course.courseId === courseId)) {
+                user.courses.push({ courseId });
+                await user.save();
+            }
+            return user;
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            throw error;
         }
     }
+
 }
 
   
