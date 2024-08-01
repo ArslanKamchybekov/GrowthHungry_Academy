@@ -58,7 +58,6 @@ export class UserController {
             return { error: error.message };
         }
     }
-
 }
 
 
