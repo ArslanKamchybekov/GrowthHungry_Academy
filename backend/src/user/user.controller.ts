@@ -49,11 +49,11 @@ export class UserController {
         }
     }
 
-   @Post(':id/enroll')
-    async enrollUserInCourse(@Param('id') id: string, @Body('courseId') courseId: string) {
+    @Post('enroll/:id')
+    async enrollUser(@Param ('id')id: string, @Body() _id: string) { 
         try {
-            const updatedUser = await this.userService.enrollInCourse(id, courseId);
-            return updatedUser;
+            const enrolledUser = await this.userService.enroll(id, _id);
+            return enrolledUser;
         } catch (error) {
             return { error: error.message };
         }
