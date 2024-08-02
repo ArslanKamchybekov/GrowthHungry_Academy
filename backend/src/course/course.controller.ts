@@ -60,7 +60,9 @@ export class CourseController {
     @Get('/content/:id')
     async getCourseContent(@Param('id') id: string) {
         try {
+            console.log("Id: ", id )
             const course = await this.courseService.getContent(id);
+            console.log("Course: ", course)
             return course;
         } catch (error) {
             return { error: error.message };
