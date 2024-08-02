@@ -58,6 +58,10 @@ export class UserController {
             return { error: error.message };
         }
     }
+
+    // add an endpoint
+    //controller - dlya obrabotki endpoint
+    // service - sama logika v service
 }
 
 
