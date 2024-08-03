@@ -26,14 +26,16 @@ const SignIn: React.FC = () => {
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         },
         body: JSON.stringify({ email, password }),
+        
       });
+
 
       if (!response.ok) {
         throw new Error('Invalid credentials');
       }
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('access-token', data.token);
       router.push('/course');
     } catch (err: any) {
       setError(err.message);
