@@ -59,14 +59,6 @@ export class UserController {
         }
     }
 
-    async enroll(id: string, courseId: string) {
-        try {
-            return UserModel.findByIdAndUpdate(id, { $push: { courses: courseId } }, { new: true }).exec();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     @Get('/getbypoints')
     async getUsersByPoints(@Body() user: IUser) { 
         try {
