@@ -59,9 +59,23 @@ export class UserController {
         }
     }
 
-    // add an endpoint
-    //controller - dlya obrabotki endpoint
-    // service - sama logika v service
+    async enroll(id: string, courseId: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { $push: { courses: courseId } }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    @Get('/getbypoints')
+    async getUsersByPoints(@Body() user: IUser) { 
+        try {
+            const users = await this.userService.getByPoints();
+            return users;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 }
 
 

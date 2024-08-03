@@ -54,8 +54,13 @@ export class UserService {
         }
     }
 
-    //get-by-points
-    //
+    async getByPoints() {
+        try {
+            const users = await UserModel.find().sort({points: -1}).exec();
+            return users
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
-  
