@@ -2,7 +2,6 @@ import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { JwtService } from '@nestjs/jwt';
 import UserModel from '../models/user.model';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { redis } from '../utils/redis';
 import * as bcrypt from 'bcrypt';
 
@@ -10,7 +9,6 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -44,14 +42,10 @@ export class AuthService {
   }
 
   async refreshToken(user: any, res: any) {
-    const cachedRefreshToken = await this.cacheManager.get<string>(user._id);
-    if (!cachedRefreshToken) throw new UnauthorizedException('Invalid refresh token')
-
     const payload = { username: user.username, sub: user._id };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '1h' });
 
     res.cookie('access_token', accessToken, { httpOnly: true, secure: true });
-
     return { access_token: accessToken };
   }
 
@@ -59,8 +53,9 @@ export class AuthService {
     try {
       res.cookie('access_token', '', { maxAge: 1 });
       res.cookie('refresh_token', '', { maxAge: 1 }); 
-      console.log(`User ID deleted: ${user._id}`);
-      redis.del(user._id);
+      
+      console.log(`User ID deleted: ${user}`);
+      redis.del(user);
     } catch (error) {
       console.error('Error deleting session in Redis:', error);
     }
