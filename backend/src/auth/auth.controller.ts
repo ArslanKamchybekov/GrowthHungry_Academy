@@ -31,6 +31,10 @@ interface ILoginRequest {
   password: string;
 }
 
+interface ILogoutRequest {
+  userId: string;
+}
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -47,8 +51,7 @@ export class AuthController {
       const activation_token = this.createActivationToken(user);
       const activation_code = activation_token.activationCode;
       const activationLink = `http://localhost:3000/activate?token=${activation_token.token}&code=${activation_code}`;
-      // const data = { user: { name: user.name }, activation_code };
-      const template = 'activation-mail.ejs'; // Template filename
+      const template = 'activation-mail.ejs';
 
       try {
         await sendMail({
@@ -133,11 +136,15 @@ export class AuthController {
 
   @UseGuards(JwtGuard)
   @Get('logout')
-  async logoutUser(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
+  async logoutUser(@Req() req: Request & { user: ILogoutRequest }, @Res() res: Response, @Next() next: NextFunction) {
     try {
-      await this.authService.logout(req.user, res); //user id is undefined
+      if (!req.user || !req.user.userId) throw new Error('User not authenticated');
+      const userId = req.user.userId.toString();
+      
+      await this.authService.logout(userId, res); // Pass the userId as a string
       res.status(200).json({ success: true, message: 'User logged out successfully' });
     } catch (error: any) {
+      console.error('Error during logout:', error); // Debugging line
       return next(new ErrorHandler(error.message, 400));
     }
   }
@@ -151,7 +158,7 @@ export class AuthController {
 
       const resetToken = this.createResetToken(user);
       const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
-      const template = 'reset-password.ejs'; // Template filename
+      const template = 'reset-password.ejs';
 
       try {
         await sendMail({

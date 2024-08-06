@@ -35,7 +35,7 @@ const userSchema = new Schema<IUser>(
         message: 'Please enter a valid email address.',
       },
     },
-    password: { type: String, required: true, minlength: 6, select: false },
+    password: { type: String, minlength: 6, select: false },
     avatar: {
       public_id: { type: String, required: false },
       url: { type: String, required: false },
