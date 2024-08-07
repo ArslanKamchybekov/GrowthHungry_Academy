@@ -25,6 +25,7 @@ const SignIn: React.FC = () => {
           'Access-Control-Allow-Credentials': 'true',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
         
       });
@@ -35,7 +36,10 @@ const SignIn: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log('Response data:', data);
+
       localStorage.setItem('access-token', data.token);
+      console.log('Token stored:', data.token);
       router.push('/course');
     } catch (err: any) {
       setError(err.message);

@@ -15,10 +15,12 @@ const CourseProgress = () => {
                 const token = localStorage.getItem('access-token');
                 if (!token) throw new Error('No token found');
 
+                console.log('Token:', token)
+
                 const response = await fetch(`http://localhost:8000/course/content/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     }
                 });
                 if (!response.ok) {
