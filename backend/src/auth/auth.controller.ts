@@ -121,8 +121,8 @@ export class AuthController {
       const user = await this.authService.validateUser(email, password);
       if (!user) return next(new ErrorHandler('Invalid credentials', 401));
 
-      await this.authService.login(user, res);
-      res.status(200).json({ status: 'success', user });
+      const token = await this.authService.login(user, res);
+      res.status(200).json({ status: 'success', user, token: token.access_token });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
