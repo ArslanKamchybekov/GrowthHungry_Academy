@@ -28,7 +28,6 @@ const SignIn: React.FC = () => {
         credentials: 'include',
       });
 
-
       if (!response.ok) {
         throw new Error('Invalid credentials');
       }
