@@ -20,9 +20,8 @@ const CourseProgress = () => {
                 const response = await fetch(`http://localhost:8000/course/content/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'include'
+                        'Content-Type': 'application/json'
+                    }
                 });
                 if (!response.ok) {
                     throw new Error('Course not found');

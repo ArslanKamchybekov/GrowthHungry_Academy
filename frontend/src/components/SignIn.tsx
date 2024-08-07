@@ -24,8 +24,8 @@ const SignIn: React.FC = () => {
           'Access-Control-Allow-Credentials': 'true',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         },
-        credentials: 'include',
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
 
 
