@@ -21,7 +21,8 @@ const CourseProgress = () => {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
-                    }
+                    },
+                    credentials: 'include'
                 });
                 if (!response.ok) {
                     throw new Error('Course not found');

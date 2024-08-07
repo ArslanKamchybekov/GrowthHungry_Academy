@@ -26,7 +26,6 @@ const SignIn: React.FC = () => {
         },
         credentials: 'include',
         body: JSON.stringify({ email, password }),
-        credentials: 'include',
       });
 
 
