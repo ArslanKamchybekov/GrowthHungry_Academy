@@ -12,6 +12,15 @@ export class UserService {
         }
     }
 
+    async getByPoints() {
+        try {
+            const users = await UserModel.find().sort({points: -1}).exec();
+            return users
+        } catch (error) {
+            console.log(error) 
+        }
+    }
+
     async get(id: string) {
         try {
             const user = await UserModel.findById({_id:id}).exec();
@@ -49,15 +58,6 @@ export class UserService {
     async enroll(id: string, courseId: string) {
         try {
             return UserModel.findByIdAndUpdate(id, { $push: { courses: courseId } }, { new: true }).exec();
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    async getByPoints() {
-        try {
-            const users = await UserModel.find().sort({points: -1}).exec();
-            return users
         } catch (error) {
             console.log(error)
         }

@@ -12,7 +12,7 @@ export class UserController {
     constructor(private readonly userService : UserService){}
     
     @Get('/get')
-    async getUsers(@Body() user: IUser) { 
+    async getUsers() { 
         try {
             const users = await this.userService.getAll();
             return users;
@@ -49,7 +49,7 @@ export class UserController {
         }
     }
 
-    @Post('enroll/:id')
+    @Post('/enroll/:id')
     async enrollUser(@Param ('id')id: string, @Body() _id: string) { 
         try {
             const enrolledUser = await this.userService.enroll(id, _id);
@@ -59,8 +59,8 @@ export class UserController {
         }
     }
 
-    @Get('/getbypoints')
-    async getUsersByPoints(@Body() user: IUser) { 
+    @Get('/points')
+    async getUsersByPoints() { 
         try {
             const users = await this.userService.getByPoints();
             return users;

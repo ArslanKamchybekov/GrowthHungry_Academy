@@ -14,11 +14,11 @@ export interface IUser extends Document {
   };
   role: string;
   isVerified: boolean;
+  points: Number;
   courses: Array<{ courseId: string }>;
   comparePassword(candidatePassword: string): Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
-  points: Number;
 }
 
 const userSchema = new Schema<IUser>(
@@ -42,8 +42,8 @@ const userSchema = new Schema<IUser>(
     },
     role: { type: String, default: 'user' },
     isVerified: { type: Boolean, default: false },
+    points: { type: Number, required: true, default: 0 },
     courses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
-    points: { type: Number, required: true, default: 0 }
   },
   { timestamps: true },
 );
