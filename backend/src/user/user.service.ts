@@ -54,6 +54,14 @@ export class UserService {
         }
     }
 
+    async unenroll(id: string, courseId: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { $pull: { courses: courseId } }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async getByPoints(){
         try {
             const users = await UserModel.find().sort({points: -1}).exec();

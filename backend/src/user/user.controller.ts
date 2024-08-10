@@ -59,6 +59,16 @@ export class UserController {
         }
     }
 
+    @Post('/unenroll/:id')
+    async unenrollUser(@Param ('id')id: string, @Body() _id: string) { 
+        try {
+            const unenrolledUser = await this.userService.unenroll(id, _id);
+            return unenrolledUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+
     @Get('/points/get')
     async getPoints() { 
         try {
