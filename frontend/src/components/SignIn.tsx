@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaGoogle } from 'react-icons/fa';

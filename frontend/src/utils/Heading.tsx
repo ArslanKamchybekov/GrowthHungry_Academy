@@ -7,10 +7,10 @@ interface HeadProps {
 
 const Heading: FC<HeadProps> = ({title, description}) => {
     return (
-        <head>
+        <>
             <title>{title}</title>
-            <meta name="description" content={description}/>
-        </head>
+            <meta name="description" content={description} />
+        </>
     )
 }
 

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import { Compass, Trophy } from 'lucide-react';
-import styles from './sidebar.module.css'; // Import CSS module
+import styles from '../styles/sidebar.module.css'; // Import CSS module
 
 const Sidebar: React.FC = () => {
     const router = useRouter();
