@@ -1,17 +1,3 @@
-// Add props like the title
-// interface CourseProgressSidebarProps {
-//     title: string;
-//     links: Course[];
-// }
-
-// interface Course {
-//     title: string;
-//     description: string;
-//     videoUrl: string | null;
-//     videoLength: number;
-//     _id: string;
-// }
-import router from "next/router";
 import { CourseProgressProps } from "../pages/types/types";
 
 const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse, links }) => {
@@ -37,7 +23,6 @@ const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse,
                                 <div style={{ minWidth: 100, display: "table" }}>
                                     {links?.map((link, index) => (
                                         <a key={index} href={`/course/progress/${id}/chapters/${link._id}`}>
-                                        {/* // <a key={index} href="#"> */}
                                             <div className="flex w-full text-sm items-center p-5 border-b hover:bg-muted transition-background group text-emerald-700">
                                                 {link.title}
                                             </div>

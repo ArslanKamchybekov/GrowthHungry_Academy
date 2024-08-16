@@ -37,13 +37,6 @@ const CourseProgressChapter: React.FC = () => {
                     console.log(data)
                     setTitle(data.name)
                     setLinks(data.courseData)
-                    // console.log("Course Data: "+ links)
-                    // console.log("Video URL: " + links[0].videoUrl)
-                    
-                    // const chapterData = links.find(item => item._id === chapterid)
-                    // console.log("Chapter Data: " + chapterData)
-                    // console.log("Url: " + chapterData?.videoUrl)
-                    // setVideo(chapterData?.videoUrl as string)
                 } catch (error) {
                     console.error('Error fetching course:', error);
                 }
