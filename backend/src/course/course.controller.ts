@@ -49,6 +49,7 @@ export class CourseController {
             else{
                 const course = await this.courseService.get(id);
                 await redis.set(course_id, JSON.stringify(course));
+                console.log(course)
                 return course;
             }
         } catch (error) {
