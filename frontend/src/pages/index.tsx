@@ -11,7 +11,7 @@ interface Props {
 const Page: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
-  const [route, setRoute] = useState('');
+  const [route, setRoute] = useState('Login');
 
   return (
     <>

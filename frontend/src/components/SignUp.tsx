@@ -15,7 +15,6 @@ const SignUp: React.FC = () => {
     setError('');
 
     try {
-     //api will be changed
       const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         headers: {
