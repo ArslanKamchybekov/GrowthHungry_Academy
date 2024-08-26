@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
@@ -7,6 +7,7 @@ import Link from "next/link";
 const Navbar = () => {
     const router = useRouter();
     const [searchInput, setSearchInput] = useState("");
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value);
@@ -17,6 +18,21 @@ const Navbar = () => {
         e.preventDefault();
         // Implement search functionality here
     };
+
+    const handleSignOut = () => {
+        localStorage.removeItem('access-token');
+        setIsAuthenticated(false);
+        router.push('/');
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem('access-token');
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, []);
 
     return (
         <div className="h-[80px] fixed inset-x-0 top-0 w-full z-[49] bg-white border-b">
@@ -48,22 +64,44 @@ const Navbar = () => {
                     </form>
                 </div>
                 <div className="flex items-center gap-x-2 ml-auto">
-                    <Link href="/signin" passHref>
-                        <button
-                            className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
-                            aria-label="Sign In"
-                        >
-                            Sign In
-                        </button>
-                    </Link>
-                    <Link href="/signup" passHref>
-                        <button
-                            className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
-                            aria-label="Sign Up"
-                        >
-                            Sign Up
-                        </button>
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <Link href="/profile" passHref>
+                                <button
+                                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
+                                    aria-label="Profile"
+                                >
+                                    Profile
+                                </button>
+                            </Link>
+                            <button
+                                onClick={handleSignOut}
+                                className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-red-500 h-9 rounded-md px-3"
+                                aria-label="Sign Out"
+                            >
+                                Sign Out
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link href="/signin" passHref>
+                                <button
+                                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
+                                    aria-label="Sign In"
+                                >
+                                    Sign In
+                                </button>
+                            </Link>
+                            <Link href="/signup" passHref>
+                                <button
+                                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
+                                    aria-label="Sign Up"
+                                >
+                                    Sign Up
+                                </button>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
