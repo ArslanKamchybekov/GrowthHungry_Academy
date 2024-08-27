@@ -93,7 +93,6 @@ const CourseProgressChapter: React.FC = () => {
                     <div className="flex flex-col max-w-screen-lg mx-auto pb-20 p-4">
                         <div>
                             <div className="border rounded-md p-6 flex flex-col lg:flex-row items-center justify-between bg-white">
-                                {/* Title should come from the courseData array such as Introduction to Programming for the first course */}
                                 <h2 className="text-lg lg:text-2xl font-semibold mb-2 lg:mb-0 lg:text-center">{currentDescription}</h2>
                             </div>
                         </div>
