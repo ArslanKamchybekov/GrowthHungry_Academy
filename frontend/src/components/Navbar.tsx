@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Search } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 const Navbar = () => {
     const router = useRouter();
     const [searchInput, setSearchInput] = useState("");
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const { id } = router.query;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value);
@@ -40,7 +41,7 @@ const Navbar = () => {
                 <Link href="/" passHref>
                     <div className="items-center gap-x-2 hidden lg:flex hover:opacity-75 transition-opacity cursor-pointer">
                         <div className="leading-tight">
-                            <p className="font-semibold text-base text-sky-700">Learning Management System</p>
+                            <p className="font-semibold text-base text-sky-700">GrowthHungry Academy</p>
                             <p className="text-xs text-muted-foreground text-sky-700">Build something great!</p>
                         </div>
                     </div>
@@ -66,7 +67,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-x-2 ml-auto">
                     {isAuthenticated ? (
                         <>
-                            <Link href="/profile" passHref>
+                            <Link href={`/profile/${id}`} passHref>
                                 <button
                                     className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3"
                                     aria-label="Profile"

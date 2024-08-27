@@ -14,7 +14,7 @@ const UserProfile = () => {
                 const token = localStorage.getItem("access-token");
                 if (!token) throw new Error("No token found");
 
-                const response = await fetch(`http://localhost:8000/user/66876fe62e7e5c8a4f8b4aeb`, { // replace with ${id}
+                const response = await fetch(`http://localhost:8000/user/${id}`, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",

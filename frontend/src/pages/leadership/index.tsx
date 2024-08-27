@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
 const Leadership = () => {
     const [leadershipData, setLeadershipData] = useState(null);
