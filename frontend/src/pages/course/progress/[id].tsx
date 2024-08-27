@@ -1,7 +1,6 @@
 import CourseProgressSidebar from "@/components/CourseProgressSidebar"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import styles from "../course.module.css";
 // import CourseProgressChapter from "./chapters/[id]";
 import { Course, CourseProgressProps } from "@/pages/types/types";
 import CourseProgressChapter from "./[id]/chapters/[chapterid]";

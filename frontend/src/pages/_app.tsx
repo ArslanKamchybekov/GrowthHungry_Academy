@@ -9,8 +9,8 @@ import Sidebar from "@/components/Sidebar";
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ReduxProvider>
-      <Navbar />
-      <Sidebar />
+      {/* <Navbar />
+      <Sidebar /> */}
       <Component {...pageProps} />
     </ReduxProvider>
   );
