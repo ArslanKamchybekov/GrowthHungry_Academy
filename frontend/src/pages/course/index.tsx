@@ -1,6 +1,5 @@
 "use client";
 import Navbar from '@/components/Navbar';
-import Sidebar from '@/components/Sidebar';
 import { BookOpen } from 'lucide-react';
 import styles from './course.module.css'; // Import CSS module
 import { useEffect } from 'react';
@@ -24,7 +23,6 @@ const Course = () => {
         <>
             <Navbar />
             <div className={styles.pageWrapper}>
-                <Sidebar/>
                 <main className={styles.mainContent}>
                     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                         <div className="order-1 col-span-1 lg:col-span-3 flex flex-col space-y-6">
