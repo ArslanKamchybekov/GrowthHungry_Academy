@@ -1,6 +1,7 @@
 // src/pages/index.tsx
 import React, { useState } from "react";
 import Navbar from '../components/Navbar';
+import { Search } from "lucide-react";
 
 const Home: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -25,7 +26,9 @@ const Home: React.FC = () => {
                 <h3 className="text-2xl mb-8 text-gray-600">Learn the latest technologies with our hands-on courses</h3>
                 <div className="flex items-center">
                     <input className="w-full px-5 py-3 mr-3 shadow-md rounded-lg" type="text" placeholder="What do you want to learn?"/>
-                    <button className="bg-blue-500 text-white px-5 py-3 rounded-lg">Search</button>
+                    <button className="bg-blue-500 text-white px-5 py-3 rounded-lg">
+                      <Search />
+                    </button>
                 </div>
             </div>
         </div>
