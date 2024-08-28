@@ -15,10 +15,16 @@ const Courses: React.FC = () => {
     router.push(`/course`);
   };
 
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem('access-token');
+
+        if (!token) {
+          router.push('/signin');
+        }
+
         const response = await fetch('http://localhost:8000/course/get', {
           method: 'GET',
           headers: {
@@ -45,7 +51,7 @@ const Courses: React.FC = () => {
     <div className="container mx-auto px-6 py-12">
       <h2 className="text-4xl font-bold mb-8 text-gray-800">Courses</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {courses.map((course) => (
+        {courses ? courses.map((course) => (
           <div
             key={course.id}
             className="bg-orange rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
@@ -62,7 +68,11 @@ const Courses: React.FC = () => {
               View Details
             </button>
           </div>
-        ))}
+        )) : (
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-sky-700"></div>
+          </div>
+        )}
       </div>
     </div>
   );
