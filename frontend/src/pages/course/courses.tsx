@@ -12,7 +12,7 @@ const Courses: React.FC = () => {
   const router = useRouter();
 
   const handleViewDetails = (courseId) => {
-    router.push(`/course`);
+    router.push(`/course/${courseId}`);
   };
 
 
