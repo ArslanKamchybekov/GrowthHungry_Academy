@@ -34,6 +34,7 @@ const CourseProgress = () => {
                 setLinks(data.courseData)
             } catch (error) {
                 console.error('Error fetching course:', error);
+                router.push('/signin');
             }
         }
 
