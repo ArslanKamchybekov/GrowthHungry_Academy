@@ -40,7 +40,7 @@ const Courses: React.FC = () => {
         const data = await response.json();
         setCourses(data);
       } catch (error) {
-        console.error('Error fetching courses:', error);
+        router.push('/signin');
       }
     }
 
