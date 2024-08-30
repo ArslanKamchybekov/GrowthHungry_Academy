@@ -111,9 +111,9 @@ const Courses: React.FC = () => {
             </div>
           ))
         ) : (
-          <p className="text-center col-span-full">
-            No courses found matching your search.
-          </p>
+          <div className="text-center font-semibold text-gray-600">
+            No courses found. Please try a different search term.
+          </div>
         )}
       </div>
     </div>

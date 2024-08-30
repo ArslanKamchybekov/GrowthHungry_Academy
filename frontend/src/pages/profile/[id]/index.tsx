@@ -6,7 +6,7 @@ const UserProfile = () => {
     const router = useRouter();
     const { id } = router.query;
     const [profileData, setProfileData] = useState(null);
-    const [courses, setCourses] = useState([]); // State to store course names
+    const [courses, setCourses] = useState([]);
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -26,7 +26,7 @@ const UserProfile = () => {
                 }
 
                 const data = await response.json();
-                const courseIds = data.courses.map(course => course._id); // Extract _id from each course object
+                const courseIds = data.courses.map(course => course._id);
                 setProfileData(data);
 
                 if (courseIds.length > 0) {
@@ -42,7 +42,6 @@ const UserProfile = () => {
         fetchUserProfile();
     }, [id]);
 
-    // Function to fetch course names based on an array of course IDs
     const fetchCourses = async (courseIds) => {
         try {
             const token = localStorage.getItem("access-token");
@@ -63,10 +62,9 @@ const UserProfile = () => {
                 }
 
                 const data = await response.json();
-                return data.name; // Assuming the course object has a name property
+                return data.name;
             });
 
-            // Wait for all course names to be fetched
             const courseNames = await Promise.all(coursePromises);
             return courseNames;
         } catch (error) {
@@ -111,8 +109,8 @@ const UserProfile = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex justify-center">
-                        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-sky-700"></div>
+                    <div className="flex justify-center mt-16">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-700"></div>
                     </div>
                 )}
             </div>

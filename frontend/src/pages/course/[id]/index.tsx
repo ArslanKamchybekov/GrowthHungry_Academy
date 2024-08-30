@@ -65,12 +65,12 @@ const Course = () => {
       {/* Mobile Navigation */}
       <nav className="bg-white border-b md:hidden">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-xl font-bold">Course</h1>
+          <h1 className="text-xl font-bold">{course?.name || "Course Name"}</h1>
           <button
             className="text-gray-800 focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={20} />}
           </button>
         </div>
         {isMobileMenuOpen && (
@@ -80,6 +80,9 @@ const Course = () => {
             </a>
             <a href="/leadership" className="text-gray-800 hover:text-gray-600">
               Leadership
+            </a>
+            <a href="/profile" className="text-gray-800 hover:text-gray-600">
+              Profile
             </a>
             <a href="/signout" className="text-gray-800 hover:text-gray-600">
               Sign Out
@@ -94,9 +97,9 @@ const Course = () => {
       </div>
 
       {/* Page Wrapper */}
-      <div className={`p-4 md:p-8 ${styles.pageWrapper}`}>
+      <div className={`p-2 md:p-8 ${styles.pageWrapper}`}>
         <main className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
             {/* Course Content */}
             <div className="order-1 col-span-1 lg:col-span-3 flex flex-col space-y-6">
               <div className="border rounded-md overflow-hidden bg-white">
