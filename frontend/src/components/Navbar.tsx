@@ -34,7 +34,7 @@ const Navbar = () => {
                         <img src="/assets/logo.png" alt="GrowthHungry Logo" className="h-8 w-8" />
                         <div className="leading-tight m-2">
                             <p className="font-semibold text-base text-sky-700">GrowthHungry Academy</p>
-                            <p className="text-xs text-muted-foreground text-sky-700">Build something great!</p>
+                            <p className="text-xs text-muted-foreground text-sky-700">Compound your learning!</p>
                         </div>
                     </div>
                 </Link>

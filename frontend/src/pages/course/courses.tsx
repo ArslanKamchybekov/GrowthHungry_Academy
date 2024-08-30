@@ -92,7 +92,7 @@ const Courses: React.FC = () => {
           filteredCourses.map((course) => (
             <div
               key={course.id}
-              className="bg-orange-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
+              className="bg-blue-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
             >
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                 {course.name}
