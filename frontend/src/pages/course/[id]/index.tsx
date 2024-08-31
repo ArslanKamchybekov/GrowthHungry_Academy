@@ -119,9 +119,9 @@ const Course = () => {
               </div>
               <div className="border rounded-md p-6 bg-white">
                 <div className="flex items-center gap-x-2 mb-3">
-                  <div className="inline-flex items-center border rounded-md px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-sky-500/10 text-sky-800">
+                  <div className="inline-flex items-center border rounded-md px-2.5 py-0.5 text-xs font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-sky-500/10 text-sky-800">
                     <BookOpen className="mr-1" />
-                    <span>{course?.chapters?.length || 0} chapters</span>
+                    <span>{course?.courseData.length || 0} Chapters</span>
                   </div>
                 </div>
                 <h3 className="font-semibold text-lg md:text-2xl mb-2 capitalize">
@@ -130,11 +130,6 @@ const Course = () => {
                 <p className="text-sm text-muted-foreground mb-4">
                   {course?.description || "Course description goes here."}
                 </p>
-                <div className="mt-4">
-                  <p className="font-medium text-sky-700 text-xs">
-                    {course?.progress || 0}% Complete
-                  </p>
-                </div>
               </div>
             </div>
 

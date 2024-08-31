@@ -1,77 +1,90 @@
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import styles from "../../../course.module.css"
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import styles from "../../../course.module.css";
 import CourseProgressSidebar from "@/components/CourseProgressSidebar";
-import { Course, CourseProgressProps } from "@/pages/types/types";
+import { Course, Chapter } from "@/pages/types/types";
+import Navbar from "@/components/Navbar";
 
 const CourseProgressChapter: React.FC = () => {
     const router = useRouter();
     const { id, chapterid } = router.query; 
     const [loading, setLoading] = useState(true);
-    const [title, setTitle] = useState("")
+    const [error, setError] = useState<string | null>(null);
+    const [title, setTitle] = useState("");
     const [links, setLinks] = useState<Course[]>([]);
     const [video, setVideo] = useState("");
-    const [currentDescription, setCurrentDescription] = useState("")
+    const [currentChapter, setCurrentChapter] = useState("");
+    const [currentDescription, setCurrentDescription] = useState("");
 
     useEffect(() => {
-        if (id && chapterid) {
-            console.log("Course ID: " + id);
-            console.log("Chapter ID: " + chapterid);
-            setLoading(false)
+        const fetchCourse = async () => {
+            if (!id || !chapterid) return;
+            
+            try {
+                setLoading(true);
+                setError(null); 
+                
+                const token = localStorage.getItem('access-token');
+                if (!token) router.push('/signin');
 
-            const fetchCourse = async () => {
-                try {
-                    const token = localStorage.getItem('access-token');
-                    if (!token) throw new Error('No token found');
-    
-                    const response = await fetch(`http://localhost:8000/course/content/${id}`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    if (!response.ok) {
-                        throw new Error('Course not found');
-                    }
-                    const data = await response.json();
-                    console.log(data)
-                    setTitle(data.name)
-                    setLinks(data.courseData)
-                } catch (error) {
-                    console.error('Error fetching course:', error);
+                const response = await fetch(`http://localhost:8000/course/content/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch course. Please try again later.');
                 }
+
+                const data = await response.json();
+                setTitle(data.name);
+                setLinks(data.courseData);
+            } catch (error: any) {
+                setError(error.message || 'An error occurred');
+            } finally {
+                setLoading(false);
             }
-    
-            fetchCourse()
-        }        
-    }, [id, chapterid]); 
+        };
+
+        fetchCourse();
+    }, [id, chapterid]);
 
     useEffect(() => {
         if (links.length > 0 && chapterid) {
             const chapterData = links.find((item) => item._id === chapterid);
-            console.log("Chapter Data: ", chapterData);
 
             if (chapterData) {
                 setVideo(chapterData.videoUrl as string);
                 setCurrentDescription(chapterData.description);
+                setCurrentChapter(chapterData.title);
             }
         }
     }, [links, chapterid]);
 
     if (loading) {
-        return <div>Loading...</div>
+        return (
+          <div className="flex justify-center items-center h-screen">
+            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+          </div>
+        );
+      }
+
+    if (error) {
+        return <div>Error: {error}</div>;
     }
 
     return (
         <>
             <CourseProgressSidebar id={id as string} titleCourse={title} links={links} />
             <main className="lg:pl-80 pt-[80px] h-full">
-                <div>
+                <div className="max-w-4xl mx-auto px-4 py-6">
                     <div className="mb-6">
-                        <div className="relative aspect-video overflow-hidden bg-slate-100">
-                            <div className="absolute inset-y-0 inset-x-0 w-full h-full" data-vimeo-initialized="true">
-                                <div className={styles.videoContainer}>
-                                    {video && video.length > 0 ? (
+                        <div className="relative aspect-video overflow-hidden bg-slate-100 rounded-md shadow-lg">
+                            <div className="absolute inset-0 w-full h-full" data-vimeo-initialized="true">
+                                <div className={`${styles.videoContainer} w-full h-full`}>
+                                    {video ? (
                                         <iframe
                                             src={video.replace('youtu.be/', 'www.youtube.com/embed/')}
                                             title="YouTube video player"
@@ -79,28 +92,38 @@ const CourseProgressChapter: React.FC = () => {
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen
-                                            className={styles.videoIframe}
-                                            width={640}
-                                            height={360}
+                                            className={`${styles.videoIframe} w-full h-full rounded-md`}
                                         ></iframe>
                                     ) : (
-                                        <div>No video available</div>    
+                                        <div className="flex items-center justify-center w-full h-full text-white text-lg font-bold">
+                                        
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col max-w-screen-lg mx-auto pb-20 p-4">
-                        <div>
-                            <div className="border rounded-md p-6 flex flex-col lg:flex-row items-center justify-between bg-white">
-                                <h2 className="text-lg lg:text-2xl font-semibold mb-2 lg:mb-0 lg:text-center">{currentDescription}</h2>
+                    <div className="bg-white p-6 rounded-md shadow-lg">
+                        <h2 className="text-3xl font-bold mb-4">{currentChapter}</h2>
+                        <p className="text-gray-700 mb-4">{currentDescription}</p>
+                        <div className="flex flex-col lg:flex-row gap-4 mt-6">
+                            <button className="bg-green-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                                Mark as completed
+                            </button>
+                            <div className="flex space-x-4">
+                                <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                                    Previous chapter
+                                </button>
+                                <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                                    Next chapter
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </main>
         </>
-    )
-}
+    );    
+};
 
-export default CourseProgressChapter
+export default CourseProgressChapter;

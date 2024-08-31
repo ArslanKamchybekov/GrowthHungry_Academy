@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 // import CourseProgressChapter from "./chapters/[id]";
 import { Course, CourseProgressProps } from "@/pages/types/types";
 import CourseProgressChapter from "./[id]/chapters/[chapterid]";
+import Navbar from "@/components/Navbar";
 
 const CourseProgress = () => {
     const router = useRouter()
