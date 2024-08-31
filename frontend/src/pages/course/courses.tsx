@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 type Course = {
-  id: number;
+  _id: string;
   name: string;
   description?: string; 
   prerequisites?: string;
@@ -16,7 +16,7 @@ const Courses: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const router = useRouter();
 
-  const handleViewDetails = (courseId: number) => {
+  const handleViewDetails = (courseId: string) => {
     router.push(`/course/${courseId}`);
   };
 
@@ -61,6 +61,7 @@ const Courses: React.FC = () => {
         const data = await response.json();
         setCourses(data);
         setFilteredCourses(data); // Set initial filtered courses to all courses
+        console.log(data)
       } catch (error) {
         console.error("Error fetching courses:", error);
         router.push("/signin");
@@ -91,7 +92,7 @@ const Courses: React.FC = () => {
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
             <div
-              key={course.id}
+              key={course._id}
               className="bg-blue-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
             >
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">
@@ -103,7 +104,7 @@ const Courses: React.FC = () => {
                 {course.prerequisites}
               </p>
               <button
-                onClick={() => handleViewDetails(course.id)}
+                onClick={() => handleViewDetails(course?._id.toString())}
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               >
                 View Details
