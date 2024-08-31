@@ -4,7 +4,6 @@ export interface ICourseData {
     title: string;
     description: string;
     videoUrl: string;
-    videoLength: number;
 }
 export interface ICourse {
     name: string;
@@ -17,7 +16,6 @@ const CourseDataSchema: Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     videoUrl: { type: String},
-    videoLength: { type: Number, required: true }
 });
 const CourseSchema: Schema = new Schema({
     name: { type: String, required: true },

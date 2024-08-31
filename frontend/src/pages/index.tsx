@@ -1,22 +1,9 @@
 // src/pages/index.tsx
-import React, { useState } from "react";
+import React from "react";
 import Navbar from '../components/Navbar';
-import { Search } from "lucide-react";
 import Courses from "./course/courses";
 
 const Home: React.FC = () => {
-  const [searchInput, setSearchInput] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value);
-    console.log(e.target.value);
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      
-  };
-
   return (
     <>
       <Navbar />

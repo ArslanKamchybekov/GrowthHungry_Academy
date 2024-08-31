@@ -19,7 +19,7 @@ export class CourseService {
 
     async getAll() {
         try {
-            return Course.find().select('-courseData.videoUrl').exec();
+            return Course.find().exec();
         } catch (error) {
             throw new Error(`Error fetching courses: ${error.message}`);
         }
@@ -27,7 +27,7 @@ export class CourseService {
 
     async get(id: string) {
         try {
-            return Course.findById(id).select('-courseData.videoUrl ').exec();
+            return Course.findById(id).select('-courseData.videoUrl').exec();
         } catch (error) {
             throw new Error(`Error fetching course with id ${id}: ${error.message}`);
         }

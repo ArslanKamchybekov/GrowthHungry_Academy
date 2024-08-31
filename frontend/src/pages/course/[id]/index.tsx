@@ -117,12 +117,6 @@ const Course = () => {
             <a href="/leadership" className="text-gray-800 hover:text-gray-600">
               Leadership
             </a>
-            <a href="/profile" className="text-gray-800 hover:text-gray-600">
-              Profile
-            </a>
-            <a href="/signout" className="text-gray-800 hover:text-gray-600">
-              Sign Out
-            </a>
           </div>
         )}
       </nav>
@@ -169,7 +163,7 @@ const Course = () => {
 
             <div className="order-2 lg:col-span-2 flex flex-col space-y-6">
               <div className="border rounded-md p-6 text-secondary bg-white">
-                <div className="mb-7">
+                <div>
                   <h4 className="font-semibold text-xl mb-4">Ready to learn?</h4>
                   <p className="text-gray-700">
                     Start your learning journey and track your progress through the course.
@@ -177,20 +171,18 @@ const Course = () => {
                 </div>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                  className="my-4 inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
                   onClick={handleEnroll}
                 >
                   Start course
                 </button>
-              </div>
-              <div className="border rounded-md p-6 text-secondary bg-white">
-                  <button
+                <button
                     type="button"
-                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-red-500 text-red-500"
                     onClick={handleUnenroll}
                   >
                     Unenroll
-                  </button>
+                </button>
               </div>
             </div>
           </div>

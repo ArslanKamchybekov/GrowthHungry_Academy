@@ -2,11 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
+import useCurrentUser from "@/hooks/useAuth";
 
 type Course = {
   _id: string;
   name: string;
-  description?: string; 
+  description?: string;
   prerequisites?: string;
 };
 
@@ -14,6 +15,8 @@ const Courses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>("");
+  const { user } = useCurrentUser();
   const router = useRouter();
 
   const handleViewDetails = (courseId: string) => {
@@ -35,6 +38,33 @@ const Courses: React.FC = () => {
     );
     setFilteredCourses(filtered);
   };
+
+  // const handleDeleteCourse = async (courseId: string) => {
+  //   try {
+  //     const token = localStorage.getItem("access-token");
+  //     if (!token) {
+  //       router.push("/signin");
+  //       return;
+  //     }
+
+  //     const response = await fetch(`http://localhost:8000/course/delete/${courseId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to delete course");
+  //     }
+
+  //     setCourses(courses.filter((course) => course._id !== courseId));
+  //     setFilteredCourses(filteredCourses.filter((course) => course._id !== courseId));
+  //   } catch (error) {
+  //     console.error("Error deleting course:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -60,16 +90,43 @@ const Courses: React.FC = () => {
 
         const data = await response.json();
         setCourses(data);
-        setFilteredCourses(data); // Set initial filtered courses to all courses
-        console.log(data)
+        setFilteredCourses(data);
       } catch (error) {
         console.error("Error fetching courses:", error);
         router.push("/signin");
       }
     };
 
+    // const fetchUserRole = async () => {
+    //   try {
+    //     const token = localStorage.getItem("access-token");
+
+    //     if (!token || !user) {
+    //       console.log(user)
+    //     }
+
+    //     const response = await fetch(`http://localhost:8000/user/${user.userId}`, {
+    //       method: "GET",
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     });
+
+    //     if (!response.ok) {
+    //       throw new Error("Failed to fetch user role");
+    //     }
+
+    //     const userData = await response.json();
+    //     setUserRole(userData.role);
+    //   } catch (error) {
+    //     console.error("Error fetching user role:", error);
+    //     router.push("/signin");
+    //   }
+    // };
+
     fetchCourses();
-  }, []);
+  }, [router]);
 
   return (
     <div className="container mx-auto px-6 py-8">
@@ -104,7 +161,7 @@ const Courses: React.FC = () => {
                 {course.prerequisites}
               </p>
               <button
-                onClick={() => handleViewDetails(course?._id.toString())}
+                onClick={() => handleViewDetails(course._id)}
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
               >
                 View Details

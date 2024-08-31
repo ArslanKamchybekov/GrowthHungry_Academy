@@ -28,13 +28,15 @@ export class CourseController {
     @Get('/get')
     async getCourses() {
         try {
-            const cachedCourses = await redis.get('courses');
-            if (cachedCourses) return JSON.parse(cachedCourses);
-            else{
-                const courses = await this.courseService.getAll();
-                await redis.set('courses', JSON.stringify(courses));
-                return courses;
-            }
+            // const cachedCourses = await redis.get('courses');
+            // if (cachedCourses) return JSON.parse(cachedCourses);
+            // else{
+            //     const courses = await this.courseService.getAll();
+            //     await redis.set('courses', JSON.stringify(courses));
+            //     return courses;
+            // }
+            const courses = await this.courseService.getAll();
+            return courses;
         } catch (error) {
             return { error: error.message };
         }
