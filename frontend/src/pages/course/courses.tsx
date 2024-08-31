@@ -13,8 +13,9 @@ const Courses: React.FC = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('/api/courses');
+        const response = await fetch('http://localhost:8000/course/get');
         const data: Course[] = await response.json();
+        console.log("All Courses Data: " + data);
         setCourses(data);
       } catch (error) {
         console.error('Error fetching courses:', error);
@@ -28,9 +29,9 @@ const Courses: React.FC = () => {
     <div>
       <h1>Courses</h1>
       <ul>
-        {courses.map((course) => (
+        {/* {courses.map((course) => (
           <li key={course.id}>{course.name}</li>
-        ))}
+        ))} */}
       </ul>
     </div>
   );

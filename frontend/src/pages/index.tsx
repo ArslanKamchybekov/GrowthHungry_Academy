@@ -1,6 +1,7 @@
 // src/pages/index.tsx
 import React, { useState } from "react";
 import Navbar from '../components/Navbar';
+import Courses from "./course/courses";
 
 const Home: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -29,6 +30,7 @@ const Home: React.FC = () => {
                 </div>
             </div>
         </div>
+        <Courses />
     </>
   );
 };
