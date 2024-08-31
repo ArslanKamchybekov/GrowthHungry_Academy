@@ -77,7 +77,7 @@ const UserProfile = () => {
         <>
             <Navbar />
             <div className="container mx-auto px-4 py-8 mt-16">
-                <h1 className="text-3xl font-bold text-center mb-4">My Profile</h1>
+                <h1 className="text-3xl font-bold text-center my-8">My Profile</h1>
                 {profileData ? (
                     <div className="flex justify-center">
                         <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">

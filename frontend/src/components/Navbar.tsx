@@ -1,14 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useCurrentUser from "../hooks/useAuth";
 
 const Navbar = () => {
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State for mobile menu toggle
-    const { id } = router.query;
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { user, loading, error } = useCurrentUser();
 
     const handleSignOut = () => {
         localStorage.removeItem("access-token");
@@ -17,6 +18,7 @@ const Navbar = () => {
     };
 
     useEffect(() => {
+        console.log("User:", user);
         const token = localStorage.getItem("access-token");
         if (token) {
             setIsAuthenticated(true);
@@ -50,7 +52,7 @@ const Navbar = () => {
                                         Leadership
                                     </button>
                                 </Link>
-                                <Link href={`/profile/${id}`} passHref>
+                                <Link href={`/profile/${user?.userId}`} passHref>
                                     <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
                                         Profile
                                     </button>
@@ -97,7 +99,7 @@ const Navbar = () => {
                                     Leadership
                                 </button>
                             </Link>
-                            <Link href={`/profile/${id}`} passHref>
+                            <Link href={`/profile/${user?.userId}`} passHref>
                                 <button className="block w-full text-left text-sm font-medium transition-colors hover:bg-gray-100 py-2 px-4">
                                     Profile
                                 </button>

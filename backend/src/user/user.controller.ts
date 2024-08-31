@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Req, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import UserModel, { IUser } from 'src/models/user.model';
 import { UserService } from './user.service';
 import { RolesGuard } from 'src/auth/roles.guard';
@@ -6,7 +6,6 @@ import { Roles } from 'src/auth/roles.decorator';
 import { JwtGuard } from 'src/auth/jwt-auth.guard';
 
 @UseGuards(JwtGuard, RolesGuard)
-@Roles('admin')
 @Controller('user')
 export class UserController {
     constructor(private readonly userService : UserService){}
@@ -21,6 +20,16 @@ export class UserController {
         }
     }
 
+    @Get('/me')
+    async getMe(@Req() req: any) { 
+        try {
+            return req.user;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+      
+
     @Get(':id')
     async getUser(@Param ('id')id:string) { 
         try {
@@ -31,6 +40,7 @@ export class UserController {
     }
 
     @Delete('/delete/:id')
+    @Roles('admin')
     async deleteUser(@Param ('id')id:string) { 
         try {
             this.userService.delete(id);
@@ -40,6 +50,7 @@ export class UserController {
     }
 
    @Put('/update/:id')
+   @Roles('admin')
    async updateUser(@Param ('id')id:string, @Body ()user: IUser) { 
         try {
             const updatedUser = await this.userService.update(id, user);

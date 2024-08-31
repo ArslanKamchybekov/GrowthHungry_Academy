@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Navbar from "@/components/Navbar";
 import { BookOpen, Menu, X } from "lucide-react";
 import styles from "../course.module.css";
 import { useRouter, useParams } from "next/navigation";
+import useCurrentUser from "@/hooks/useAuth";
 
 const Course = () => {
   const router = useRouter();
@@ -12,6 +13,7 @@ const Course = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useCurrentUser();
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -22,8 +24,6 @@ const Course = () => {
           router.push("/signin");
           return;
         }
-
-        console.log("ID: " + id);
 
         const response = await fetch(`http://localhost:8000/course/${id}`, {
           method: "GET",
@@ -38,17 +38,51 @@ const Course = () => {
         }
 
         const data = await response.json();
-        setCourse(data); // Set the course data in state
-      } catch (error) {
+        setCourse(data);
+      } catch (error: any) {
         console.error("Error fetching course:", error);
         setError(error.message);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching
+        setIsLoading(false);
       }
     };
 
     fetchCourse();
   }, [id, router]);
+
+  const handleEnroll = async () => {
+    try {
+      const token = localStorage.getItem("access-token");
+      
+      if (!token) {
+        router.push("/signin");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:8000/user/enroll/${user?.userId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to enroll in course");
+      }
+
+      router.push(`/course/progress/${id}`);
+    } catch (error) {
+      console.error("Error enrolling in course:", error);
+    }
+  };
+
+  const handleUnenroll = async () => {
+    // Aleks & Aida: Implement unenroll functionality here
+    // Hint: You can use the same endpoint as the enroll functionality
+    // Test the functionality by first enrolling in a course and then unenrolling and checking if the course is removed from the user's profile
+  }
 
   if (isLoading) {
     return (
@@ -143,10 +177,20 @@ const Course = () => {
                 </div>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                  className="inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                  onClick={handleEnroll}
                 >
-                  <a href={`/course/progress/${id}`}>Start course</a>
+                  Start course
                 </button>
+              </div>
+              <div className="border rounded-md p-6 text-secondary bg-white">
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                    onClick={handleUnenroll}
+                  >
+                    Unenroll
+                  </button>
               </div>
             </div>
           </div>

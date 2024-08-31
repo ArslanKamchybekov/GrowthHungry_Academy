@@ -56,7 +56,7 @@ export class CourseController {
         }
     }
 
-    @UseGuards(CourseAccessGuard)
+    // @UseGuards(CourseAccessGuard)
     @Get('/content/:id')
     async getCourseContent(@Param('id') id: string) {
         try {
