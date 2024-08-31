@@ -23,6 +23,8 @@ const Course = () => {
           return;
         }
 
+        console.log("ID: " + id);
+
         const response = await fetch(`http://localhost:8000/course/${id}`, {
           method: "GET",
           headers: {
