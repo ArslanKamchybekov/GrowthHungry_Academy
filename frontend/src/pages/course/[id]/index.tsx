@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
-import { BookOpen, Menu, X } from "lucide-react";
+import { BookOpen, Link, Menu, X } from "lucide-react";
 import styles from "../course.module.css";
 import { useRouter, useParams } from "next/navigation";
 import useCurrentUser from "@/hooks/useAuth";
@@ -182,13 +182,23 @@ const Course = () => {
             <div className="order-2 lg:col-span-2 flex flex-col space-y-6">
               <div className="border rounded-md p-6 text-secondary bg-white">
                 {isEnrolled ? (
-                  <button
-                    type="button"
-                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-red-500 text-red-500"
-                    onClick={handleUnenroll}
-                  >
-                    Unenroll
-                  </button>
+                  // Add a button to unenroll from the course, continue the course
+                  <div className="flex flex-col items-center justify-between">
+                    <button
+                      type="button"
+                      className="my-2 inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                      onClick={() => router.push(`/course/progress/${id}`)}
+                    >
+                      Continue course
+                    </button>
+                    <button
+                      type="button"
+                      className="my-2 inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-red-500 text-red-500"
+                      onClick={handleUnenroll}
+                    >
+                      Unenroll
+                    </button>
+                  </div>
                 ) : (
                   <button
                     type="button"
