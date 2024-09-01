@@ -108,7 +108,7 @@ const Home: React.FC = () => {
                 </button>
               </Link>
               <a href="https://wa.me/2243432210" target="_blank" rel="noopener noreferrer">
-                <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-600 transition mx-4">
+                <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-600 transition m-4">
                   Contact Us on WhatsApp
                 </button>
               </a>

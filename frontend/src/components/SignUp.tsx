@@ -7,20 +7,43 @@ const SignUp: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setProfilePicture(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setPreview(null);
+    }
+  };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+
+      // if (profilePicture) {
+      //   formData.append('avatar', profilePicture);
+      // }
+
       const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -39,7 +62,7 @@ const SignUp: React.FC = () => {
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sign up</h2>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} encType="multipart/form-data">
           <div className="mb-4">
             <label className="block text-gray-700">Name</label>
             <input
@@ -60,7 +83,7 @@ const SignUp: React.FC = () => {
               required
             />
           </div>
-          <div className="mb-4 relative">
+          <div className="mb-4">
             <label className="block text-gray-700">Password</label>
             <input
               type="password"
@@ -70,6 +93,24 @@ const SignUp: React.FC = () => {
               required
             />
           </div>
+          {/* <div className="mb-4">
+            <label className="block text-gray-700">Profile Picture</label>
+            <input
+              type="file"
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-gray-300"
+              onChange={handleProfilePictureChange}
+              accept="image/*"
+            />
+            {preview && (
+              <div className="mt-4">
+                <img
+                  src={preview}
+                  alt="Profile Preview"
+                  className="w-24 h-24 rounded-full object-cover"
+                />
+              </div>
+            )}
+          </div> */}
           <button
             type="submit"
             className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
@@ -88,8 +129,8 @@ const SignUp: React.FC = () => {
         </form>
       </div>
       <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">Supported by GrowthHungry Academy</p>
-        </div>
+        <p className="text-sm text-gray-600">Supported by GrowthHungry Academy</p>
+      </div>
     </div>
   );
 };

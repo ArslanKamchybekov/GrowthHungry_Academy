@@ -7,7 +7,8 @@ const UserProfile = () => {
   const { id } = router.query;
   const [profileData, setProfileData] = useState(null);
   const [courses, setCourses] = useState([]);
-  const [userRole, setUserRole] = useState(""); // State to manage user role
+  const [userRole, setUserRole] = useState("");
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -39,6 +40,9 @@ const UserProfile = () => {
           const coursesResponse = await fetchCourses(courseIds);
           setCourses(coursesResponse);
         }
+
+        fetchUsers();
+
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -46,6 +50,29 @@ const UserProfile = () => {
 
     fetchUserProfile();
   }, [id]);
+
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch("http://localhost:8000/user/get", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  }
 
   const fetchCourses = async (courseIds) => {
     try {
@@ -76,6 +103,31 @@ const UserProfile = () => {
       return [];
     }
   };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch(`http://localhost:8000/user/delete/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+
+      router.push("/");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  }
 
   const handleDeleteCourse = async (courseId) => {
     try {
@@ -184,6 +236,29 @@ const UserProfile = () => {
                         <button
                           className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteCourse(course.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-center mt-8">
+              <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-semibold">Users</h2>
+                </div>
+                <div className="mt-6 space-y-4">
+                  {users.map((user) => (
+                    <div key={user.id} className="flex items-center justify-between space-x-4">
+                      <span className="text-gray-800 font-medium">{user.name}</span>
+                      <span className="text-gray-800 font-medium">{user.role}</span>
+                      <div className="flex space-x-4">
+                        <button
+                          className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                          onClick={() => handleDeleteUser(user._id)}
                         >
                           Delete
                         </button>

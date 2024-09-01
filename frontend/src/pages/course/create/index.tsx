@@ -212,13 +212,13 @@ const CreateCourseForm: React.FC = () => {
             )}
           </div>
         ))}
-        <button type="button" onClick={addCourseData} className="bg-blue-500 text-white px-3 py-1 rounded">
+        <button type="button" onClick={addCourseData} className="bg-gray-800 text-white px-4 py-1 rounded font-semibold hover:bg-gray-700 transition">
           Add Course Data
         </button>
       </div>
 
       {/* Submit Button */}
-      <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+      <button type="submit" className="bg-blue-800 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
         Create Course
       </button>
     </form>

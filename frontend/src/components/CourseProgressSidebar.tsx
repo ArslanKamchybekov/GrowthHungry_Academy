@@ -1,9 +1,9 @@
 import { CourseProgressProps } from "../pages/types/types";
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Icons for toggling the mobile menu
+import { Menu, X } from "lucide-react";
 
 const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse, links }) => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State to toggle mobile menu
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -34,7 +34,7 @@ const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse,
                 <div className="h-full border-r flex flex-col shadow-sm bg-white">
                     <div className="p-8 flex flex-col border-b">
                         <a href="/" className="flex items-center mb-4">
-                            <span className="font-bold text-black">{titleCourse}</span>
+                            <span className="font-bold">{titleCourse}</span>
                         </a>
                         <div className="mt-4">
                             <div>
@@ -64,7 +64,7 @@ const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse,
                                 <div style={{ minWidth: 100, display: "table" }}>
                                     {links?.map((link, index) => (
                                         <a key={index} href={`/course/progress/${id}/chapters/${link._id}`}>
-                                            <div className="flex w-full text-sm items-center p-5 border-b hover:bg-muted transition-background group text-emerald-700">
+                                            <div className="flex w-full text-sm items-center p-5 border-b hover:bg-muted transition-background group">
                                                 {link.title}
                                             </div>
                                         </a>

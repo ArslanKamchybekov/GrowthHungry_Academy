@@ -47,5 +47,3 @@ useEffect(() => {
 
                 
 1. Fix the progress landing page
-2. Spread out the mobile nav menu
-3. Update profile functionality
