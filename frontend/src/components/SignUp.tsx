@@ -76,6 +76,14 @@ const SignUp: React.FC = () => {
           >
             Sign up
           </button>
+          <div className="mt-4 text-center">
+            <p className="text-gray-600">
+              Already have an account?{' '}
+              <a href="/signin" className="text-blue-600">
+                Log in
+              </a>
+            </p>
+          </div>
           {error && <p className="mt-2 text-red-600">{error}</p>}
         </form>
       </div>
