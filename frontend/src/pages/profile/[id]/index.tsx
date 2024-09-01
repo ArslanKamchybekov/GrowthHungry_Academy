@@ -13,7 +13,10 @@ const UserProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem("access-token");
-        if (!token) throw new Error("No token found");
+        if (!token){
+            router.push("/signin");
+            return;
+        }
 
         const response = await fetch(`http://localhost:8000/user/${id}`, {
           headers: {
@@ -29,7 +32,7 @@ const UserProfile = () => {
         const data = await response.json();
         const courseIds = data.courses.map((course) => course._id);
         setProfileData(data);
-        setUserRole(data.role); // Set the role of the user
+        setUserRole(data.role);
 
         if (courseIds.length > 0) {
           // Fetch course names based on courseIds
@@ -91,14 +94,22 @@ const UserProfile = () => {
         throw new Error("Failed to delete course");
       }
 
-      setCourses(courses.filter((course) => course.id !== courseId));
+      const unenrollResponse = await fetch(`http://localhost:8000/user/unenroll/${id}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: courseId }),
+      });
+
+        if (!unenrollResponse.ok) {
+            throw new Error("Failed to unenroll user from course");
+        }
+      setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId));
     } catch (error) {
       console.error("Error deleting course:", error);
     }
-  };
-
-  const handleEditCourse = (courseId) => {
-    router.push(`/course/edit/${courseId}`);
   };
 
   return (
@@ -162,12 +173,6 @@ const UserProfile = () => {
                     <div key={course.id} className="flex items-center justify-between">
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
-                        <button
-                          className="text-white bg-green-500 hover:bg-green-700 px-4 py-2 rounded"
-                          onClick={() => handleEditCourse(course.id)}
-                        >
-                          Edit
-                        </button>
                         <button
                           className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded"
                           onClick={() => handleDeleteCourse(course.id)}

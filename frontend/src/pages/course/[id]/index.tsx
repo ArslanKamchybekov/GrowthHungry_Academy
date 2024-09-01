@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import { BookOpen, Menu, X } from "lucide-react";
 import styles from "../course.module.css";
@@ -14,6 +14,7 @@ const Course = () => {
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user } = useCurrentUser();
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -39,7 +40,23 @@ const Course = () => {
 
         const data = await response.json();
         setCourse(data);
-      } catch (error: any) {
+        
+        // Check if the user is enrolled in the course
+        const userResponse = await fetch(`http://localhost:8000/user/${user?.userId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          const enrolledCourses = userData.courses || [];
+          setIsEnrolled(enrolledCourses.some(course => course._id === id));
+        }
+
+      } catch (error) {
         console.error("Error fetching course:", error);
         setError(error.message);
       } finally {
@@ -48,12 +65,12 @@ const Course = () => {
     };
 
     fetchCourse();
-  }, [id, router]);
+  }, [id, router, user]);
 
   const handleEnroll = async () => {
     try {
       const token = localStorage.getItem("access-token");
-      
+
       if (!token) {
         router.push("/signin");
         return;
@@ -72,6 +89,7 @@ const Course = () => {
         throw new Error("Failed to enroll in course");
       }
 
+      setIsEnrolled(true);
       router.push(`/course/progress/${id}`);
     } catch (error) {
       console.error("Error enrolling in course:", error);
@@ -82,7 +100,7 @@ const Course = () => {
     // Aleks & Aida: Implement unenroll functionality here
     // Hint: You can use the same endpoint as the enroll functionality
     // Test the functionality by first enrolling in a course and then unenrolling and checking if the course is removed from the user's profile
-  }
+  };
 
   if (isLoading) {
     return (
@@ -163,26 +181,23 @@ const Course = () => {
 
             <div className="order-2 lg:col-span-2 flex flex-col space-y-6">
               <div className="border rounded-md p-6 text-secondary bg-white">
-                <div>
-                  <h4 className="font-semibold text-xl mb-4">Ready to learn?</h4>
-                  <p className="text-gray-700">
-                    Start your learning journey and track your progress through the course.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  className="my-4 inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
-                  onClick={handleEnroll}
-                >
-                  Start course
-                </button>
-                <button
+                {isEnrolled ? (
+                  <button
                     type="button"
                     className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-red-500 text-red-500"
                     onClick={handleUnenroll}
                   >
                     Unenroll
-                </button>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="my-4 inline-flex items-center justify-center text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-3 w-full border border-solid border-black"
+                    onClick={handleEnroll}
+                  >
+                    Start course
+                  </button>
+                )}
               </div>
             </div>
           </div>
