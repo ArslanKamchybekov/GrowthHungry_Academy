@@ -122,22 +122,49 @@ const Home: React.FC = () => {
         </>
       )}
       {/* Footer */}
-      <footer className="bg-white text-black py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p>&copy; 2024 GrowthHungry Academy. All rights reserved.</p>
-          <div className="flex justify-center mt-4">
-            <a href="https://www.growthhungry.life/" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/logo.png" alt="Website" width={24} height={24} className="mx-2"/>
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-6">
+          {/* Footer top section */}
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            {/* Company info and logo */}
+            <div className="text-center md:text-left mb-6 md:mb-0">
+              <h3 className="text-2xl font-bold mb-2">GrowthHungry Academy</h3>
+              <p className="text-gray-400">Empowering your growth with quality education and mentorship.</p>
+            </div>
+
+            {/* Footer navigation links */}
+            <div className="flex justify-center md:justify-start space-x-4">
+              {/* <Link href="/about">
+                <h1 className="text-gray-300 hover:text-white">About Us</h1>
+              </Link>
+              <Link href="/courses">
+                <h1 className="text-gray-300 hover:text-white">Courses</h1>
+              </Link>
+              <Link href="/contact">
+                <h1 className="text-gray-300 hover:text-white">Contact</h1>
+              </Link>
+              <Link href="/faq">
+                <h1 className="text-gray-300 hover:text-white">FAQ</h1>
+              </Link> */}
+            </div>
+          </div>
+
+          {/* Social media links section */}
+          <div className="flex justify-center mt-8">
+            <a href="https://www.instagram.com/growthhungry/" target="_blank" rel="noopener noreferrer" className="mx-2">
+              <Image src="/assets/instagram.png" alt="Instagram" width={24} height={24} className="opacity-70 hover:opacity-100 transition" />
             </a>
-            <a href="https://www.instagram.com/growthhungry/" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/instagram.png" alt="Instagram" width={24} height={24} className="mx-2"/>
+            <a href="https://www.linkedin.com/company/growthhungry-academy/mycompany/" target="_blank" rel="noopener noreferrer" className="mx-2">
+              <Image src="/assets/linkedin.png" alt="LinkedIn" width={24} height={24} className="opacity-70 hover:opacity-100 transition" />
             </a>
-            <a href="https://www.linkedin.com/company/growthhungry-academy/mycompany/" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/linkedin.png" alt="LinkedIn" width={24} height={24} className="mx-2"/>
+            <a href="https://t.me/growthhungrypublic" target="_blank" rel="noopener noreferrer" className="mx-2">
+              <Image src="/assets/telegram.png" alt="Telegram" width={24} height={24} className="opacity-70 hover:opacity-100 transition" />
             </a>
-            <a href="https://t.me/growthhungrypublic" target="_blank" rel="noopener noreferrer">
-              <Image src="/assets/telegram.png" alt="Telegram" width={24} height={24} className="mx-2"/>
-            </a>
+          </div>
+
+          {/* Footer bottom section */}
+          <div className="mt-8 border-t border-gray-700 pt-4">
+            <p className="text-center text-gray-400">&copy; 2024 GrowthHungry Academy. All rights reserved.</p>
           </div>
         </div>
       </footer>

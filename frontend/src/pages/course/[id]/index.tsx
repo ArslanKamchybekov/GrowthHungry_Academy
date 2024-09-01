@@ -9,11 +9,11 @@ import useCurrentUser from "@/hooks/useAuth";
 const Course = () => {
   const router = useRouter();
   const { id } = useParams();
+  const { user } = useCurrentUser();
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user } = useCurrentUser();
   const [isEnrolled, setIsEnrolled] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ const Course = () => {
         const data = await response.json();
         setCourse(data);
         
-        // Check if the user is enrolled in the course
         const userResponse = await fetch(`http://localhost:8000/user/${user?.userId}`, {
           method: "GET",
           headers: {
@@ -56,7 +55,7 @@ const Course = () => {
           setIsEnrolled(enrolledCourses.some(course => course._id === id));
         }
 
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching course:", error);
         setError(error.message);
       } finally {
@@ -160,7 +159,7 @@ const Course = () => {
               <div className="border rounded-md p-6 bg-white">
                 <div className="flex items-center gap-x-2 mb-3">
                   <div className="inline-flex items-center border rounded-md px-2.5 py-0.5 text-xs font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-sky-500/10 text-sky-800">
-                    <BookOpen className="mr-1" />
+                    <BookOpen className="mr-2" />
                     <span>{course?.courseData.length || 0} Chapters</span>
                   </div>
                 </div>

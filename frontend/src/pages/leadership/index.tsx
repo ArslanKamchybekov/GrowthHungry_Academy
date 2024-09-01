@@ -20,7 +20,7 @@ const Leadership = () => {
             <Navbar />
             <br />
             <br />
-            <div className="bg-gradient-to-r from-blue-500 to-teal-400 py-16">
+            <div className="bg-gradient-to-r from-gray-900 to-blue-900 text-white py-20">
                 <div className="container mx-auto px-4">
                     <h1 className="text-4xl font-bold text-white text-center mb-4">
                         Meet the Most Ambitious Students in Our Community
