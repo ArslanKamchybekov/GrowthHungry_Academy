@@ -64,7 +64,7 @@ const Home: React.FC = () => {
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-700 p-6 rounded-md shadow-md text-center">
                     <Image
-                      src="/assets/icon_1.avif"
+                      src="/assets/icon_3.png"
                       alt="High-Quality Content"
                       width={80}
                       height={80}
@@ -79,7 +79,7 @@ const Home: React.FC = () => {
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-700 p-6 rounded-md shadow-md text-center">
                     <Image
-                      src="/assets/icon_1.avif"
+                      src="/assets/icon_2.png"
                       alt="Community Support"
                       width={80}
                       height={80}
@@ -107,21 +107,38 @@ const Home: React.FC = () => {
                   Sign Up Now
                 </button>
               </Link>
-              <br />
-              <br />
               <a href="https://wa.me/2243432210" target="_blank" rel="noopener noreferrer">
-                <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-600 transition">
+                <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-600 transition mx-4">
                   Contact Us on WhatsApp
                 </button>
               </a>
+              <Link href="https://www.growthhungry.life/">
+                <button className="bg-black text-white font-semibold px-6 py-3 rounded-md hover:bg-gray-600 transition">
+                  Our Website
+                </button>
+              </Link>
             </div>
           </section>
         </>
       )}
       {/* Footer */}
-      <footer className="bg-black text-white py-8">
+      <footer className="bg-white text-black py-8">
         <div className="container mx-auto px-6 text-center">
           <p>&copy; 2024 GrowthHungry Academy. All rights reserved.</p>
+          <div className="flex justify-center mt-4">
+            <a href="https://www.growthhungry.life/" target="_blank" rel="noopener noreferrer">
+              <Image src="/assets/logo.png" alt="Website" width={24} height={24} className="mx-2"/>
+            </a>
+            <a href="https://www.instagram.com/growthhungry/" target="_blank" rel="noopener noreferrer">
+              <Image src="/assets/instagram.png" alt="Instagram" width={24} height={24} className="mx-2"/>
+            </a>
+            <a href="https://www.linkedin.com/company/growthhungry-academy/mycompany/" target="_blank" rel="noopener noreferrer">
+              <Image src="/assets/linkedin.png" alt="LinkedIn" width={24} height={24} className="mx-2"/>
+            </a>
+            <a href="https://t.me/growthhungrypublic" target="_blank" rel="noopener noreferrer">
+              <Image src="/assets/telegram.png" alt="Telegram" width={24} height={24} className="mx-2"/>
+            </a>
+          </div>
         </div>
       </footer>
     </>

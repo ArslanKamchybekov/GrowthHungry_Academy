@@ -6,10 +6,9 @@ const UpdateProfile = () => {
 
     const [profile, setProfile] = useState({
         name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        points: 0,
+        // email: "",
+        // password: "",
+        // confirmPassword: "",
     });
 
     const router = useRouter();
@@ -67,19 +66,6 @@ const UpdateProfile = () => {
                         required
                     />
                 </div>
-
-                <div className="mb-4">
-                    <label className="block text-gray-700 font-semibold mb-2">Points</label>
-                    <input
-                        type="number"
-                        name="points"
-                        value={profile.points}
-                        onChange={handleProfileChange}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
-                </div>
-
                 
                 {/* <div className="mb-4">
                     <label className="block text-gray-700 font-semibold mb-2">Email</label>
