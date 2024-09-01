@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../../../course.module.css";
 import CourseProgressSidebar from "@/components/CourseProgressSidebar";
-import { Course, Chapter } from "@/pages/types/types";
-import Navbar from "@/components/Navbar";
+import { Course } from "@/pages/types/types";
 
 const CourseProgressChapter: React.FC = () => {
     const router = useRouter();
@@ -63,6 +62,24 @@ const CourseProgressChapter: React.FC = () => {
         }
     }, [links, chapterid]);
 
+    const handleNextChapter = () => {
+        const currentIndex = links.findIndex((item) => item._id === chapterid);
+        const nextIndex = currentIndex + 1;
+
+        if (nextIndex < links.length) {
+            router.push(`/course/progress/${id}/chapters/${links[nextIndex]._id}`);
+        }
+    }
+
+    const handlePrevChapter = () => {
+        const currentIndex = links.findIndex((item) => item._id === chapterid);
+        const prevIndex = currentIndex - 1;
+
+        if (prevIndex >= 0) {
+            router.push(`/course/progress/${id}/chapters/${links[prevIndex]._id}`);
+        }
+    }
+
     if (loading) {
         return (
           <div className="flex justify-center items-center h-screen">
@@ -107,14 +124,11 @@ const CourseProgressChapter: React.FC = () => {
                         <h2 className="text-3xl font-bold mb-4">{currentChapter}</h2>
                         <p className="text-gray-700 mb-4">{currentDescription}</p>
                         <div className="flex flex-col lg:flex-row gap-4 mt-6">
-                            <button className="bg-green-500 hover:bg-black text-white font-semibold px-4 py-2 rounded-md transition duration-200">
-                                Mark as completed
-                            </button>
                             <div className="flex space-x-4">
-                                <button className="bg-black hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                                <button className="bg-black hover:bg-blue-900 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handlePrevChapter}>
                                     Previous chapter
                                 </button>
-                                <button className="bg-black hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md transition duration-200">
+                                <button className="bg-black hover:bg-blue-900 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handleNextChapter}>
                                     Next chapter
                                 </button>
                             </div>

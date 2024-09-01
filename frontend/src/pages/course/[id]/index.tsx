@@ -150,18 +150,12 @@ const Course = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
             {/* Course Content */}
             <div className="order-1 col-span-1 lg:col-span-3 flex flex-col space-y-6">
-              <div className="border rounded-md overflow-hidden bg-white">
-                <div className={styles.videoContainer}>
-                  <iframe
-                    src="https://www.youtube.com/embed/kf6yyxMck8Y?si=rXhTTDQuhuiB3ZrU"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className={styles.videoIframe}
-                  ></iframe>
-                </div>
+              <div className="aspect-w-16 aspect-h-9 rounded-md overflow-hidden bg-slate-100 shadow-lg p-4">
+                <img
+                  src={course?.thumbnail.url || "/assets/placeholder.webp"}
+                  alt="Course Thumbnail"
+                  className="object-cover w-full h-full"
+                />
               </div>
               <div className="border rounded-md p-6 bg-white">
                 <div className="flex items-center gap-x-2 mb-3">
