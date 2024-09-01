@@ -162,7 +162,7 @@ const Courses: React.FC = () => {
               </p>
               <button
                 onClick={() => handleViewDetails(course._id)}
-                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 font-bold"
               >
                 View Course
               </button>

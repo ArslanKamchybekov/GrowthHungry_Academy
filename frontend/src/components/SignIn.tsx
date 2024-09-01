@@ -34,8 +34,8 @@ const SignIn: React.FC = () => {
       const data = await response.json();
       localStorage.setItem('access-token', data.token);
       router.push('/');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (error: any) {
+      setError(error.message);
     }
   };
 
@@ -86,7 +86,6 @@ const SignIn: React.FC = () => {
             type="submit"
             className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
           >
-
             Sign in
           </button>
           {error && <p className="mt-2 text-red-600">{error}</p>}

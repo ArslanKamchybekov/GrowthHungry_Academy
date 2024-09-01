@@ -120,9 +120,17 @@ const UserProfile = () => {
         {profileData ? (
           <div className="flex justify-center">
             <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
-              <div className="mb-4">
-                <h2 className="text-2xl font-semibold">{profileData.name}</h2>
-                <p className="text-sm text-gray-600">{profileData.email}</p>
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-2xl font-semibold">{profileData.name}</h2>
+                  <p className="text-sm text-gray-600">{profileData.email}</p>
+                </div>
+                <button
+                  className="text-white bg-black hover:bg-gray-600 px-4 py-2 rounded font-bold"
+                  onClick={() => router.push(`/profile/update/${id}`)}
+                >
+                  Update Profile
+                </button>
               </div>
               <div className="mt-6 space-y-4">
                 <div className="flex items-center">
@@ -160,9 +168,9 @@ const UserProfile = () => {
             <div className="flex justify-center">
               <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-semibold">Courses</h2>
+                    <h2 className="text-2xl font-semibold">My Courses</h2>
                     <button
-                        className="text-white bg-black hover:bg-gray-600 px-4 py-2 rounded"
+                        className="text-white bg-black hover:bg-gray-600 px-4 py-2 rounded font-bold"
                         onClick={() => router.push("/course/create")}
                     >
                         Create Course
@@ -174,7 +182,7 @@ const UserProfile = () => {
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded"
+                          className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteCourse(course.id)}
                         >
                           Delete

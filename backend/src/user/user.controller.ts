@@ -50,7 +50,6 @@ export class UserController {
     }
 
    @Put('/update/:id')
-   @Roles('admin')
    async updateUser(@Param ('id')id:string, @Body ()user: IUser) { 
         try {
             const updatedUser = await this.userService.update(id, user);
