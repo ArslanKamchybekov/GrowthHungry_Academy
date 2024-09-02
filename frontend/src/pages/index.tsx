@@ -27,11 +27,11 @@ const Home: React.FC = () => {
       ) : (
         <>
           {/* Hero Section */}
-          <section className="mt-8 bg-gradient-to-b from-white to-white text-black py-20">
+          <section className="mt-8 bg-gradient-to-b from-blue-100 to-white text-black py-20">
             <div className="container mx-auto px-6 text-center">
-              <h1 className="text-5xl font-bold mb-4">Welcome to GrowthHungry Academy</h1>
+              <h1 className="text-5xl font-bold mb-8">Easy-to-use learning software to help you achieve your goals</h1>
               <p className="text-xl mb-8">
-                Unlock your potential with expert mentorship and high-quality education.
+                Unlock your potential with expert mentorship and high-quality education
               </p>
               <Link href="/signup">
                 <button className="bg-white text-blue-900 font-semibold px-6 py-2 rounded-md hover:bg-gray-200 transition border border-input">
@@ -41,19 +41,27 @@ const Home: React.FC = () => {
             </div>
           </section>
 
+          {/* Demo Video Player */}
+          <section className="bg-white">
+            <div className="container mx-auto px-6">
+              <div className="relative" style={{ paddingTop: "56.25%" }}>
+                <iframe
+                  src=""
+                  title="GrowthHungry Academy Demo"
+                  className="absolute inset-0 w-full h-full rounded-md shadow-md"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          </section>
+          
+
           {/* Features Section */}
           <section className="bg-white py-16">
             <div className="container mx-auto px-6">
               <div className="flex flex-wrap justify-center">
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
-                    <Image
-                      src="/assets/icon_1.avif"
-                      alt="Expert Mentorship"
-                      width={80}
-                      height={80}
-                      className="mx-auto mb-4"
-                    />
                     <h3 className="text-xl font-semibold mb-2 text-white">Expert Mentorship</h3>
                     <p className="text-gray-300">
                       Learn from industry experts who bring real-world experience to the classroom.
@@ -62,13 +70,6 @@ const Home: React.FC = () => {
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-100 p-6 rounded-md shadow-md text-center">
-                    <Image
-                      src="/assets/icon_3.png"
-                      alt="High-Quality Content"
-                      width={80}
-                      height={80}
-                      className="mx-auto mb-4"
-                    />
                     <h3 className="text-xl font-semibold mb-2">High-Quality Content</h3>
                     <p className="text-black">
                       Access top-notch educational materials tailored to your learning needs.
@@ -77,13 +78,6 @@ const Home: React.FC = () => {
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
-                    <Image
-                      src="/assets/icon_2.png"
-                      alt="Community Support"
-                      width={80}
-                      height={80}
-                      className="mx-auto mb-4"
-                    />
                     <h3 className="text-xl font-semibold mb-2 text-white">Community Support</h3>
                     <p className="text-gray-300">
                       Join a community of learners and collaborate with peers from around the world.
