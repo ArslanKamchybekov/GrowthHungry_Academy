@@ -96,9 +96,31 @@ const Course = () => {
   };
 
   const handleUnenroll = async () => {
-    // Aleks & Aida: Implement unenroll functionality here
-    // Hint: You can use the same endpoint as the enroll functionality
-    // Test the functionality by first enrolling in a course and then unenrolling and checking if the course is removed from the user's profile
+    try {
+      const token = localStorage.getItem("access-token");
+
+      if (!token) {
+        router.push("/signin");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:8000/user/unenroll/${user?.userId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to unenroll from course");
+      }
+
+      setIsEnrolled(false);
+    } catch (error) {
+      console.error("Error unenrolling from course:", error);
+    }
   };
 
   if (isLoading) {

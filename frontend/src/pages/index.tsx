@@ -46,7 +46,7 @@ const Home: React.FC = () => {
             <div className="container mx-auto px-6">
               <div className="relative" style={{ paddingTop: "56.25%" }}>
                 <iframe
-                  src=""
+                  src="https://www.youtube.com/embed/xJw8MUfXfDc?si=G9bz9OAO1oRyRT6p"
                   title="GrowthHungry Academy Demo"
                   className="absolute inset-0 w-full h-full rounded-md shadow-md"
                   allowFullScreen
