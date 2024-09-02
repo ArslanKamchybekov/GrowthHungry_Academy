@@ -9,12 +9,12 @@ const Navbar = () => {
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { user, loading, error } = useCurrentUser();
+    const { user } = useCurrentUser();
 
     const handleSignOut = () => {
         localStorage.removeItem("access-token");
         setIsAuthenticated(false);
-        router.push("/");
+        router.push("/signin");
     };
 
     useEffect(() => {
@@ -23,6 +23,7 @@ const Navbar = () => {
             setIsAuthenticated(true);
         } else {
             setIsAuthenticated(false);
+            router.push("/");
         }
     }, []);
 
