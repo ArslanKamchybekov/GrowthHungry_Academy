@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { CircularProgress } from '@mui/material';
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState('');
@@ -10,26 +11,28 @@ const SignUp: React.FC = () => {
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setProfilePicture(file);
+  // const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0] || null;
+  //   setProfilePicture(file);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPreview(null);
-    }
-  };
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setPreview(reader.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   } else {
+  //     setPreview(null);
+  //   }
+  // };
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -55,6 +58,8 @@ const SignUp: React.FC = () => {
       router.push('/activate');
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,12 +116,16 @@ const SignUp: React.FC = () => {
               </div>
             )}
           </div> */}
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-          >
-            Sign up
-          </button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+            >
+              Sign up
+            </button>
+          )}
           <div className="mt-4 text-center">
             <p className="text-gray-600">
               Already have an account?{' '}

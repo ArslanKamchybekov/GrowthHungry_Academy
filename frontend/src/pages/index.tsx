@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       ) : (
         <>
           {/* Hero Section */}
-          <section className="bg-gradient-to-r from-gray-900 to-blue-900 text-white py-24">
+          <section className="bg-gradient-to-r from-black to-blue-900 text-white py-24">
             <div className="container mx-auto px-6 text-center">
               <h1 className="text-5xl font-bold mb-4">Welcome to GrowthHungry Academy</h1>
               <p className="text-xl mb-8">
@@ -42,12 +42,12 @@ const Home: React.FC = () => {
           </section>
 
           {/* Features Section */}
-          <section className="bg-gray-800 py-16">
+          <section className="bg-white py-16">
             <div className="container mx-auto px-6">
-              <h2 className="text-4xl font-bold text-center mb-12 text-white">Why Choose Us?</h2>
+              <h2 className="text-4xl font-bold text-center mb-12 text-black">Why Choose Us?</h2>
               <div className="flex flex-wrap justify-center">
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-700 p-6 rounded-md shadow-md text-center">
+                  <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
                     <Image
                       src="/assets/icon_1.avif"
                       alt="Expert Mentorship"
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-700 p-6 rounded-md shadow-md text-center">
+                  <div className="bg-gray-200 p-6 rounded-md shadow-md text-center">
                     <Image
                       src="/assets/icon_3.png"
                       alt="High-Quality Content"
@@ -70,14 +70,14 @@ const Home: React.FC = () => {
                       height={80}
                       className="mx-auto mb-4"
                     />
-                    <h3 className="text-xl font-semibold mb-2 text-white">High-Quality Content</h3>
-                    <p className="text-gray-300">
+                    <h3 className="text-xl font-semibold mb-2">High-Quality Content</h3>
+                    <p className="text-black">
                       Access top-notch educational materials tailored to your learning needs.
                     </p>
                   </div>
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-700 p-6 rounded-md shadow-md text-center">
+                  <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
                     <Image
                       src="/assets/icon_2.png"
                       alt="Community Support"
@@ -108,8 +108,8 @@ const Home: React.FC = () => {
                 </button>
               </Link>
               <a href="https://wa.me/2243432210" target="_blank" rel="noopener noreferrer">
-                <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-600 transition m-4">
-                  Contact Us on WhatsApp
+                <button className="bg-gray-200 text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition mx-4">
+                  Contact Us
                 </button>
               </a>
               <Link href="https://www.growthhungry.life/">

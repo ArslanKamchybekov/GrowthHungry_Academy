@@ -50,7 +50,7 @@ const SignIn: React.FC = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">Sign in</h2>
         <form onSubmit={handleSignIn}>
           <div className="mb-4">
-            <label className="block text-gray-700">E-mail</label>
+            <label className="block text-gray-700">Email</label>
             <input
               type="email"
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring focus:border-gray-300"
@@ -93,18 +93,6 @@ const SignIn: React.FC = () => {
           )}
           {error && <p className="mt-2 text-red-600">{error}</p>}
         </form>
-        <div className="mt-6 flex items-center justify-center">
-          <div className="border-t w-full"></div>
-          <span className="mx-4 text-gray-500">OR</span>
-          <div className="border-t w-full"></div>
-        </div>
-        <button
-          type="button"
-          className="mt-4 w-full flex items-center justify-center bg-white border border-gray-300 p-2 rounded-md shadow-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-        >
-          <FaGoogle className="mr-2" />
-          Continue with Google
-        </button>
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Don’t have an account? <a href="/signup" className="text-gray-600 hover:underline">Create now</a>
