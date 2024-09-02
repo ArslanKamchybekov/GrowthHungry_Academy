@@ -42,9 +42,9 @@ const UserProfile = () => {
         }
 
         fetchUsers();
-
       } catch (error) {
         console.error("Error fetching user profile:", error);
+        router.push("/");
       }
     };
 
@@ -222,7 +222,7 @@ const UserProfile = () => {
                 <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-semibold">My Courses</h2>
                     <button
-                        className="text-white bg-black hover:bg-gray-600 px-4 py-2 rounded font-bold"
+                        className="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded font-bold"
                         onClick={() => router.push("/course/create")}
                     >
                         Create Course
@@ -234,7 +234,7 @@ const UserProfile = () => {
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-gray-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                          className="text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteCourse(course.id)}
                         >
                           Delete
