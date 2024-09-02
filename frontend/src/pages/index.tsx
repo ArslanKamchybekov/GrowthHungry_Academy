@@ -27,14 +27,14 @@ const Home: React.FC = () => {
       ) : (
         <>
           {/* Hero Section */}
-          <section className="mt-12 bg-gradient-to-r from-black to-blue-900 text-white py-16">
+          <section className="mt-8 bg-gradient-to-b from-white to-blue-100 text-black py-20">
             <div className="container mx-auto px-6 text-center">
               <h1 className="text-5xl font-bold mb-4">Welcome to GrowthHungry Academy</h1>
               <p className="text-xl mb-8">
                 Unlock your potential with expert mentorship and high-quality education.
               </p>
               <Link href="/signup">
-                <button className="bg-white text-blue-900 font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition">
+                <button className="bg-white text-blue-900 font-semibold px-6 py-2 rounded-md hover:bg-gray-200 transition border border-input">
                   Get Started
                 </button>
               </Link>
@@ -44,7 +44,6 @@ const Home: React.FC = () => {
           {/* Features Section */}
           <section className="bg-white py-16">
             <div className="container mx-auto px-6">
-              <h2 className="text-4xl font-bold text-center mb-12 text-black">Why Choose Us?</h2>
               <div className="flex flex-wrap justify-center">
                 <div className="w-full md:w-1/3 px-4 mb-8">
                   <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
@@ -62,7 +61,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-200 p-6 rounded-md shadow-md text-center">
+                  <div className="bg-gray-100 p-6 rounded-md shadow-md text-center">
                     <Image
                       src="/assets/icon_3.png"
                       alt="High-Quality Content"
@@ -103,17 +102,17 @@ const Home: React.FC = () => {
                 Sign up today and start your journey with GrowthHungry Academy!
               </p>
               <Link href="/signup">
-                <button className="bg-black text-white font-semibold px-6 py-3 rounded-md hover:bg-gray-600 transition">
+                <button className="bg-black text-white font-semibold px-6 py-2 rounded-md hover:bg-gray-600 transition">
                   Sign Up Now
                 </button>
               </Link>
               <a href="https://wa.me/2243432210" target="_blank" rel="noopener noreferrer">
-                <button className="bg-gray-200 text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition m-4">
+                <button className="bg-gray-200 text-black font-semibold px-6 py-2 rounded-md hover:bg-gray-300 transition m-4">
                   Contact Us
                 </button>
               </a>
               <Link href="https://www.growthhungry.life/">
-                <button className="bg-black text-white font-semibold px-6 py-3 rounded-md hover:bg-gray-600 transition">
+                <button className="bg-black text-white font-semibold px-6 py-2 rounded-md hover:bg-gray-600 transition">
                   Our Website
                 </button>
               </Link>

@@ -27,7 +27,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <div className="h-[80px] fixed inset-x-0 top-0 w-full z-[49] bg-white border-b">
+        <div className="h-[70px] fixed inset-x-0 top-0 w-full z-[49] bg-white border-b shadow-md">
             <div className="p-4 gap-x-4 h-full flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" passHref>
@@ -47,18 +47,18 @@ const Navbar = () => {
                         {isAuthenticated ? (
                             <>
                                 <Link href="/leadership" passHref>
-                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
                                         Leadership
                                     </button>
                                 </Link>
                                 <Link href={`/profile/${user?.userId}`} passHref>
-                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
                                         Profile
                                     </button>
                                 </Link>
                                 <button
                                     onClick={handleSignOut}
-                                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-red-500 h-9 rounded-md px-3"
+                                    className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background text-red-700 h-9 rounded-md px-3"
                                 >
                                     Sign Out
                                 </button>
@@ -66,12 +66,12 @@ const Navbar = () => {
                         ) : (
                             <>
                                 <Link href="/signin" passHref>
-                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none border border-input bg-background h-9 rounded-md px-3">
                                         Sign In
                                     </button>
                                 </Link>
                                 <Link href="/signup" passHref>
-                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground text-blue-500 h-9 rounded-md px-3">
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none border border-input bg-background h-9 rounded-md px-3">
                                         Sign Up
                                     </button>
                                 </Link>

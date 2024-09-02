@@ -171,7 +171,7 @@ const UserProfile = () => {
         <h1 className="text-3xl font-bold text-center my-8">My Profile</h1>
         {profileData ? (
           <div className="flex justify-center">
-            <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
+            <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
               <div className="flex justify-between items-center">
                 <div>
                   <h2 className="text-2xl font-semibold">{profileData.name}</h2>
@@ -218,7 +218,7 @@ const UserProfile = () => {
           <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold text-center my-8">Admin Panel</h1>
             <div className="flex justify-center">
-              <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
+              <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
                 <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-semibold">My Courses</h2>
                     <button
@@ -246,7 +246,7 @@ const UserProfile = () => {
               </div>
             </div>
             <div className="flex justify-center mt-8">
-              <div className="bg-blue-100 shadow-md rounded-lg p-6 max-w-lg w-full">
+              <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-semibold">Users</h2>
                 </div>
@@ -254,10 +254,10 @@ const UserProfile = () => {
                   {users.map((user) => (
                     <div key={user.id} className="flex items-center justify-between space-x-4">
                       <span className="text-gray-800 font-medium">{user.name}</span>
-                      <span className="text-gray-800 font-medium">{user.role}</span>
+                      <span className="text-gray-800 font-semibold">{user.role}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-gray-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                          className="text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteUser(user._id)}
                         >
                           Delete
