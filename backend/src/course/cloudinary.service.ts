@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { v2 } from 'cloudinary';
+import { v2, UploadApiErrorResponse, UploadApiResponse } from 'cloudinary'; 
+import * as streamifier from 'streamifier';
 
 @Injectable()
 export class CloudinaryService {
@@ -12,8 +13,14 @@ export class CloudinaryService {
     }
 
     // upload method to upload images to Cloudinary(image database)
-    async upload(filePath: string, folder: string) {
-        return v2.uploader.upload(filePath, {folder: folder});
+    async upload(file: Express.Multer.File): Promise<UploadApiResponse | UploadApiErrorResponse> {
+        return new Promise((resolve, reject) => {
+            const uploadStream = v2.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
+                if (result) resolve(result);
+                else reject(error);
+            });
+            streamifier.createReadStream(file.buffer).pipe(uploadStream);
+        });
     }
 
     // delete method to delete images from Cloudinary

@@ -212,7 +212,7 @@ const CreateCourseForm: React.FC = () => {
             )}
           </div>
         ))}
-        <button type="button" onClick={addCourseData} className="bg-gray-800 text-white px-4 py-1 rounded font-semibold hover:bg-gray-700 transition">
+        <button type="button" onClick={addCourseData} className="bg-gray-800 text-white px-4 py-2 rounded font-semibold hover:bg-gray-700 transition">
           Add Course Data
         </button>
       </div>

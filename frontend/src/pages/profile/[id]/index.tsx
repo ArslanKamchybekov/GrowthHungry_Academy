@@ -234,7 +234,7 @@ const UserProfile = () => {
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                          className="text-white bg-gray-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteCourse(course.id)}
                         >
                           Delete
@@ -257,7 +257,7 @@ const UserProfile = () => {
                       <span className="text-gray-800 font-medium">{user.role}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
+                          className="text-white bg-gray-500 hover:bg-red-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteUser(user._id)}
                         >
                           Delete

@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       ) : (
         <>
           {/* Hero Section */}
-          <section className="bg-gradient-to-r from-black to-blue-900 text-white py-24">
+          <section className="mt-12 bg-gradient-to-r from-black to-blue-900 text-white py-16">
             <div className="container mx-auto px-6 text-center">
               <h1 className="text-5xl font-bold mb-4">Welcome to GrowthHungry Academy</h1>
               <p className="text-xl mb-8">
@@ -108,7 +108,7 @@ const Home: React.FC = () => {
                 </button>
               </Link>
               <a href="https://wa.me/2243432210" target="_blank" rel="noopener noreferrer">
-                <button className="bg-gray-200 text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition mx-4">
+                <button className="bg-gray-200 text-black font-semibold px-6 py-3 rounded-md hover:bg-gray-300 transition m-4">
                   Contact Us
                 </button>
               </a>

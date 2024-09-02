@@ -19,7 +19,7 @@ export class LayoutController {
 
             if (type === "Banner") {
                 const { image, title, subTitle } = layoutData;
-                const uploadedImage = await this.cloudinaryService.upload(image, "banner");
+                const uploadedImage = await this.cloudinaryService.upload(image);
 
                 const newLayout = {
                     type,

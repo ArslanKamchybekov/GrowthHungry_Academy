@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards, Put } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
+import { CloudinaryService } from './cloudinary.service';
 import { ICourse } from '../models/course.model';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -11,13 +12,24 @@ import { CourseAccessGuard } from './course-access.guard';
 @Controller('course')
 @UseGuards(JwtGuard, RolesGuard)
 export class CourseController {
-    constructor(private readonly courseService: CourseService) {}
+    constructor(
+        private readonly courseService: CourseService, 
+        private readonly cloudinaryService: CloudinaryService
+    ) {}
 
     @Roles('admin')
     @Post('/create')
     //@UseInterceptors(FileInterceptor('thumbnail'))
-    async createCourse(@Body() course: ICourse) { // @UploadedFile() thumbnail: Express.Multer.File
+    async createCourse(@Body() course: ICourse) { //@UploadedFile() file: Express.Multer.File
         try {
+            // const uploadedImage = await this.cloudinaryService.upload(file);
+            // const newCourse = {
+            //     ...course,
+            //     thumbnail: {
+            //         url: uploadedImage.secure_url,
+            //         public_id: uploadedImage.public_id
+            //     }
+            // };
             const createdCourse = await this.courseService.create(course);
             return createdCourse;
         } catch (error) {
@@ -58,13 +70,10 @@ export class CourseController {
         }
     }
 
-    // @UseGuards(CourseAccessGuard)
     @Get('/content/:id')
     async getCourseContent(@Param('id') id: string) {
         try {
-            console.log("Id: ", id )
             const course = await this.courseService.getContent(id);
-            console.log("Course: ", course)
             return course;
         } catch (error) {
             return { error: error.message };
