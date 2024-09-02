@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { CircularProgress } from '@mui/material';
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
@@ -14,6 +16,7 @@ const ForgotPassword: React.FC = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:8000/auth/forgot-password', {
@@ -33,6 +36,8 @@ const ForgotPassword: React.FC = () => {
       setSuccess('Reset password email sent successfully!');
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,12 +56,16 @@ const ForgotPassword: React.FC = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-          >
-            Send Email
-          </button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+            >
+              Send Email
+            </button>
+          )}  
           {error && <p className="mt-2 text-red-600">{error}</p>}
           {success && <p className="mt-2 text-green-600">{success}</p>}
         </form>

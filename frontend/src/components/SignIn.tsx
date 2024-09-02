@@ -4,16 +4,19 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaGoogle } from 'react-icons/fa';
 import Link from 'next/link';
+import { CircularProgress } from '@mui/material';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:8000/auth/login', {
@@ -36,6 +39,8 @@ const SignIn: React.FC = () => {
       router.push('/');
     } catch (error: any) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,22 +77,20 @@ const SignIn: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <input type="checkbox" id="remember" name="remember" className="h-4 w-4 text-gray-600" />
-              <label htmlFor="remember" className="ml-2 block text-gray-900">
-                Remember me
-              </label>
-            </div>
             <Link href="/forgot-password" className="text-sm text-gray-600 hover:underline">
               Forgot Password?
             </Link>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-          >
-            Sign in
-          </button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+            >
+              Sign in
+            </button>
+          )}
           {error && <p className="mt-2 text-red-600">{error}</p>}
         </form>
         <div className="mt-6 flex items-center justify-center">
