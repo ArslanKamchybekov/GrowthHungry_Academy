@@ -32,6 +32,7 @@ const CourseProgress = () => {
         const data = await response.json();
         setTitle(data.name);
         setLinks(data.courseData);
+        // navigateToChapter(links[0]._id);
       } catch (error) {
         console.error("Error fetching course:", error);
         router.push("/signin");
@@ -40,6 +41,12 @@ const CourseProgress = () => {
 
     fetchCourse();
   }, [id]);
+
+  useEffect(() => {
+    if (links.length > 0) {
+      navigateToChapter(links[0]._id);
+    }
+  }, [links]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
