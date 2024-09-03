@@ -45,7 +45,6 @@ export class CourseService {
     async delete(id: string) {
         try {
             await Course.findByIdAndDelete(id).exec();
-            //this.cloudinaryService.delete(id);
         } catch (error) {
             throw new Error(`Error deleting course with id ${id}: ${error.message}`);
         }
