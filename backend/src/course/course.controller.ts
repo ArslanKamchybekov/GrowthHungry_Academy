@@ -98,13 +98,13 @@ export class CourseController {
         }
     }
 
-    @Patch('complete-chapter')
-    async completeChapter(@Body() data: { userId: string, courseId: string, chapterId: string }) {
-        try {
-            const updatedUser = await this.courseService.markChapterAsCompleted(data.userId, data.courseId, data.chapterId);
-            return updatedUser;
-        } catch (error) {
-            return { error: error.message };
-        }
-    }
+    // @Patch('complete-chapter')
+    // async completeChapter(@Body() data: { userId: string, courseId: string, chapterId: string }) {
+    //     try {
+    //         const updatedUser = await this.courseService.markChapterAsCompleted(data.userId, data.courseId, data.chapterId);
+    //         return updatedUser;
+    //     } catch (error) {
+    //         return { error: error.message };
+    //     }
+    // }
 }
