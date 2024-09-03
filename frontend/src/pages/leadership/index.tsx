@@ -1,14 +1,16 @@
 import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const Leadership = () => {
     const [leadershipData, setLeadershipData] = useState(null);
+    const router = useRouter();
     
     useEffect(() => {
         const fetchLeadership = async () => {
             try {
                 const token = localStorage.getItem("access-token");
-                if (!token) throw new Error("No token found");
+                if (!token) router.push("/signin");
 
                 const response = await fetch(`http://localhost:8000/user/points/get`, {
                     headers: {
@@ -18,7 +20,8 @@ const Leadership = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error("Leadership not found");
+                    router.push("/signin");
+                    throw new Error("Failed to fetch leadership data. Please try again later.");
                 }
 
                 const data = await response.json();

@@ -13,6 +13,7 @@ const CourseProgressChapter: React.FC = () => {
     const [links, setLinks] = useState<Course[]>([]);
     const [video, setVideo] = useState("");
     const [currentChapter, setCurrentChapter] = useState("");
+    const [completedChapters, setCompletedChapters] = useState<string[]>([]);
     const [currentDescription, setCurrentDescription] = useState("");
 
     useEffect(() => {
@@ -80,6 +81,34 @@ const CourseProgressChapter: React.FC = () => {
         }
     }
 
+    // const handleMarkAsCompleted = async (chapterId: string) => {
+    //     try {
+    //       const token = localStorage.getItem("access-token");
+    //       if (!token) throw new Error("No token found");
+    
+    //       const response = await fetch("http://localhost:8000/course/complete-chapter", {
+    //         method: "PATCH",
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //           "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             userId: user?.id,
+    //             courseId: id,
+    //             chapterId,
+    //         }),
+    //       });
+    //       console.log(response);
+    //       if (!response.ok) {
+    //         throw new Error("Error marking chapter as completed");
+    //       }
+    //       const data = await response.json();
+    //       setCompletedChapters(data.completedCourses);
+    //     } catch (error) {
+    //       console.error("Error marking chapter as completed:", error);
+    //     }
+    //   }
+
     if (loading) {
         return (
           <div className="flex justify-center items-center h-screen">
@@ -125,10 +154,16 @@ const CourseProgressChapter: React.FC = () => {
                         <p className="text-gray-700 mb-4">{currentDescription}</p>
                         <div className="flex flex-col lg:flex-row gap-4 mt-6">
                             <div className="flex space-x-4">
-                                <button className="bg-black hover:bg-blue-900 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handlePrevChapter}>
+                                {/* <button
+                                    className="bg-black hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-md transition duration-200"
+                                    onClick={() => handleMarkAsCompleted(chapterid as string)}
+                                >
+                                    Mark as completed
+                                </button> */}
+                                <button className="bg-black hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handlePrevChapter}>
                                     Previous chapter
                                 </button>
-                                <button className="bg-black hover:bg-blue-900 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handleNextChapter}>
+                                <button className="bg-black hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-md transition duration-200" onClick={handleNextChapter}>
                                     Next chapter
                                 </button>
                             </div>

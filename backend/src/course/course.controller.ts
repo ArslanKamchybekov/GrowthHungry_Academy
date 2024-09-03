@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards, Put } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseInterceptors, UseGuards, Put, Patch } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
 import { CloudinaryService } from './cloudinary.service';
@@ -93,6 +93,16 @@ export class CourseController {
         try {
             const updatedCourse = await this.courseService.update(id, course);
             return updatedCourse;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+
+    @Patch('complete-chapter')
+    async completeChapter(@Body() data: { userId: string, courseId: string, chapterId: string }) {
+        try {
+            const updatedUser = await this.courseService.markChapterAsCompleted(data.userId, data.courseId, data.chapterId);
+            return updatedUser;
         } catch (error) {
             return { error: error.message };
         }

@@ -13,8 +13,10 @@ export interface IUser extends Document {
     url: string;
   };
   role: string;
+  points: number;
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
+  completedCourses: Array<{ courseId: string }>;
   comparePassword(candidatePassword: string): Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
@@ -40,8 +42,10 @@ const userSchema = new Schema<IUser>(
       url: { type: String, required: false },
     },
     role: { type: String, default: 'user' },
+    points: { type: Number, default: 0 },
     isVerified: { type: Boolean, default: false },
     courses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
+    completedCourses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
   },
   { timestamps: true },
 );

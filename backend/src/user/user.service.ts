@@ -70,6 +70,22 @@ export class UserService {
             console.log(error)
         }
     }
+
+    async promote(id: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { role: 'admin' }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async demote(id: string) {
+        try {
+            return UserModel.findByIdAndUpdate(id, { role: 'user' }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
   

@@ -61,9 +61,9 @@ const Home: React.FC = () => {
             <div className="container mx-auto px-6">
               <div className="flex flex-wrap justify-center">
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
-                    <h3 className="text-xl font-semibold mb-2 text-white">Expert Mentorship</h3>
-                    <p className="text-gray-300">
+                  <div className="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                    <h3 className="text-xl font-semibold mb-2 text-black">Expert Mentorship</h3>
+                    <p className="text-black">
                       Learn from industry experts who bring real-world experience to the classroom.
                     </p>
                   </div>
@@ -77,9 +77,9 @@ const Home: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-full md:w-1/3 px-4 mb-8">
-                  <div className="bg-gray-900 p-6 rounded-md shadow-md text-center">
-                    <h3 className="text-xl font-semibold mb-2 text-white">Community Support</h3>
-                    <p className="text-gray-300">
+                  <div className="bg-gray-100 p-6 rounded-md shadow-md text-center">
+                    <h3 className="text-xl font-semibold mb-2 text-black">Community Support</h3>
+                    <p className="text-black">
                       Join a community of learners and collaborate with peers from around the world.
                     </p>
                   </div>

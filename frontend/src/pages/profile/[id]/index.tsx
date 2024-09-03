@@ -164,6 +164,68 @@ const UserProfile = () => {
     }
   };
 
+  const handlePromoteUser = async (userId) => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch(`http://localhost:8000/user/promote/${userId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Failed to promote user");
+      }
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => {
+          if (user._id === userId) {
+            return { ...user, role: "admin" };
+          }
+          return user;
+        })
+      );
+    } catch (error) {
+      console.error("Error promoting user:", error);
+    }
+  };
+
+  const handleDemoteUser = async (userId) => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch(`http://localhost:8000/user/demote/${userId}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to demote user");
+      }
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => {
+          if (user._id === userId) {
+            return { ...user, role: "user" };
+          }
+          return user;
+        })
+      );
+    } catch (error) {
+      console.error("Error demoting user:", error);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -178,10 +240,10 @@ const UserProfile = () => {
                   <p className="text-sm text-gray-600">{profileData.email}</p>
                 </div>
                 <button
-                  className="text-white bg-black hover:bg-gray-600 px-4 py-2 rounded font-bold"
+                  className="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded font-bold"
                   onClick={() => router.push(`/profile/update/${id}`)}
                 >
-                  Update Profile
+                  Update
                 </button>
               </div>
               <div className="mt-6 space-y-4">
@@ -225,7 +287,7 @@ const UserProfile = () => {
                         className="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded font-bold"
                         onClick={() => router.push("/course/create")}
                     >
-                        Create Course
+                        Create
                     </button>
                 </div>
                 <div className="mt-6 space-y-4">
@@ -234,7 +296,7 @@ const UserProfile = () => {
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
                         <button
-                          className="text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                          className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
                           onClick={() => handleDeleteCourse(course.id)}
                         >
                           Delete
@@ -253,15 +315,36 @@ const UserProfile = () => {
                 <div className="mt-6 space-y-4">
                   {users.map((user) => (
                     <div key={user.id} className="flex items-center justify-between space-x-4">
-                      <span className="text-gray-800 font-medium">{user.name}</span>
-                      <span className="text-gray-800 font-semibold">{user.role}</span>
+                      {user.role === "admin" ? (
+                        <span className="text-gray-800 font-bold">{user.name} (admin)</span>
+                      ) : (
+                        <span className="text-gray-800">{user.name}</span>
+                      )}
                       <div className="flex space-x-4">
-                        <button
-                          className="text-white bg-gray-500 hover:bg-gray-700 px-4 py-2 rounded font-bold"
-                          onClick={() => handleDeleteUser(user._id)}
-                        >
-                          Delete
-                        </button>
+                        {user.role === "user" && (
+                          <>
+                            <button
+                              className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                              onClick={() => handlePromoteUser(user._id)}
+                            >
+                              Promote
+                            </button>
+                            <button
+                              className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                              onClick={() => handleDeleteUser(user._id)}
+                              >
+                              Delete
+                            </button>
+                          </>
+                        )}
+                        {user.role === "admin" && (
+                          <button
+                            className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                            onClick={() => handleDemoteUser(user._id)}
+                          >
+                            Demote
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}

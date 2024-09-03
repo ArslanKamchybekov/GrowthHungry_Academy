@@ -26,7 +26,7 @@ const useCurrentUser = () => {
 
                 const data = await response.json();
                 setUser(data);
-            } catch (err) {
+            } catch (err: any) {
                 setError(err.message);
                 console.error('Error fetching user data:', err);
             } finally {

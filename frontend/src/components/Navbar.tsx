@@ -35,8 +35,8 @@ const Navbar = () => {
                     <div className="items-center gap-x-2 flex hover:opacity-75 transition-opacity cursor-pointer">
                         <img src="/assets/logo.png" alt="GrowthHungry Logo" className="h-8 w-8" />
                         <div className="leading-tight m-2">
-                            <p className="font-semibold text-base text-sky-700">GrowthHungry Academy</p>
-                            <p className="text-xs text-muted-foreground text-sky-700">Compound your learning!</p>
+                            <p className="font-semibold text-base text-sky-800">GrowthHungry Academy</p>
+                            <p className="text-xs text-muted-foreground text-sky-800">Compound your learning!</p>
                         </div>
                     </div>
                 </Link>

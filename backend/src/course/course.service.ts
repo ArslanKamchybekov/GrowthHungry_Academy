@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Course } from '../models/course.model';
 import { CloudinaryService } from './cloudinary.service';
+import UserModel from '../models/user.model';
 
 @Injectable()
 export class CourseService {
@@ -57,4 +58,24 @@ export class CourseService {
             throw new Error(`Error updating course with id ${id}: ${error.message}`);
         }   
     } 
+
+    async markChapterAsCompleted(courseId: string, chapterId: string, userId: string) {
+        try {
+            const course = await Course.findById(courseId).exec();
+            const user = await UserModel.findById(userId).exec();
+            if (!course || !user) throw new Error('Course or user not found');
+            
+            const chapter = course.courseData.find(chapter => chapter._id == chapterId);
+            if (!chapter) throw new Error('Chapter not found');
+
+            if(!user.completedCourses.some(course => course.courseId == courseId)){
+                user.completedCourses.push({ courseId });
+                user.points += 10;
+            }
+
+            return user.save();
+        } catch (error) {
+            throw new Error(`Error marking chapter as completed: ${error.message}`);
+        }
+    }
 }

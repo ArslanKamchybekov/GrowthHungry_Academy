@@ -88,6 +88,30 @@ export class UserController {
             return { error: error.message };
         }
     }
+
+    @Post('/promote/:id')
+    @Roles('admin')
+    async promoteUser(@Param ('id')id: string) { 
+        try {
+            const promotedUser = await this.userService.promote(id);
+            promotedUser.save();
+            return promotedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
+
+    @Post('/demote/:id')
+    @Roles('admin')
+    async demoteUser(@Param ('id')id: string) {
+        try {
+            const demotedUser = await this.userService.demote(id);
+            demotedUser.save();
+            return demotedUser;
+        } catch (error) {
+            return { error: error.message };
+        }
+    }
 }
 
 
