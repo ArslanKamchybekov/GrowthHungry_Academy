@@ -67,7 +67,7 @@ const AssignmentPage = () => {
         <>
             <Navbar />
             <br />
-            <div className="container mx-auto mt-16 py-8">
+            <div className="container mx-auto px-4 py-8 mt-16">
                 <h1 className="text-4xl font-bold text-black text-center p-4">
                     {assignment.title}
                 </h1>

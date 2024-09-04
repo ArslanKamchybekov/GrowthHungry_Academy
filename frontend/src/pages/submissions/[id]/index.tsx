@@ -53,7 +53,6 @@ const Submissions = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {submissions.map((submission, index) => (
                             <div key={index} className="bg-gray-100 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                                <h2 className="text-2xl font-bold text-gray-800">{submission.title || "Title"}</h2>
                                 <p className="text-gray-600 font-bold my-2">Date submitted: {new Date(submission.submittedAt).toLocaleDateString()}</p>
                                 <p className="text-gray-600">{submission.submissionText || "Description"}</p>
                             </div>
