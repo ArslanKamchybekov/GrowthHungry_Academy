@@ -45,7 +45,7 @@ const Leadership = () => {
                         Meet the Most Ambitious Students in Our Community
                     </h1>
                     <p className="text-lg text-black text-center">
-                        Discover the top performers who are making a difference with their dedication and hard work
+                        Discover the top performers of GrowthHungry Academy and get inspired by their dedication and hard work
                     </p>
                 </div>
             </div>
