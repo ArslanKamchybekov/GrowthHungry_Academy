@@ -116,7 +116,9 @@ const Home: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             {/* Company info and logo */}
             <div className="text-center md:text-left mb-6 md:mb-0">
-              <h3 className="text-2xl font-bold mb-2">GrowthHungry Academy</h3>
+              <Link href="https://www.growthhungry.life/" passHref>
+                <h1 className="font-semibold text-2xl">GrowthHungry Academy</h1>
+              </Link>
               <p className="text-gray-400">Empowering your growth with quality education and mentorship.</p>
             </div>
 

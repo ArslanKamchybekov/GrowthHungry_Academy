@@ -6,8 +6,6 @@ import useCurrentUser from "@/hooks/useAuth";
 const Submissions = () => {
     const router = useRouter();
     const [submissions, setSubmissions] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const { user } = useCurrentUser();
     const { id } = router.query;
 
@@ -32,11 +30,8 @@ const Submissions = () => {
 
                 const data = await response.json();
                 setSubmissions(data);
-                setLoading(false);
             } catch (error: any) {
                 console.error('Error fetching submissions:', error);
-                setError(error.message);
-                setLoading(false);
                 router.push("/");
             }
         };
@@ -44,37 +39,31 @@ const Submissions = () => {
         fetchSubmissions();
     }, [user]);
 
-    if (loading) {
-        return <p className="text-center text-lg text-gray-800">Loading submissions...</p>;
-    }
-
-    if (error) {
-        return <p className="text-center text-lg text-red-800">{error}</p>;
-    }
-
     return (
         <>
-            <Navbar />
+           <Navbar />
             <br />
             <div className="container mx-auto mt-16 py-12">
                 <h1 className="text-4xl font-bold text-black text-center mb-4">
                     Submissions
                 </h1>
-                <div className="container mx-auto px-4 py-12">
-                    {submissions.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                            {submissions.map((submission, index) => (
-                                <div key={index} className="bg-gray-100 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-                                    <h2 className="text-2xl font-bold text-gray-800 mb-2">{submission.title || "Title"}</h2>
-                                    <p className="text-gray-600">{submission.submissionText || "Description"}</p>
-                                    <p className="text-gray-600 mt-2">Date submitted: {new Date(submission.submittedAt).toLocaleDateString()}</p>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-center text-lg text-gray-800">No submissions found</p>
-                    )}
-                </div>
+            </div>
+            <div className="container mx-auto px-4 py-12">
+                {submissions.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                        {submissions.map((submission, index) => (
+                            <div key={index} className="bg-gray-100 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <h2 className="text-2xl font-bold text-gray-800">{submission.title || "Title"}</h2>
+                                <p className="text-gray-600 font-bold my-2">Date submitted: {new Date(submission.submittedAt).toLocaleDateString()}</p>
+                                <p className="text-gray-600">{submission.submissionText || "Description"}</p>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="flex justify-center mt-16">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-sky-700"></div>
+                    </div>
+                )}
             </div>
         </>
     );
