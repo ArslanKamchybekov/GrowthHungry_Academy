@@ -26,7 +26,7 @@ const UpdateProfile = () => {
                 throw new Error("No token found");
             }
 
-            const response = await fetch(`http://localhost:8000/user/update/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/update/${id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

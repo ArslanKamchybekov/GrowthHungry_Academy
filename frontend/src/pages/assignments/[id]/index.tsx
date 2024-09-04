@@ -11,7 +11,7 @@ const AssignmentPage = () => {
         const fetchAssignment = async () => {
             const token = localStorage.getItem('access-token');
             try {
-                const response = await fetch(`http://localhost:8000/assignment/${assignmentId}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/${assignmentId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const AssignmentPage = () => {
 
         const submissionText = e.target.submission.value;
         try {
-            const response = await fetch(`http://localhost:8000/assignment/submit/${assignmentId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/${assignmentId}/submit`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,

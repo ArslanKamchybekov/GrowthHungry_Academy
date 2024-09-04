@@ -24,7 +24,7 @@ const Course = () => {
           router.push("/signin");
           return;
         }
-        const response = await fetch(`http://localhost:8000/course/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ const Course = () => {
         const data = await response.json();
         setCourse(data);
         
-        const userResponse = await fetch(`http://localhost:8000/user/${user?.userId}`, {
+        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user?.userId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const Course = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:8000/user/enroll/${user?.userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/enroll/${user?.userId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ const Course = () => {
         return;
       }
 
-      const response = await fetch(`http://localhost:8000/user/unenroll/${user?.userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/unenroll/${user?.userId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

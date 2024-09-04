@@ -24,7 +24,7 @@ const CourseProgressChapter: React.FC = () => {
                 const token = localStorage.getItem('access-token');
                 if (!token) router.push('/signin');
 
-                const response = await fetch(`http://localhost:8000/course/content/${id}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/content/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',

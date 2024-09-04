@@ -46,7 +46,7 @@ const Courses: React.FC = () => {
           return;
         }
 
-        const response = await fetch("http://localhost:8000/course/get", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/get`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

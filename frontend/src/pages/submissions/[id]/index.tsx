@@ -17,7 +17,7 @@ const Submissions = () => {
                 return;
             }
             try {
-                const response = await fetch(`http://localhost:8000/submission/user/${id}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/submission/user/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',

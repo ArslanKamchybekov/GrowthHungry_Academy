@@ -11,7 +11,7 @@ const Activation: React.FC = () => {
         const activateUser = async () => {
             if (token && code) {
                 try {
-                const response = await fetch('http://localhost:8000/auth/activate-user', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/activate`, {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',

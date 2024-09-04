@@ -83,7 +83,7 @@ const CreateCourseForm: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/course/create", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/create`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

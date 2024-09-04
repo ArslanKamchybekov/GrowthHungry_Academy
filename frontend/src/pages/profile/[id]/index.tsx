@@ -20,7 +20,7 @@ const UserProfile = () => {
             return;
         }
 
-        const response = await fetch(`http://localhost:8000/user/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:8000/user/get", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/get`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const UserProfile = () => {
       if (!token) throw new Error("No token found");
 
       const coursePromises = courseIds.map(async (courseId: any) => {
-        const response = await fetch(`http://localhost:8000/course/${courseId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/${courseId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -109,7 +109,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch("http://localhost:8000/assignment/get", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/get`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -132,7 +132,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch(`http://localhost:8000/user/delete/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/delete/${userId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -145,7 +145,6 @@ const UserProfile = () => {
       }
 
       setUsers((prevUsers) => prevUsers.filter((user: any) => user.id !== userId));
-
       router.push("/");
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -157,7 +156,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch(`http://localhost:8000/course/delete/${courseId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/delete/${courseId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -169,7 +168,7 @@ const UserProfile = () => {
         throw new Error("Failed to delete course");
       }
 
-      const unenrollResponse = await fetch(`http://localhost:8000/user/unenroll/${id}`, {
+      const unenrollResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/unenroll/${id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -192,7 +191,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch(`http://localhost:8000/user/promote/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/promote/${userId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -221,7 +220,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch(`http://localhost:8000/user/demote/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/demote/${userId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -251,7 +250,7 @@ const UserProfile = () => {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const response = await fetch(`http://localhost:8000/assignment/${assignmentId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/${assignmentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

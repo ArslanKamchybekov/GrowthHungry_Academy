@@ -12,7 +12,7 @@ const Leadership = () => {
                 const token = localStorage.getItem("access-token");
                 if (!token) router.push("/signin");
 
-                const response = await fetch(`http://localhost:8000/user/points/get`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/points/get`, {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json",

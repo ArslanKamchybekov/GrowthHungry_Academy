@@ -26,7 +26,7 @@ const UpdateAssignmentForm = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:8000/assignment/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/${id}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,

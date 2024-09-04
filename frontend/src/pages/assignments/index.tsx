@@ -12,7 +12,7 @@ const Assignments = () => {
 
         const fetchAssignments = async () => {
             try {
-                const response = await fetch('http://localhost:8000/assignment/get', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/assignment/get`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',

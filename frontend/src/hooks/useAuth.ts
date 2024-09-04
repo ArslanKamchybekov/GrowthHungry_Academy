@@ -13,7 +13,7 @@ const useCurrentUser = () => {
                     throw new Error('No token found');
                 }
 
-                const response = await fetch('http://localhost:8000/user/me', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
