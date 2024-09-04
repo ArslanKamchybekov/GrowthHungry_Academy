@@ -35,4 +35,8 @@ export class SubmissionController {
         return this.submissionService.delete(id);
     }
 
+    @Get('user/:userId')
+    async getByUserId(@Param('userId') userId: string) {
+        return this.submissionService.getByUserId(userId);
+    }
 }

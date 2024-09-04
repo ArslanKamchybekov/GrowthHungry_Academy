@@ -27,7 +27,12 @@ export class SubmissionService {
     }
 
     async delete(id: string) {
-        const submission = await Submission.findByIdAndDelete(id);
+        const submission = await Submission.findByIdAndDelete(id)
         return submission;
+    }
+
+    async getByUserId(userId: string){
+        const submissions = await Submission.find({userId: userId}).exec()
+        return submissions;
     }
 }
