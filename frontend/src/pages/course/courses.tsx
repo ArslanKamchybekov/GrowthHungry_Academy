@@ -71,7 +71,7 @@ const Courses: React.FC = () => {
   }, [router]);
 
   return (
-    <div className="container mx-auto px-6 py-8">
+    <div className="container mx-auto px-2 py-8">
       <form className="flex items-center mb-8" onSubmit={handleSearchSubmit}>
         <input
           className="w-full px-5 py-3 mr-3 shadow-md rounded-lg border border-gray-200"
@@ -92,7 +92,7 @@ const Courses: React.FC = () => {
           filteredCourses.map((course) => (
             <div
               key={course._id}
-              className="bg-gray-100 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
+              className="bg-gray-100 rounded-lg shadow-lg p-4 transition-transform transform hover:scale-105 hover:shadow-xl"
             >
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">
                 {course.name}

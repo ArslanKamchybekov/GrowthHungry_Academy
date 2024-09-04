@@ -57,60 +57,54 @@ const CreateAssignmentForm: React.FC = () => {
         <>
         <Navbar />
         <br />
-        <div className="container mx-auto mt-16 py-12">
-            <h1 className="text-4xl font-bold text-black text-center mb-4">
+        <form onSubmit={handleSubmit} className="max-w-lg mx-2 p-4 shadow-md rounded my-16 bg-gray-100">
+            <h2 className="text-2xl font-bold mb-4">Create Assignment</h2>
+
+            {/* Title */}
+            <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    value={assignment.title}
+                    onChange={handleAssignmentChange}
+                    className="block w-full p-3 rounded"
+                    required
+                />
+            </div>
+
+            {/* Description */}
+            <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">Description</label>
+                <textarea
+                    name="description"
+                    value={assignment.description}
+                    onChange={handleAssignmentChange}
+                    className="block w-full p-3 rounded"
+                    required
+                ></textarea>
+            </div>
+
+            {/* Due Date */}
+            <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">Due Date</label>
+                <input
+                    type="date"
+                    name="dueDate"
+                    value={assignment.dueDate}
+                    onChange={handleAssignmentChange}
+                    className="block w-full p-3 rounded"
+                    required
+                />
+            </div>
+
+            <button
+                type="submit"
+                className="w-full bg-black hover:bg-gray-700 text-white font-bold py-2 rounded transition"
+            >
                 Create Assignment
-            </h1>
-            <form onSubmit={handleSubmit} className="container mx-auto px-4 py-12">
-                <div className="mb-4">
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                        Title
-                    </label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        value={assignment.title}
-                        onChange={handleAssignmentChange}
-                        required
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                        Description
-                    </label>
-                    <textarea
-                        name="description"
-                        id="description"
-                        value={assignment.description}
-                        onChange={handleAssignmentChange}
-                        required
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
-                        Due Date
-                    </label>
-                    <input
-                        type="date"
-                        name="dueDate"
-                        id="dueDate"
-                        value={assignment.dueDate}
-                        onChange={handleAssignmentChange}
-                        required
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-black text-white font-semibold px-4 py-2 rounded-md mt-4 hover:bg-gray-700 transition"
-                >
-                    Create Assignment
-                </button>
-            </form>
-        </div>
+            </button>
+        </form>
         </>
     );
 };
