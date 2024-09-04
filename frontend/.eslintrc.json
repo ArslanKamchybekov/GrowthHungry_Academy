@@ -1,11 +1,11 @@
 {
-  "extends": ["next/babel","next/core-web-vitals","next"],
+  "extends": ["next/core-web-vitals","next"],
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
-    // Add your custom rules here
+
   }
 }
