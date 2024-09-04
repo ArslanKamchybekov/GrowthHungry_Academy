@@ -1,9 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
+import { IAssignment } from './assignment.model';
 
 export interface ICourseData {
     title: string;
     description: string;
     videoUrl: string;
+    assignments: IAssignment[];
 }
 export interface ICourse {
     name: string;
@@ -16,6 +18,7 @@ const CourseDataSchema: Schema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     videoUrl: { type: String},
+    assignments: [{ type: Schema.Types.ObjectId, ref: 'Assignment' }]
 });
 const CourseSchema: Schema = new Schema({
     name: { type: String, required: true },

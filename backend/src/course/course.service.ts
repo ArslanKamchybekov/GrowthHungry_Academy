@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Course } from '../models/course.model';
 import { CloudinaryService } from './cloudinary.service';
-import UserModel from '../models/user.model';
 
 @Injectable()
 export class CourseService {

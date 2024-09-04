@@ -52,6 +52,16 @@ const Navbar = () => {
                                         Leadership
                                     </button>
                                 </Link>
+                                <Link href="/submissions" passHref>
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
+                                        Submissions
+                                    </button>
+                                </Link>
+                                <Link href="/assignments" passHref>
+                                    <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
+                                        Assignments
+                                    </button>
+                                </Link>
                                 <Link href={`/profile/${user?.userId}`} passHref>
                                     <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
                                         Profile
@@ -97,6 +107,16 @@ const Navbar = () => {
                             <Link href="/leadership" passHref>
                                 <button className="block w-full text-left text-sm font-medium transition-colors hover:bg-gray-100 py-2 px-4">
                                     Leadership
+                                </button>
+                            </Link>
+                            <Link href="/assignments" passHref>
+                                <button className="block w-full text-left text-sm font-medium transition-colors hover:bg-gray-100 py-2 px-4">
+                                    Assignments
+                                </button>
+                            </Link>
+                            <Link href="/submissions" passHref>
+                                <button className="block w-full text-left text-sm font-medium transition-colors hover:bg-gray-100 py-2 px-4">
+                                    Submissions
                                 </button>
                             </Link>
                             <Link href={`/profile/${user?.userId}`} passHref>

@@ -9,6 +9,7 @@ const UserProfile = () => {
   const [courses, setCourses] = useState([]);
   const [userRole, setUserRole] = useState("");
   const [users, setUsers] = useState([]);
+  const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -36,11 +37,10 @@ const UserProfile = () => {
         setUserRole(data.role);
 
         if (courseIds.length > 0) {
-          // Fetch course names based on courseIds
           const coursesResponse = await fetchCourses(courseIds);
           setCourses(coursesResponse);
         }
-
+        fetchAssignments();
         fetchUsers();
       } catch (error) {
         console.error("Error fetching user profile:", error);
@@ -103,6 +103,29 @@ const UserProfile = () => {
       return [];
     }
   };
+
+  const fetchAssignments = async () => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch("http://localhost:8000/assignment/get", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch assignments");
+      }
+
+      const data = await response.json();
+      setAssignments(data);
+    } catch (error) {
+      console.error("Error fetching assignments:", error);
+    }
+  }
 
   const handleDeleteUser = async (userId) => {
     try {
@@ -226,6 +249,31 @@ const UserProfile = () => {
     }
   };
 
+  const handleDeleteAssignment = async (assignmentId) => {
+    try {
+      const token = localStorage.getItem("access-token");
+      if (!token) throw new Error("No token found");
+
+      const response = await fetch(`http://localhost:8000/assignment/${assignmentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete assignment");
+      }
+
+      setAssignments((prevAssignments) =>
+        prevAssignments.filter((assignment) => assignment._id !== assignmentId)
+      );
+    } catch (error) {
+      console.error("Error deleting assignment:", error);
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -282,7 +330,7 @@ const UserProfile = () => {
             <div className="flex justify-center">
               <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-semibold">My Courses</h2>
+                    <h2 className="text-2xl font-semibold">Courses</h2>
                     <button
                         className="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded font-bold"
                         onClick={() => router.push("/course/create")}
@@ -307,7 +355,9 @@ const UserProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="flex justify-center mt-8">
+              
+            {/* Admin Panel: list of all users - promote, demote, delete */}
+            <div className="flex justify-center my-8">
               <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-semibold">Users</h2>
@@ -345,6 +395,41 @@ const UserProfile = () => {
                             Demote
                           </button>
                         )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Admin Panel: list of all assignments - edit, delete; create assignment; */}
+            <div className="flex justify-center">
+              <div className="bg-gray-100 shadow-md rounded-lg p-6 max-w-lg w-full">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-semibold">Assignments</h2>
+                  <button
+                    className="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                    onClick={() => router.push("/assignments/create")}
+                  >
+                    Create
+                  </button>
+                </div>
+                <div className="mt-6 space-y-4">
+                  {assignments.map((assignment) => (
+                    <div key={assignment._id} className="flex items-center justify-between">
+                      <span className="text-gray-800 font-medium">{assignment.title}</span>
+                      <div className="flex space-x-4">
+                        <button
+                          className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                          onClick={() => router.push(`/assignments/update/${assignment._id}`)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="text-white bg-gray-400 hover:bg-gray-700 px-4 py-2 rounded font-bold"
+                          onClick={() => handleDeleteAssignment(assignment._id)}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
                   ))}

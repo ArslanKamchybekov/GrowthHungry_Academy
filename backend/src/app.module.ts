@@ -17,6 +17,12 @@ import { LayoutController } from './layout/layout.controller';
 import { LayoutService } from './layout/layout.service';
 import { LayoutModule } from './layout/layout.module';
 import { AuthService } from './auth/auth.service';
+import { AssignmentController } from './assignment/assignment.controller';
+import { AssignmentService } from './assignment/assignment.service';
+import { AssignmentModule } from './assignment/assignment.module';
+import { SubmissionController } from './submission/submission.controller';
+import { SubmissionService } from './submission/submission.service';
+import { SubmissionModule } from './submission/submission.module';
 
 @Module({
   imports: [
@@ -36,10 +42,12 @@ import { AuthService } from './auth/auth.service';
     UserModule,
     CourseModule,
     LayoutModule,
-    CloudinaryModule
+    CloudinaryModule,
+    AssignmentModule,
+    SubmissionModule
   ],
-  controllers: [AuthController, CourseController, UserController, LayoutController],
-  providers: [CourseService, UserService, LayoutService, CloudinaryService],
+  controllers: [AuthController, CourseController, UserController, LayoutController, AssignmentController, SubmissionController],
+  providers: [CourseService, UserService, LayoutService, CloudinaryService, AssignmentService, SubmissionService],
   exports: []
 })
 export class AppModule {}

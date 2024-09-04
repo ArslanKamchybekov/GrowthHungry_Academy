@@ -1,4 +1,4 @@
-import { Injectable, Post } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import UserModel from '../models/user.model';
 
 @Injectable()
@@ -82,6 +82,15 @@ export class UserService {
     async demote(id: string) {
         try {
             return UserModel.findByIdAndUpdate(id, { role: 'user' }, { new: true }).exec();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async isEnrolled(id: string, courseId: string) {
+        try {
+            const user = await UserModel.findById(id).exec();
+            return user.courses.includes({ courseId: courseId });
         } catch (error) {
             console.log(error)
         }

@@ -17,6 +17,7 @@ export interface IUser extends Document {
   isVerified: boolean;
   courses: Array<{ courseId: string }>;
   completedCourses: Array<{ courseId: string }>;
+  submissions: Array<{ submissionId: string }>;
   comparePassword(candidatePassword: string): Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
@@ -46,6 +47,7 @@ const userSchema = new Schema<IUser>(
     isVerified: { type: Boolean, default: false },
     courses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
     completedCourses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }],
+    submissions: [{ submissionId: { type: Schema.Types.ObjectId, ref: 'Submission' } }],
   },
   { timestamps: true },
 );
