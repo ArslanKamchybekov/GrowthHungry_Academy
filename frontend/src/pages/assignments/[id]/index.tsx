@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const AssignmentPage = () => {
     const router = useRouter();
     const assignmentId = router.query.id as string;
-    const [assignment, setAssignment] = useState([]);
+    const [assignment, setAssignment] = useState<any>({});
     
     useEffect(() => {
         const fetchAssignment = async () => {
@@ -31,7 +31,7 @@ const AssignmentPage = () => {
         fetchAssignment();
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         const token = localStorage.getItem('access-token');
         if (!token) {

@@ -14,11 +14,11 @@ const UpdateProfile = () => {
     const router = useRouter();
     const { id } = useParams();
 
-    const handleProfileChange = (e) => {
+    const handleProfileChange = (e: any) => {
         setProfile({ ...profile, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem("access-token");

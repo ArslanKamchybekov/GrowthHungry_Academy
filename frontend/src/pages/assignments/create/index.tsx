@@ -23,7 +23,7 @@ const CreateAssignmentForm: React.FC = () => {
         setAssignment({ ...assignment, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         const token = localStorage.getItem('access-token');
         if (!token) {

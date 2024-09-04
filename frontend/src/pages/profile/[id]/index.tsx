@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 const UserProfile = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState<any>();
   const [courses, setCourses] = useState([]);
   const [userRole, setUserRole] = useState("");
   const [users, setUsers] = useState([]);
@@ -32,13 +32,13 @@ const UserProfile = () => {
         }
 
         const data = await response.json();
-        const courseIds = data.courses.map((course) => course._id);
+        const courseIds = data.courses.map((course: any) => course._id);
         setProfileData(data);
         setUserRole(data.role);
 
         if (courseIds.length > 0) {
           const coursesResponse = await fetchCourses(courseIds);
-          setCourses(coursesResponse);
+          setCourses(coursesResponse as any);
         }
         fetchAssignments();
         fetchUsers();
@@ -74,12 +74,12 @@ const UserProfile = () => {
     }
   }
 
-  const fetchCourses = async (courseIds) => {
+  const fetchCourses = async (courseIds: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
 
-      const coursePromises = courseIds.map(async (courseId) => {
+      const coursePromises = courseIds.map(async (courseId: any) => {
         const response = await fetch(`http://localhost:8000/course/${courseId}`, {
           method: "GET",
           headers: {
@@ -127,7 +127,7 @@ const UserProfile = () => {
     }
   }
 
-  const handleDeleteUser = async (userId) => {
+  const handleDeleteUser = async (userId: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
@@ -144,7 +144,7 @@ const UserProfile = () => {
         throw new Error("Failed to delete user");
       }
 
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      setUsers((prevUsers) => prevUsers.filter((user: any) => user.id !== userId));
 
       router.push("/");
     } catch (error) {
@@ -152,7 +152,7 @@ const UserProfile = () => {
     }
   }
 
-  const handleDeleteCourse = async (courseId) => {
+  const handleDeleteCourse = async (courseId: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
@@ -181,13 +181,13 @@ const UserProfile = () => {
         if (!unenrollResponse.ok) {
             throw new Error("Failed to unenroll user from course");
         }
-      setCourses((prevCourses) => prevCourses.filter((course) => course.id !== courseId));
+      setCourses((prevCourses) => prevCourses.filter((course: any) => course.id !== courseId));
     } catch (error) {
       console.error("Error deleting course:", error);
     }
   };
 
-  const handlePromoteUser = async (userId) => {
+  const handlePromoteUser = async (userId: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
@@ -199,15 +199,12 @@ const UserProfile = () => {
           "Content-Type": "application/json",
         },
       });
-
-
-      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to promote user");
       }
 
-      setUsers((prevUsers) =>
-        prevUsers.map((user) => {
+      setUsers((prevUsers: any) =>
+        prevUsers.map((user: any) => {
           if (user._id === userId) {
             return { ...user, role: "admin" };
           }
@@ -219,7 +216,7 @@ const UserProfile = () => {
     }
   };
 
-  const handleDemoteUser = async (userId) => {
+  const handleDemoteUser = async (userId: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
@@ -236,8 +233,8 @@ const UserProfile = () => {
         throw new Error("Failed to demote user");
       }
 
-      setUsers((prevUsers) =>
-        prevUsers.map((user) => {
+      setUsers((prevUsers: any) =>
+        prevUsers.map((user: any) => {
           if (user._id === userId) {
             return { ...user, role: "user" };
           }
@@ -249,7 +246,7 @@ const UserProfile = () => {
     }
   };
 
-  const handleDeleteAssignment = async (assignmentId) => {
+  const handleDeleteAssignment = async (assignmentId: any) => {
     try {
       const token = localStorage.getItem("access-token");
       if (!token) throw new Error("No token found");
@@ -267,7 +264,7 @@ const UserProfile = () => {
       }
 
       setAssignments((prevAssignments) =>
-        prevAssignments.filter((assignment) => assignment._id !== assignmentId)
+        prevAssignments.filter((assignment: any) => assignment._id !== assignmentId)
       );
     } catch (error) {
       console.error("Error deleting assignment:", error);
@@ -303,7 +300,7 @@ const UserProfile = () => {
                 <div className="flex items-center">
                   <span className="text-gray-600 font-bold w-1/3">Courses</span>
                     <div className="flex flex-col">
-                    {courses.map((course) => (
+                    {courses.map((course: any) => (
                       <div key={course.id} className="flex items-center">
                         <span className="text-gray-800 font-medium">{course.name}</span>
                       </div>
@@ -340,7 +337,7 @@ const UserProfile = () => {
                     </button>
                 </div>
                 <div className="mt-6 space-y-4">
-                  {courses.map((course) => (
+                  {courses.map((course: any) => (
                     <div key={course.id} className="flex items-center justify-between">
                       <span className="text-gray-800 font-medium">{course.name}</span>
                       <div className="flex space-x-4">
@@ -364,7 +361,7 @@ const UserProfile = () => {
                   <h2 className="text-2xl font-semibold">Users</h2>
                 </div>
                 <div className="mt-6 space-y-4">
-                  {users.map((user) => (
+                  {users.map((user: any) => (
                     <div key={user.id} className="flex items-center justify-between space-x-4">
                       {user.role === "admin" ? (
                         <span className="text-gray-800 font-bold">{user.name} (admin)</span>
@@ -415,7 +412,7 @@ const UserProfile = () => {
                   </button>
                 </div>
                 <div className="mt-6 space-y-4">
-                  {assignments.map((assignment) => (
+                  {assignments.map((assignment: any) => (
                     <div key={assignment._id} className="flex items-center justify-between">
                       <span className="text-gray-800 font-medium">{assignment.title}</span>
                       <div className="flex space-x-4">

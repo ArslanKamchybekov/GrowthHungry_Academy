@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const Leadership = () => {
-    const [leadershipData, setLeadershipData] = useState(null);
+    const [leadershipData, setLeadershipData] = useState<any>(null);
     const router = useRouter();
     
     useEffect(() => {
@@ -52,7 +52,7 @@ const Leadership = () => {
             <div className="container mx-auto px-4 py-12">
             {leadershipData ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {leadershipData.map((user, index) => (
+                        {leadershipData.map((user: any, index: number) => (
                             <div key={index} className="bg-gray-100 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
                                 <h2 className="text-2xl font-bold text-gray-800 mb-2">{user.name}</h2>
                                 <p className="text-gray-600">Points: <span className="font-semibold">{user.points}</span></p>

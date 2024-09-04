@@ -68,7 +68,7 @@ const Submissions = () => {
             <div className="container mx-auto px-4 py-12">
                 {submissions ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {submissions.map((submission, index) => (
+                        {submissions.map((submission: any, index) => (
                             <div key={index} className="bg-gray-100 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
                                 <p className="font-bold my-2">Date submitted: {new Date(submission.submittedAt).toLocaleDateString()}</p>
                                 <p className="text-gray-600 max-h-24 overflow-y-auto">{submission.submissionText}</p>

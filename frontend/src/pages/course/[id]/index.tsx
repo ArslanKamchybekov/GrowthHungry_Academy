@@ -9,8 +9,8 @@ import useCurrentUser from "@/hooks/useAuth";
 const Course = () => {
   const router = useRouter();
   const { id } = useParams();
-  const { user } = useCurrentUser();
-  const [course, setCourse] = useState(null);
+  const { user } = useCurrentUser() as any;
+  const [course, setCourse] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -50,7 +50,7 @@ const Course = () => {
         if (userResponse.ok) {
           const userData = await userResponse.json();
           const enrolledCourses = userData.courses || [];
-          setIsEnrolled(enrolledCourses.some(course => course._id === id));
+          setIsEnrolled(enrolledCourses.some((course: any) => course._id === id));
         }
 
       } catch (error: any) {
