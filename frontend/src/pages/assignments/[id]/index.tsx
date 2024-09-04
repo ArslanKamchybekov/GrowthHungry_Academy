@@ -28,7 +28,6 @@ const AssignmentPage = () => {
                 console.error('Error fetching assignments:', error);
             }
         }
-
         fetchAssignment();
     }, []);
 
@@ -54,9 +53,6 @@ const AssignmentPage = () => {
             if (!response.ok) {
                 throw new Error('Failed to submit assignment');
             }
-
-            const data = await response.json();
-            console.log('Assignment submitted successfully:', data);
             router.push('/assignments');
         } catch (error) {
             console.error('Error submitting assignment:', error);

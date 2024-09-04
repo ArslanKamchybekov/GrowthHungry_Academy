@@ -8,6 +8,7 @@ const ResetPassword: React.FC = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ const ResetPassword: React.FC = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true);
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -45,13 +47,14 @@ const ResetPassword: React.FC = () => {
       }
 
       setSuccess("Password reset successfully. You can now log in with your new password.");
-      // Redirect to login page after success
       setTimeout(() => {
         router.push("/signin");
       }, 3000);
 
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,12 +85,18 @@ const ResetPassword: React.FC = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-          >
-            Reset Password
-          </button>
+          {loading ? (
+            <div className="flex justify-center">
+              <div className="w-6 h-6 border-2 border-t-2 border-gray-800 rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-gray-800 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+            >
+              Reset Password
+            </button>
+          )}
         </form>
       </div>
     </div>

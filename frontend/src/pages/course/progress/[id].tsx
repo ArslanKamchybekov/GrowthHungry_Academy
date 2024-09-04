@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Course } from "@/pages/types/types";
 import CourseProgressSidebar from "@/components/CourseProgressSidebar";
 import CourseProgressChapter from "./[id]/chapters/[chapterid]";
-import { Menu, X } from "lucide-react"; // Icons for mobile menu
+import { Menu, X } from "lucide-react";
 
 const CourseProgress = () => {
   const router = useRouter();
   const { id } = router.query;
   const [title, setTitle] = useState("");
   const [links, setLinks] = useState<Course[]>([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to toggle mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -30,9 +30,9 @@ const CourseProgress = () => {
           throw new Error("Course not found");
         }
         const data = await response.json();
+        console.log(data);
         setTitle(data.name);
         setLinks(data.courseData);
-        // navigateToChapter(links[0]._id);
       } catch (error) {
         console.error("Error fetching course:", error);
         router.push("/signin");

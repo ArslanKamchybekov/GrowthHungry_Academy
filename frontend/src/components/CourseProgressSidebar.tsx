@@ -5,29 +5,26 @@ import { Menu, X } from "lucide-react";
 const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse, links }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
     return (
         <>
-            {/* Mobile Menu Button */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md p-4 flex justify-between items-center">
-                <a className="font-bold text-black" href="/">{titleCourse}</a>
-                <button onClick={toggleMobileMenu} className="text-gray-800 focus:outline-none">
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <nav className="bg-white border-b md:hidden">
+                <div className="flex items-center justify-between p-4">
+                <h1 className="text-xl font-bold">{titleCourse}</h1>
+                <button
+                    className="text-gray-800 focus:outline-none"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={20} />}
                 </button>
-            </div>
-
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <nav className="lg:hidden fixed top-16 left-0 right-0 z-50 bg-white shadow-md p-4">
-                    <div className="flex flex-col space-y-2">
-                        <a href="/" className="text-gray-800 hover:text-gray-600">Home</a>
-                        <a href="/leadership" className="text-gray-800 hover:text-gray-600">Leadership</a>  
-                    </div>
-                </nav>
-            )}
+                </div>
+                {isMobileMenuOpen && (
+                <div className="flex flex-col px-4 pb-4 space-y-2">
+                    <a href="/" className="text-gray-800 hover:text-gray-600">
+                        Home
+                    </a>
+                </div>
+                )}
+            </nav>
 
             {/* Sidebar for Larger Screens */}
             <div className="hidden lg:flex h-full w-80 flex-col fixed inset-y-0 z-50">

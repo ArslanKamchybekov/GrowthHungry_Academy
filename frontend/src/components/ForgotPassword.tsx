@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@mui/material';
 
 const ForgotPassword: React.FC = () => {
@@ -9,7 +8,6 @@ const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState('');
-  const router = useRouter();
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +29,6 @@ const ForgotPassword: React.FC = () => {
       }else{
         setMessage('An error occurred during activation.');
       }
-
       setSuccess('Reset password email sent successfully!');
     } catch (err: any) {
       setError(err.message);

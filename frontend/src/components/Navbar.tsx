@@ -7,22 +7,22 @@ import useCurrentUser from "../hooks/useAuth";
 
 const Navbar = () => {
     const router = useRouter();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { user } = useCurrentUser();
 
     const handleSignOut = () => {
         localStorage.removeItem("access-token");
-        setIsAuthenticated(false);
-        router.push("/signin");
+        setIsSignedIn(false);
+        router.reload();
     };
 
     useEffect(() => {
         const token = localStorage.getItem("access-token");
         if (token) {
-            setIsAuthenticated(true);
+            setIsSignedIn(true);
         } else {
-            setIsAuthenticated(false);
+            setIsSignedIn(false);
             router.push("/");
         }
     }, []);
@@ -45,7 +45,7 @@ const Navbar = () => {
                 <div className="hidden lg:flex items-center">
                     {/* Desktop Menu Links */}
                     <div className="flex items-center gap-x-2 ml-4">
-                        {isAuthenticated ? (
+                        {isSignedIn ? (
                             <>
                                 <Link href="/leadership" passHref>
                                     <button className="inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background h-9 rounded-md px-3">
@@ -102,7 +102,7 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
                 <div className="lg:hidden p-4 bg-white border-t">
-                    {isAuthenticated ? (
+                    {isSignedIn ? (
                         <>
                             <Link href="/leadership" passHref>
                                 <button className="block w-full text-left text-sm font-medium transition-colors hover:bg-gray-100 py-2 px-4">

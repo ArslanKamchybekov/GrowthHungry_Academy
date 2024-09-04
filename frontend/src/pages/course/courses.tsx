@@ -63,7 +63,6 @@ const Courses: React.FC = () => {
         setFilteredCourses(data);
       } catch (error) {
         console.error("Error fetching courses:", error);
-        router.push("/signin");
       }
     };
 

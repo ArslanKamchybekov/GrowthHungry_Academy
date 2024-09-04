@@ -11,7 +11,6 @@ interface EmailOptions {
   data: { [key: string]: any };
 }
 
-// Promisify ejs.renderFile
 const renderFileAsync = (filePath: string, data: any): Promise<string> => {
   return new Promise((resolve, reject) => {
     ejs.renderFile(filePath, data, (err, str) => {

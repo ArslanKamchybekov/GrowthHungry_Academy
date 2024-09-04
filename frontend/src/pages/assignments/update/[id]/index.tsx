@@ -48,7 +48,7 @@ const UpdateAssignmentForm = () => {
         <>
             <Navbar />
             <br />
-            <form onSubmit={handleSubmit} className="max-w-lg mx-2 p-4 shadow-md rounded my-16 bg-gray-100">
+            <form onSubmit={handleSubmit} className="container mx-auto max-w-md p-4 bg-gray-100 shadow-md rounded mt-16">
                 <h2 className="text-2xl font-bold mb-4">Update Assignment</h2>
 
                 {/* Title */}

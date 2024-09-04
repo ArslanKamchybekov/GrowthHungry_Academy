@@ -12,7 +12,6 @@ const Course = () => {
   const { user } = useCurrentUser();
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState(false);
 
@@ -25,7 +24,6 @@ const Course = () => {
           router.push("/signin");
           return;
         }
-
         const response = await fetch(`http://localhost:8000/course/${id}`, {
           method: "GET",
           headers: {
@@ -57,7 +55,6 @@ const Course = () => {
 
       } catch (error: any) {
         console.error("Error fetching course:", error);
-        setError(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -131,10 +128,6 @@ const Course = () => {
     );
   }
 
-  if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
-  }
-
   return (
     <>
       {/* Mobile Navigation */}
@@ -152,9 +145,6 @@ const Course = () => {
           <div className="flex flex-col px-4 pb-4 space-y-2">
             <a href="/" className="text-gray-800 hover:text-gray-600">
               Home
-            </a>
-            <a href="/leadership" className="text-gray-800 hover:text-gray-600">
-              Leadership
             </a>
           </div>
         )}
@@ -197,7 +187,6 @@ const Course = () => {
             <div className="order-2 lg:col-span-2 flex flex-col space-y-6">
               <div className="border rounded-md p-6 text-secondary bg-white">
                 {isEnrolled ? (
-                  // Add a button to unenroll from the course, continue the course
                   <div className="flex flex-col items-center justify-between">
                     <button
                       type="button"

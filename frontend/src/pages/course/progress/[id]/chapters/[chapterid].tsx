@@ -8,12 +8,10 @@ const CourseProgressChapter: React.FC = () => {
     const router = useRouter();
     const { id, chapterid } = router.query; 
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [title, setTitle] = useState("");
     const [links, setLinks] = useState<Course[]>([]);
     const [video, setVideo] = useState("");
     const [currentChapter, setCurrentChapter] = useState("");
-    const [completedChapters, setCompletedChapters] = useState<string[]>([]);
     const [currentDescription, setCurrentDescription] = useState("");
 
     useEffect(() => {
@@ -22,7 +20,6 @@ const CourseProgressChapter: React.FC = () => {
             
             try {
                 setLoading(true);
-                setError(null); 
                 
                 const token = localStorage.getItem('access-token');
                 if (!token) router.push('/signin');
@@ -42,7 +39,7 @@ const CourseProgressChapter: React.FC = () => {
                 setTitle(data.name);
                 setLinks(data.courseData);
             } catch (error: any) {
-                setError(error.message || 'An error occurred');
+                console.error('Error fetching course:', error);
             } finally {
                 setLoading(false);
             }
@@ -81,45 +78,13 @@ const CourseProgressChapter: React.FC = () => {
         }
     }
 
-    // const handleMarkAsCompleted = async (chapterId: string) => {
-    //     try {
-    //       const token = localStorage.getItem("access-token");
-    //       if (!token) throw new Error("No token found");
-    
-    //       const response = await fetch("http://localhost:8000/course/complete-chapter", {
-    //         method: "PATCH",
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             userId: user?.id,
-    //             courseId: id,
-    //             chapterId,
-    //         }),
-    //       });
-    //       console.log(response);
-    //       if (!response.ok) {
-    //         throw new Error("Error marking chapter as completed");
-    //       }
-    //       const data = await response.json();
-    //       setCompletedChapters(data.completedCourses);
-    //     } catch (error) {
-    //       console.error("Error marking chapter as completed:", error);
-    //     }
-    //   }
-
     if (loading) {
         return (
           <div className="flex justify-center items-center h-screen">
-            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
           </div>
         );
       }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (
         <>
