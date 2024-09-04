@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Course } from "@/pages/types/types";
-import CourseProgressSidebar from "@/components/CourseProgressSidebar";
+import { Course } from "../../types/types";
+import CourseProgressSidebar from "../../../components/CourseProgressSidebar";
 import CourseProgressChapter from "./[id]/chapters/[chapterid]";
 import { Menu, X } from "lucide-react";
 

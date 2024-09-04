@@ -1,7 +1,7 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "../../../components/Navbar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import useCurrentUser from "@/hooks/useAuth";
+import useCurrentUser from "../../../hooks/useAuth";
 
 const Submissions = () => {
     const router = useRouter();

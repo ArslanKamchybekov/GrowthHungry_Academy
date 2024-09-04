@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "../../../components/Navbar";
 import { BookOpen, Link, Menu, X } from "lucide-react";
 import styles from "../course.module.css";
 import { useRouter, useParams } from "next/navigation";
-import useCurrentUser from "@/hooks/useAuth";
+import useCurrentUser from "../../../hooks/useAuth";
 
 const Course = () => {
   const router = useRouter();
