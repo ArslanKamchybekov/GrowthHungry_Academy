@@ -2,7 +2,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import styles from "../../../course.module.css";
 import CourseProgressSidebar from "../../../../../components/CourseProgressSidebar";
-import { Course } from "../../../../../pages/types/types";
+
+interface Course {
+    title: string;
+    description: string;
+    videoUrl: string | null;
+    videoLength: number;
+    _id: string;
+}
 
 const CourseProgressChapter: React.FC = () => {
     const router = useRouter();

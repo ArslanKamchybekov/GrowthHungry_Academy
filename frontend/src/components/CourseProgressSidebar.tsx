@@ -1,6 +1,19 @@
-import { CourseProgressProps } from "../pages/types/types";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+
+interface Course {
+    title: string;
+    description: string;
+    videoUrl: string | null;
+    videoLength: number;
+    _id: string;
+}
+
+interface CourseProgressProps {
+    titleCourse: string;
+    links: Course[];
+    id: string;
+}
 
 const CourseProgressSidebar: React.FC<CourseProgressProps> = ({ id, titleCourse, links }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

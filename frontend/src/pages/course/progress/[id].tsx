@@ -1,9 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Course } from "../../types/types";
 import CourseProgressSidebar from "../../../components/CourseProgressSidebar";
 import CourseProgressChapter from "./[id]/chapters/[chapterid]";
 import { Menu, X } from "lucide-react";
+
+interface Course {
+  title: string;
+  description: string;
+  videoUrl: string | null;
+  videoLength: number;
+  _id: string;
+}
 
 const CourseProgress = () => {
   const router = useRouter();
