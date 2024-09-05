@@ -45,7 +45,7 @@ export class LayoutController {
             } else {
                 return { success: false, error: "Invalid layout type" };
             }
-        } catch (error) {
+        } catch (error: any) {
             return { success: false, error: `Error creating layout: ${error.message}` };
         }
     }

@@ -39,6 +39,7 @@ export class AssignmentService {
     async submit(assignmentId: string, userId: string, submissionText: string, currentTime: Date) {
         try {
             const user = await this.userService.get(userId);
+            if (!user) return { message: 'User not found' };
             user.submissions.push({submissionId: assignmentId});
             user.points += 10;
             await user.save();
@@ -51,7 +52,7 @@ export class AssignmentService {
             });
 
             return submission;
-        } catch (error) {
+        } catch (error: any) {
             return { message: error.message };
         }
     }

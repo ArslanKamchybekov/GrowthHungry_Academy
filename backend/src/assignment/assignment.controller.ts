@@ -41,7 +41,7 @@ export class AssignmentController {
     async submit(
         @Param('id') assignmentId: string,
         @Body('submissionText') submissionText: string,
-        @Req() req,
+        @Req() req: any
     ) {
         const userId = req.user.userId;
         try {

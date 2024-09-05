@@ -37,7 +37,7 @@ import { SubmissionModule } from './submission/submission.module';
     MulterModule.register({
       dest: './uploads',
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot(process.env.MONGO_URI || ''),
     AuthModule,
     UserModule,
     CourseModule,

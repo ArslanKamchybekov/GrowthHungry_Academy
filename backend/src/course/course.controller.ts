@@ -2,7 +2,7 @@ import { Controller, Get, Post, Delete, Param, Body, UploadedFile, UseIntercepto
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
 import { CloudinaryService } from './cloudinary.service';
-import { ICourse } from '../models/course.model';
+import type { ICourse } from '../models/course.model';
 import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { JwtGuard } from 'src/auth/jwt-auth.guard';
@@ -32,7 +32,7 @@ export class CourseController {
             // };
             const createdCourse = await this.courseService.create(course);
             return createdCourse;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -49,7 +49,7 @@ export class CourseController {
             // }
             const courses = await this.courseService.getAll();
             return courses;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -65,7 +65,7 @@ export class CourseController {
                 await redis.set(course_id, JSON.stringify(course));
                 return course;
             }
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -75,7 +75,7 @@ export class CourseController {
         try {
             const course = await this.courseService.getContent(id);
             return course;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -93,7 +93,7 @@ export class CourseController {
         try {
             const updatedCourse = await this.courseService.update(id, course);
             return updatedCourse;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }

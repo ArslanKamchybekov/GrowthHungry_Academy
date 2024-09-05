@@ -1,5 +1,6 @@
 import { Controller, Req, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
-import UserModel, { IUser } from 'src/models/user.model';
+import UserModel from 'src/models/user.model';
+import type { IUser } from 'src/models/user.model';
 import { UserService } from './user.service';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
@@ -15,7 +16,7 @@ export class UserController {
         try {
             const users = await this.userService.getAll();
             return users;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -24,7 +25,7 @@ export class UserController {
     async getMe(@Req() req: any) { 
         try {
             return req.user;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -34,7 +35,7 @@ export class UserController {
     async getUser(@Param ('id')id:string) { 
         try {
             return UserModel.findById(id).exec();
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -44,7 +45,7 @@ export class UserController {
     async deleteUser(@Param ('id')id:string) { 
         try {
             this.userService.delete(id);
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -54,7 +55,7 @@ export class UserController {
         try {
             const updatedUser = await this.userService.update(id, user);
             return updatedUser;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -64,7 +65,7 @@ export class UserController {
         try {
             const enrolledUser = await this.userService.enroll(id, _id);
             return enrolledUser;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -74,7 +75,7 @@ export class UserController {
         try {
             const unenrolledUser = await this.userService.unenroll(id, _id);
             return unenrolledUser;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -84,7 +85,7 @@ export class UserController {
         try {
             const users = await this.userService.getByPoints();
             return users;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -94,9 +95,10 @@ export class UserController {
     async promoteUser(@Param ('id')id: string) { 
         try {
             const promotedUser = await this.userService.promote(id);
+            if(!promotedUser) return { error: 'User not found' };
             promotedUser.save();
             return promotedUser;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }
@@ -106,9 +108,10 @@ export class UserController {
     async demoteUser(@Param ('id')id: string) {
         try {
             const demotedUser = await this.userService.demote(id);
+            if(!demotedUser) return { error: 'User not found' };
             demotedUser.save();
             return demotedUser;
-        } catch (error) {
+        } catch (error: any) {
             return { error: error.message };
         }
     }

@@ -25,7 +25,7 @@ export class LayoutService {
     
             const newLayout = new Layout(layoutData);
             return await newLayout.save();
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(`Error creating layout: ${error.message}`);
         }
     }

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Req, Res, Body, UseGuards, Next } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import userModel, { IUser } from 'src/models/user.model';
 import ErrorHandler from 'src/utils/ErrorHandler';
 import * as jwt from 'jsonwebtoken';
@@ -76,14 +76,14 @@ export class AuthController {
 
   createActivationToken(user: IRegisterUser): IActivationToken {
     const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
-    const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ user, activationCode }, process.env.JWT_SECRET as string, {
       expiresIn: '5m',
     });
     return { token, activationCode };
   }
 
   createResetToken(user: IUser): string {
-    return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ userId: user._id }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
   }
 
   @Post('activate-user')

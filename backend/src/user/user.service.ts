@@ -90,6 +90,7 @@ export class UserService {
     async isEnrolled(id: string, courseId: string) {
         try {
             const user = await UserModel.findById(id).exec();
+            if (!user) return false
             return user.courses.includes({ courseId: courseId });
         } catch (error) {
             console.log(error)

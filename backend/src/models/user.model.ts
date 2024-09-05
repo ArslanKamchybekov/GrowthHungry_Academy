@@ -59,12 +59,12 @@ userSchema.pre<IUser>('save', async function (next) {
 });
 
 userSchema.methods.SignAccessToken = function(){
-  return jwt.sign({id: this._id}, process.env.ACCESS_TOKEN)
+  return jwt.sign({id: this._id}, process.env.ACCESS_TOKEN as string)
 
 };
 
 userSchema.methods.SignRefreshToken = function() {
-  return jwt.sign({id: this._id}, process.env.REFRESH_TOKEN)
+  return jwt.sign({id: this._id}, process.env.REFRESH_TOKEN as string)
 };
 
 userSchema.methods.comparePassword = async function (
