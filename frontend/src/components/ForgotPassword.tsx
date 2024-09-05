@@ -31,7 +31,7 @@ const ForgotPassword: React.FC = () => {
       }
       setSuccess('Reset password email sent successfully!');
     } catch (err: any) {
-      setError(err.message);
+      setError("User not found");
     } finally {
       setLoading(false);
     }

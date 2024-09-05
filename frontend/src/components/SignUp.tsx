@@ -86,6 +86,12 @@ const SignUp: React.FC = () => {
             </button>
           )}
           {error && <p className="mt-2 text-red-600">{error}</p>}
+          <p className="mt-4 text-gray-600 text-sm">
+            Already have an account?{' '}
+            <a href="/signin" className="text-gray-800 underline">
+              Sign in
+            </a>
+          </p>
         </form>
       </div>
       <div className="mt-6 text-center">
