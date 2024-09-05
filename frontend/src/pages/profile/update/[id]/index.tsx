@@ -1,7 +1,6 @@
 import Navbar from "../../../../components/Navbar";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 
 const UpdateProfile = () => {
 
