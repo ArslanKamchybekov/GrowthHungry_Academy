@@ -27,7 +27,6 @@ export class AuthService {
 
     try {
       await redis.set(user._id, JSON.stringify(user as any));
-      console.log(`User ID saved: ${user._id}`);
     } catch (error) {
       console.error('Error saving session in Redis:', error);
     }
