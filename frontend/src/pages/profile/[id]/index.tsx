@@ -168,7 +168,7 @@ const UserProfile = () => {
         throw new Error("Failed to delete course");
       }
 
-      const unenrollResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/course/unenroll/${id}`, {
+      const unenrollResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/unenroll/${id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
