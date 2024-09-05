@@ -9,7 +9,7 @@ const Navbar = () => {
     const router = useRouter();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { user } = useCurrentUser() as any;
+    const { user } = useCurrentUser()
 
     const handleSignOut = () => {
         localStorage.removeItem("access-token");
