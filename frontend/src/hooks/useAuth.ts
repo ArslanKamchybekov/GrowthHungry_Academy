@@ -13,12 +13,14 @@ const useCurrentUser = () => {
                     throw new Error('No token found');
                 }
 
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
+
+                console.log(response);
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch user data');

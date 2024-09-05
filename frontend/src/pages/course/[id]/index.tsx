@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/Navbar";
 import { BookOpen, Menu, X } from "lucide-react";
 import styles from "../course.module.css";
-import { useRouter } from "next/navigation";
-import { useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 import useCurrentUser from "../../../hooks/useAuth";
+import Image from "next/image";
 
 const Course = () => {
   const router = useRouter();
@@ -163,8 +163,10 @@ const Course = () => {
             {/* Course Content */}
             <div className="order-1 col-span-1 lg:col-span-3 flex flex-col space-y-6">
               <div className="aspect-w-16 aspect-h-9 rounded-md overflow-hidden bg-slate-100 shadow-lg p-4">
-                <img
-                  src={course?.thumbnail.url || "/assets/placeholder.webp"}
+                <Image
+                  src={"/assets/placeholder.webp"}
+                  width={1920}
+                  height={1080}
                   alt="Course Thumbnail"
                   className="object-cover w-full h-full"
                 />
