@@ -123,7 +123,7 @@ export class AuthController {
       if (!user) return next(new ErrorHandler('Invalid credentials', 401));
 
       const token = await this.authService.login(user, res);
-      res.status(200).json({ status: 'success', user, token: token.access_token });
+      res.status(200).json({ status: 'success', user, token: token.access_token, refresh_token: token.refresh_token });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
