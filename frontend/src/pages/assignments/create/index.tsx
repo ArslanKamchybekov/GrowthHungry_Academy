@@ -45,7 +45,6 @@ const CreateAssignmentForm: React.FC = () => {
                 throw new Error('Failed to create assignment');
             }
 
-            const data = await response.json();
             router.push('/assignments');
         } catch (error) {
             console.error('Error creating assignment:', error);
