@@ -54,7 +54,6 @@ export class AuthController {
       const template = 'activation-mail.ejs';
 
       try {
-        console.log('Sending email to:', user.email); // Debugging line
         await sendMail({
           email: user.email,
           subject: 'Account Activation',
