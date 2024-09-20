@@ -11,13 +11,11 @@ export class RolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log('Required roles:', roles);
 
     if (!roles || roles.length === 0) return true;
 
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    console.log('Request user:', user);
 
     const id = user.userId;
 
