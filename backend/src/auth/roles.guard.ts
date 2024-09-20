@@ -27,7 +27,7 @@ export class RolesGuard implements CanActivate {
       console.log('User entity:', userEntity);
 
       if (!userEntity) {
-        return false; // User not found, deny access
+        return false;
       }
 
       const hasRole = roles.includes(userEntity.role);
